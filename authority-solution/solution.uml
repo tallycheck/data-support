@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.taoswork.tallybook.authority.solution</OriginalElement>
+  <nodes>
+    <node x="202.0" y="810.0">com.taoswork.tallybook.authority.solution.AuthoritySolutionDomain</node>
+    <node x="497.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.domain.user.UserAuthority</node>
+    <node x="451.0" y="653.0">com.taoswork.tallybook.authority.solution.engine.filter.BaseFilter</node>
+    <node x="405.75" y="415.0">com.taoswork.tallybook.authority.solution.engine.PermissionEngine</node>
+    <node x="670.1630434782606" y="162.0">com.taoswork.tallybook.authority.solution.domain.permission.Permission</node>
+    <node x="188.0" y="967.0">com.taoswork.tallybook.authority.solution.domain.resource.protection.ProtectionGate</node>
+    <node x="864.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation.Tab</node>
+    <node x="195.0" y="653.0">com.taoswork.tallybook.authority.solution.engine.SKAuthority</node>
+    <node x="403.41304347826065" y="81.0">com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase</node>
+    <node x="364.91304347826065" y="243.0">com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation.Tab</node>
+    <node x="90.21875" y="734.0">com.taoswork.tallybook.authority.solution.engine.PermissionObjectMaker</node>
+    <node x="0.0" y="653.0">com.taoswork.tallybook.authority.solution.engine.resource.ResourceProtectionCase</node>
+    <node x="307.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.engine.resource.ProtectionCenterTenant</node>
+    <node x="165.9999999999999" y="243.0">com.taoswork.tallybook.authority.solution.domain.resource.ProtectionLink</node>
+    <node x="1006.6630434782606" y="324.0">com.taoswork.tallybook.authority.solution.domain.resource.Protection</node>
+    <node x="0.0" y="967.0">com.taoswork.tallybook.authority.solution.domain.permission.validation</node>
+    <node x="484.4375" y="734.0">com.taoswork.tallybook.authority.solution.engine.filter.FilterByClassifications</node>
+    <node x="0.0" y="324.0">com.taoswork.tallybook.authority.solution.engine.IPermissionEngine</node>
+    <node x="159.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.domain.ProtectionSpace</node>
+    <node x="381.66304347826065" y="162.0">com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation</node>
+    <node x="0.0" y="891.0">com.taoswork.tallybook.authority.solution.engine.filter.query.MorphiaQInterrupter</node>
+    <node x="394.25" y="496.0">com.taoswork.tallybook.authority.solution.engine.FastPermissionEngine</node>
+    <node x="353.0" y="967.0">com.taoswork.tallybook.authority.solution.domain.IClassifiable</node>
+    <node x="501.0" y="967.0">com.taoswork.tallybook.authority.solution.engine.filter.utils.FilterHelper</node>
+    <node x="340.5" y="572.0">com.taoswork.tallybook.authority.solution.engine.filter.IFilter</node>
+    <node x="566.4999999999999" y="243.0">com.taoswork.tallybook.authority.solution.domain.user.BaseAuthority</node>
+    <node x="798.2499999999999" y="243.0">com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation</node>
+    <node x="440.91304347826065" y="243.0">com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation.Group</node>
+    <node x="1065.25" y="243.0">com.taoswork.tallybook.authority.solution.domain.resource.DProtectionMode</node>
+    <node x="433.6630434782607" y="0.0">com.taoswork.tallybook.authority.solution.domain.ResourceAccess</node>
+    <node x="773.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation.Group</node>
+    <node x="561.0" y="653.0">com.taoswork.tallybook.authority.solution.engine.filter.IMongoFilter</node>
+    <node x="23.0" y="810.0">com.taoswork.tallybook.authority.solution.engine.filter.query.IQInterrupter</node>
+    <node x="630.9999999999999" y="324.0">com.taoswork.tallybook.authority.solution.domain.user.GroupAuthority</node>
+    <node x="924.2499999999999" y="243.0">com.taoswork.tallybook.authority.solution.domain.resource.ProtectionCase</node>
+    <node x="939.75" y="162.0">com.taoswork.tallybook.authority.solution.domain.resource.FilterType</node>
+    <node x="647.0" y="810.0">com.taoswork.tallybook.authority.solution.domain.resource.protection.ProtectionValidator</node>
+    <node x="425.0" y="810.0">com.taoswork.tallybook.authority.solution.domain.resource.protection.ResourceNameFieldGate</node>
+    <node x="316.0" y="653.0">com.taoswork.tallybook.authority.solution.engine.filter.FilterManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation" target="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase">
+      <point x="0.0" y="-15.5" />
+      <point x="-31.25" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.user.BaseAuthority" target="com.taoswork.tallybook.authority.solution.domain.permission.Permission">
+      <point x="0.0" y="-15.5" />
+      <point x="623.4999999999999" y="218.0" />
+      <point x="694.4130434782606" y="218.0" />
+      <point x="-24.25" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.Permission" target="com.taoswork.tallybook.authority.solution.domain.ResourceAccess">
+      <point x="24.25" y="-15.5" />
+      <point x="742.9130434782606" y="56.0" />
+      <point x="539.496376811594" y="56.0" />
+      <point x="42.333333333333314" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation.Tab" target="com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation">
+      <point x="0.0" y="-15.5" />
+      <point x="892.9999999999999" y="299.0" />
+      <point x="877.7499999999999" y="299.0" />
+      <point x="26.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.filter.FilterByClassifications" target="com.taoswork.tallybook.authority.solution.engine.filter.BaseFilter">
+      <point x="-39.25" y="-15.5" />
+      <point x="523.6875" y="709.0" />
+      <point x="496.0" y="709.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionObjectMaker" target="com.taoswork.tallybook.authority.solution.engine.SKAuthority">
+      <point x="43.25" y="-15.5" />
+      <point x="219.96875" y="709.0" />
+      <point x="245.5" y="709.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.Permission" target="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase">
+      <point x="-24.25" y="-15.5" />
+      <point x="694.4130434782606" y="137.0" />
+      <point x="497.16304347826065" y="137.0" />
+      <point x="31.25" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.resource.Protection" target="com.taoswork.tallybook.authority.solution.domain.resource.DProtectionMode">
+      <point x="23.25" y="-15.5" />
+      <point x="1076.4130434782605" y="299.0" />
+      <point x="1133.75" y="299.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.FastPermissionEngine" target="com.taoswork.tallybook.authority.solution.engine.PermissionEngine">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation.Group" target="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation">
+      <point x="0.0" y="-15.5" />
+      <point x="476.41304347826065" y="218.0" />
+      <point x="461.16304347826065" y="218.0" />
+      <point x="26.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase" target="com.taoswork.tallybook.authority.solution.domain.ResourceAccess">
+      <point x="-31.249999999999943" y="-15.5" />
+      <point x="434.6630434782607" y="56.0" />
+      <point x="454.8297101449274" y="56.0" />
+      <point x="-42.333333333333314" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.user.GroupAuthority" target="com.taoswork.tallybook.authority.solution.domain.user.BaseAuthority">
+      <point x="0.0" y="-15.5" />
+      <point x="692.4999999999999" y="299.0" />
+      <point x="651.9999999999999" y="299.0" />
+      <point x="28.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.user.UserAuthority" target="com.taoswork.tallybook.authority.solution.domain.user.BaseAuthority">
+      <point x="0.0" y="-15.5" />
+      <point x="554.4999999999999" y="299.0" />
+      <point x="594.9999999999999" y="299.0" />
+      <point x="-28.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.domain.user.GroupAuthority">
+      <point x="34.0" y="-15.5" />
+      <point x="507.75" y="385.0" />
+      <point x="692.4999999999999" y="385.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.resource.Protection" target="com.taoswork.tallybook.authority.solution.domain.resource.ProtectionCase">
+      <point x="-23.25" y="-15.5" />
+      <point x="1029.9130434782605" y="299.0" />
+      <point x="984.7499999999999" y="299.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.resource.ResourceProtectionCase" target="com.taoswork.tallybook.authority.solution.engine.filter.IFilter">
+      <point x="0.0" y="-15.5" />
+      <point x="87.5" y="628.0" />
+      <point x="351.5" y="628.0" />
+      <point x="-22.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.filter.query.MorphiaQInterrupter" target="com.taoswork.tallybook.authority.solution.engine.filter.query.IQInterrupter">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.engine.resource.ProtectionCenterTenant">
+      <point x="-11.333333333333371" y="-15.5" />
+      <point x="462.41666666666663" y="375.0" />
+      <point x="392.9999999999999" y="375.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.domain.ProtectionSpace">
+      <point x="-34.0" y="-15.5" />
+      <point x="439.75" y="385.0" />
+      <point x="223.9999999999999" y="385.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.resource.ProtectionCase" target="com.taoswork.tallybook.authority.solution.domain.resource.FilterType">
+      <point x="1.1368683772161603E-13" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation" target="com.taoswork.tallybook.authority.solution.domain.permission.Permission">
+      <point x="0.0" y="-15.5" />
+      <point x="851.2499999999999" y="218.0" />
+      <point x="742.9130434782606" y="218.0" />
+      <point x="24.25" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionObjectMaker" target="com.taoswork.tallybook.authority.solution.engine.resource.ResourceProtectionCase">
+      <point x="-43.25" y="-15.5" />
+      <point x="133.46875" y="709.0" />
+      <point x="87.5" y="709.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.filter.FilterManager" target="com.taoswork.tallybook.authority.solution.engine.filter.IFilter">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation.Group" target="com.taoswork.tallybook.authority.solution.domain.permission.Permission.Presentation">
+      <point x="0.0" y="-15.5" />
+      <point x="809.4999999999999" y="299.0" />
+      <point x="824.7499999999999" y="299.0" />
+      <point x="-26.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.filter.BaseFilter" target="com.taoswork.tallybook.authority.solution.engine.filter.IFilter">
+      <point x="0.0" y="-15.5" />
+      <point x="496.0" y="628.0" />
+      <point x="395.5" y="628.0" />
+      <point x="22.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.engine.IPermissionEngine">
+      <point x="-56.666666666666686" y="-15.5" />
+      <point x="417.08333333333326" y="395.0" />
+      <point x="70.0" y="395.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.domain.user.UserAuthority">
+      <point x="11.333333333333314" y="-15.5" />
+      <point x="485.08333333333326" y="375.0" />
+      <point x="554.4999999999999" y="375.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.ProtectionSpace" target="com.taoswork.tallybook.authority.solution.domain.resource.ProtectionLink">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation.Tab" target="com.taoswork.tallybook.authority.solution.domain.permission.PermissionCase.Presentation">
+      <point x="0.0" y="-15.5" />
+      <point x="392.91304347826065" y="218.0" />
+      <point x="408.16304347826065" y="218.0" />
+      <point x="-26.5" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.filter.FilterByClassifications" target="com.taoswork.tallybook.authority.solution.engine.filter.IMongoFilter">
+      <point x="39.25" y="-15.5" />
+      <point x="602.1875" y="709.0" />
+      <point x="615.5" y="709.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.taoswork.tallybook.authority.solution.engine.PermissionEngine" target="com.taoswork.tallybook.authority.solution.domain.resource.Protection">
+      <point x="56.66666666666663" y="-15.5" />
+      <point x="530.4166666666666" y="395.0" />
+      <point x="1053.1630434782605" y="395.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9110019646365423" x="561.2281647616994" y="238.38235928401986" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>Production</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
