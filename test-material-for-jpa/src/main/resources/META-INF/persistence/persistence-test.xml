@@ -7,24 +7,24 @@
     <persistence-unit name="tallymockupPU" transaction-type="RESOURCE_LOCAL">
         <non-jta-data-source>jdbcTestDs</non-jta-data-source>
 
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.ZooImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.ZooKeeperImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.DormitoryImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.CageImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.DogImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.FishImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.zoo.impl.CustomizedAnimalImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.ZooImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.ZooKeeperImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.DormitoryImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.CageImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.DogImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.FishImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.CustomizedAnimalImpl</class>
 
 
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.CompanyImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.ProductImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.EmployeeImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.DepartmentImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.ParkingSpaceImpl</class>
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.business.impl.ProjectImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.CompanyImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.ProductImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.EmployeeImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.DepartmentImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.ParkingSpaceImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.ProjectImpl</class>
 
 
-        <class>com.taoswork.tallybook.testmaterial.jpa.domain.nature.impl.CitizenImpl</class>
+        <class>com.taoswork.tallycheck.testmaterial.jpa.domain.nature.impl.CitizenImpl</class>
 
         <!--
         <class>AdminRoleImpl</class>
