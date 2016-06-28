@@ -1,12 +1,7 @@
 package com.taoswork.tallycheck.dataservice.mongo;
 
 import com.mongodb.ServerAddress;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Properties;
+import com.taoswork.tallycheck.general.solution.conf.TallycheckConfiguration;
 
 /**
  * Created by Gao Yuan on 2016/2/16.
@@ -15,27 +10,18 @@ public abstract class MongoDatasourceDefinitionBase implements MongoDatasourceDe
     private final ServerAddress serverAddress;
 
     public MongoDatasourceDefinitionBase() {
-        String userHome = System.getProperty("user.home");
-        Path homePath = new File(userHome).toPath();
-        File configFile = homePath.resolve(".tallybook").resolve("config.properties").toFile();
-        if (configFile.exists() && configFile.isFile()) {
-            Properties properties = new Properties();
-            try {
-                properties.load(new FileInputStream(configFile));
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                String host = properties.getProperty("mongo.host", ServerAddress.defaultHost());
-                String port = properties.getProperty("mongo.port", "" + ServerAddress.defaultPort());
-                serverAddress = new ServerAddress(host, Integer.parseInt(port));
-            }
-        } else {
-            serverAddress = new ServerAddress();
-        }
+        serverAddress = determineServerAddress();
+    }
+
+    protected ServerAddress determineServerAddress() {
+        org.apache.commons.configuration2.Configuration conf = TallycheckConfiguration.instance();
+        String host = conf.getString("tallycheck.db.mongo.host", ServerAddress.defaultHost());
+        int port = conf.getInt("tallycheck.db.mongo.port", ServerAddress.defaultPort());
+        return new ServerAddress(host, port);
     }
 
     @Override
-    public ServerAddress getServerAddress() {
+    public final ServerAddress getServerAddress() {
         return serverAddress;
     }
 

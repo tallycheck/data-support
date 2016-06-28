@@ -4,6 +4,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinition;
 import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinitionBase;
+import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinitionForTest;
 import com.taoswork.tallycheck.dataservice.mongo.config.MongoDatasourceConfiguration;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,18 +22,11 @@ public class TallyMockupMongoDatasourceConfiguration extends MongoDatasourceConf
      * Created by Gao Yuan on 2016/2/15.
      */
     public static final class DatasourceDefinition
-            extends MongoDatasourceDefinitionBase {
+            extends MongoDatasourceDefinitionForTest {
 
         @Override
         public String getDbName() {
             return "tallymockup";
-        }
-
-        public void dropDatabase() {
-            DatasourceDefinition def = this;
-            final MongoClient mongo = new MongoClient(def.getServerAddress());
-            final MongoDatabase db = mongo.getDatabase(def.getDbName());
-            db.drop();
         }
     }
 }

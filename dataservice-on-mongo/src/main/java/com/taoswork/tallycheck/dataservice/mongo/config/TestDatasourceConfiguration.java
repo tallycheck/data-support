@@ -1,9 +1,12 @@
 package com.taoswork.tallycheck.dataservice.mongo.config;
 
 import com.mongodb.MongoClient;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinition;
 import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinitionBase;
+import com.taoswork.tallycheck.dataservice.mongo.MongoDatasourceDefinitionForTest;
+import com.taoswork.tallycheck.general.solution.conf.TallycheckConfiguration;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -20,19 +23,11 @@ public class TestDatasourceConfiguration extends MongoDatasourceConfiguration {
      * Created by Gao Yuan on 2016/2/26.
      */
     public static class DatasourceDefinition
-            extends MongoDatasourceDefinitionBase {
+            extends MongoDatasourceDefinitionForTest {
 
         @Override
         public String getDbName() {
             return "tally-test";
         }
-
-        public void dropDatabase() {
-            DatasourceDefinition def = this;
-            final MongoClient mongo = new MongoClient(def.getServerAddress());
-            final MongoDatabase db = mongo.getDatabase(def.getDbName());
-            db.drop();
-        }
-
     }
 }
