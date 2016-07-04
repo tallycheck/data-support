@@ -10,18 +10,14 @@ import java.util.Map;
  * Created by Gao Yuan on 2015/6/1.
  */
 public class Entity implements Serializable{
-    private Integer timezoneOffset;
     private Class<? extends Persistable> type;
-    private Class<? extends Persistable> ceilingType;
-    private final Map<String, String> props = new HashMap<String, String>();
-    public final static String ENTITY_PROPERTY_NAME = "props";
+    private final Map<String, String> props;
 
-    public Integer getTimezoneOffset() {
-        return timezoneOffset;
+    public Entity(){
+        this(new HashMap<String, String>());
     }
-
-    public void setTimezoneOffset(Integer timezoneOffset) {
-        this.timezoneOffset = timezoneOffset;
+    public Entity(Map<String, String> props){
+        this.props = props;
     }
 
     public Class<? extends Persistable> getType() {
@@ -30,15 +26,6 @@ public class Entity implements Serializable{
 
     public Entity setType(Class<? extends Persistable> type) {
         this.type = type;
-        return this;
-    }
-
-    public Class<? extends Persistable> getCeilingType() {
-        return ceilingType;
-    }
-
-    public Entity setCeilingType(Class<? extends Persistable> ceilingType) {
-        this.ceilingType = ceilingType;
         return this;
     }
 

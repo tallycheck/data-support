@@ -84,7 +84,32 @@
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
-                <artifactId>authority-core</artifactId>
+                <artifactId>authority-atom</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-core-api</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-provider-api</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-provider</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-client</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-domain</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
@@ -109,22 +134,27 @@
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
-                <artifactId>dataservice-base</artifactId>
+                <artifactId>data-service-base</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
-                <artifactId>dataservice-on-jpa</artifactId>
+                <artifactId>datasolution-base</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
-                <artifactId>dataservice-on-mongo</artifactId>
+                <artifactId>datasolution-on-jpa</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
-                <artifactId>dataservice-server</artifactId>
+                <artifactId>datasolution-on-mongo</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>datasolution-server</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
@@ -162,6 +192,11 @@
                 <version>${tallycheck.datasupport.version}</version>
                 <type>jar</type>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>dataservice-base</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
             </dependency>
 
             <dependency>
@@ -360,6 +395,11 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
                 <artifactId>commons-dbcp2</artifactId>
                 <version>2.1.1</version>
             </dependency>
@@ -396,21 +436,20 @@
     </dependencyManagement>
 
     <modules>
-        <module>authority-core</module>
-        <module>authority-solution</module>
+        <module>authority</module>
         <module>datadomain-base</module>
         <module>datadomain-on-jpa</module>
         <module>datadomain-on-mongo</module>
-        <module>dataservice-base</module>
-        <module>dataservice-on-jpa</module>
-        <module>dataservice-on-mongo</module>
-        <module>dataservice-server</module>
+        <module>datasolution-base</module>
+        <module>datasolution-on-jpa</module>
+        <module>datasolution-on-mongo</module>
         <module>meta-descriptor-base</module>
         <module>meta-descriptor-jpa</module>
         <module>meta-descriptor-mongo</module>
         <module>test-material-base</module>
         <module>test-material-for-jpa</module>
         <module>test-material-for-mongo</module>
+        <module>data-service-base</module>
     </modules>
 
 
