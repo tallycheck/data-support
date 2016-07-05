@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.dao.query.criteria.restriction;
 
-import com.taoswork.tallycheck.datasolution.jpa.core.dao.query.criteria.converter.StringLikeFilterValueConverter;
 import com.taoswork.tallycheck.datasolution.core.dao.query.criteria.converter.*;
+import com.taoswork.tallycheck.datasolution.jpa.core.dao.query.criteria.converter.StringLikeFilterValueConverter;
 import com.taoswork.tallycheck.datasolution.jpa.core.dao.query.criteria.predicate.*;
 
 /**

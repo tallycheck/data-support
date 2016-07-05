@@ -104,6 +104,11 @@
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>authority-provider-base</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
                 <artifactId>authority-client</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>

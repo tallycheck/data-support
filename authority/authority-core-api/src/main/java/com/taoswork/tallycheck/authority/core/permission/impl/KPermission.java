@@ -1,11 +1,11 @@
 package com.taoswork.tallycheck.authority.core.permission.impl;
 
 import com.taoswork.tallycheck.authority.atom.Access;
+import com.taoswork.tallycheck.authority.atom.ProtectionMode;
 import com.taoswork.tallycheck.authority.core.IllegalCodePathException;
+import com.taoswork.tallycheck.authority.core.permission.IKPermission;
 import com.taoswork.tallycheck.authority.core.permission.IKPermissionCase;
 import com.taoswork.tallycheck.authority.core.permission.wirte.IKPermissionW;
-import com.taoswork.tallycheck.authority.atom.ProtectionMode;
-import com.taoswork.tallycheck.authority.core.permission.IKPermission;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 

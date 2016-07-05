@@ -1,6 +1,5 @@
 package com.taoswork.tallycheck.authority.atom;
 
-import com.taoswork.tallycheck.authority.atom.Access;
 import org.junit.Assert;
 import org.junit.Test;
 

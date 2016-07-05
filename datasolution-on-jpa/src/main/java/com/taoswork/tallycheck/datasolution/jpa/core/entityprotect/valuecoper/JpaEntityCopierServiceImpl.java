@@ -2,13 +2,13 @@ package com.taoswork.tallycheck.datasolution.jpa.core.entityprotect.valuecoper;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.datadomain.base.entity.valuecopier.EntityCopierPool;
-import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.service.EntityCopierService;
+import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
 import com.taoswork.tallycheck.descriptor.dataio.copier.CopyException;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
-import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.RFieldCopierSolution;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.IFieldCopierSolution;
+import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.RFieldCopierSolution;
 
 /**
  * Created by Gao Yuan on 2015/11/11.

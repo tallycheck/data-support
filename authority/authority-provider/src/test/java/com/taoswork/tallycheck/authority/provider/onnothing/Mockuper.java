@@ -3,10 +3,10 @@ package com.taoswork.tallycheck.authority.provider.onnothing;
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermission;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermissionCase;
-import com.taoswork.tallycheck.authority.provider.onnothing.client.ByTagFilter;
-import com.taoswork.tallycheck.authority.provider.onnothing.provider.GuardedDocInstance;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
 import com.taoswork.tallycheck.authority.provider.ResProtectionCase;
+import com.taoswork.tallycheck.authority.provider.onnothing.client.ByTagFilter;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
+import com.taoswork.tallycheck.authority.provider.onnothing.provider.GuardedDocInstance;
 import com.taoswork.tallycheck.authority.provider.permission.authorities.ISimpleKAuthority;
 import com.taoswork.tallycheck.authority.provider.permission.authorities.SimpleKAuthority;
 

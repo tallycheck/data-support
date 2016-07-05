@@ -4,10 +4,10 @@ import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.MongoDatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityprotect.valuecoper.MongoEntityCopierServiceImpl;
 import com.taoswork.tallycheck.datasolution.service.EntityCopierService;
-import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
-import com.taoswork.tallycheck.descriptor.service.MetaService;
 import com.taoswork.tallycheck.descriptor.mongo.service.MongoMetaInfoServiceImpl;
 import com.taoswork.tallycheck.descriptor.mongo.service.MongoMetaServiceImpl;
+import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
+import com.taoswork.tallycheck.descriptor.service.MetaService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -3,9 +3,9 @@ package com.taoswork.tallycheck.datasolution.core.entityprotect.valuegate;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.datadomain.base.entity.valuegate.FieldGatePool;
 import com.taoswork.tallycheck.datadomain.base.entity.valuegate.IFieldGate;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.field.handler.TypedFieldHandlerManager;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.field.valuegate.TypedFieldGate;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
 

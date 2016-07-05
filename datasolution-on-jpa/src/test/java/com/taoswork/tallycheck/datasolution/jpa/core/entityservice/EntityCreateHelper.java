@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.in.Entity;

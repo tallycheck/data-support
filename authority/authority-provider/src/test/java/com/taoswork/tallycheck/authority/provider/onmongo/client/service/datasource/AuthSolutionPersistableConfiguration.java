@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasource;
 
 
-import com.taoswork.tallycheck.authority.provider.onmongo.AuthoritySolutionDomain;
+import com.taoswork.tallycheck.authority.domain.AuthorityDomain;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUserAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
@@ -22,7 +22,7 @@ public class AuthSolutionPersistableConfiguration
     @Override
     protected Class<?>[] createPersistableEntities() {
         List<Class> classes = new ArrayList<Class>();
-        CollectionUtils.addAll(classes, AuthoritySolutionDomain.domainEntities());
+        CollectionUtils.addAll(classes, AuthorityDomain.domainEntities());
         classes.add(TGroupAuthority.class);
         classes.add(TUserAuthority.class);
         classes.add(XFile.class);

@@ -7,7 +7,7 @@ import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
  */
 public class AuthSolutionDataSolutionDefinition implements IDataSolutionDefinition {
     //DataServiceName
-    public final static String DATA_SERVICE_NAME = "AuthSolutionMockup";
+    public final static String DATA_SOLUTION_NAME = "AuthSolutionMockup";
 
     public static final String TMOCKUP_ENTITY_MESSAGES = ENTITY_MESSAGES_FILE_PREFIX +
             "permission/";
@@ -20,7 +20,7 @@ public class AuthSolutionDataSolutionDefinition implements IDataSolutionDefiniti
 
     @Override
     public String getDataSolutionName() {
-        return DATA_SERVICE_NAME;
+        return DATA_SOLUTION_NAME;
     }
 
     @Override

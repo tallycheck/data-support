@@ -3,12 +3,12 @@ package com.taoswork.tallycheck.descriptor.metadata.processor;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.FieldMetaMediate;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.IFieldHandler;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.MultiMetaHandler;
+import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.*;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.basics.BasicFieldHandler;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.embedded.EmbeddedFieldHandler;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.list.ListFieldHandlerDispatcher;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.list._ArrayFieldHandler;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.map.MapFieldHandlerDispatcher;
-import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

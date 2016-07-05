@@ -1,10 +1,10 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice.impl;
 
-import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.PersistenceService;
 import com.taoswork.tallycheck.datasolution.jpa.core.metaaccess.JpaEntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.jpa.core.persistence.IPersistentMethod;

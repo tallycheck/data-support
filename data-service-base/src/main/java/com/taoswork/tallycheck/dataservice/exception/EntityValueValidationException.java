@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.dataservice.exception;
 
-import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.datadomain.base.entity.validation.error.EntityValidationErrors;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
 
 /**
  * Created by Gao Yuan on 2015/9/28.

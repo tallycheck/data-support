@@ -1,12 +1,11 @@
-package com.taoswork.tallycheck.authority.provider.onmongo;
+package com.taoswork.tallycheck.authority.domain;
 
-import com.taoswork.tallycheck.authority.domain.ProtectionSpace;
 import com.taoswork.tallycheck.authority.domain.resource.Protection;
 
 /**
  * Created by Gao Yuan on 2016/2/23.
  */
-public class AuthoritySolutionDomain {
+public class AuthorityDomain {
     public static Class[] domainEntities(){
         return new Class<?>[]{
                 ProtectionSpace.class,  //feature

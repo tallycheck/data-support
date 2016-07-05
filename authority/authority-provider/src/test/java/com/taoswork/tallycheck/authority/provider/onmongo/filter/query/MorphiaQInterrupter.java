@@ -1,12 +1,12 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.filter.query;
 
 import com.taoswork.tallycheck.authority.client.filter.IFilter;
+import com.taoswork.tallycheck.authority.client.impl.ResourceProtectionCase;
 import com.taoswork.tallycheck.authority.core.IllegalCodePathException;
 import com.taoswork.tallycheck.authority.core.permission.KAccessibleScope;
 import com.taoswork.tallycheck.authority.core.resource.IKProtection;
 import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
 import com.taoswork.tallycheck.authority.provider.onmongo.filter.IMongoFilter;
-import com.taoswork.tallycheck.authority.client.impl.ResourceProtectionCase;
 import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
 

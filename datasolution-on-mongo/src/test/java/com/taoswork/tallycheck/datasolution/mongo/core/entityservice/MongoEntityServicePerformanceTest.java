@@ -1,14 +1,16 @@
 package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
-import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
@@ -35,22 +37,25 @@ import java.util.Set;
 public class MongoEntityServicePerformanceTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoEntityServicePerformanceTest.class);
 
-    private IDataSolution dataService = null;
+    private IDataSolution dataSolution = null;
     private EntityTranslator translator = null;
     private EntityMetaAccess metaAccess = null;
 
     @Before
     public void setup() {
-        dataService = new TallyMockupMongoDataSolution();
-        metaAccess = dataService.getService(EntityMetaAccess.COMPONENT_NAME);
+        dataSolution = new TallyMockupMongoDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
+
+        metaAccess = dataSolution.getService(EntityMetaAccess.COMPONENT_NAME);
         translator = new EntityTranslator();
     }
 
     @After
     public void teardown() {
-        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataService.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
         mdbDef.dropDatabase();
-        dataService = null;
+        dataSolution = null;
         metaAccess = null;
         translator = null;
     }
@@ -59,7 +64,7 @@ public class MongoEntityServicePerformanceTest {
     public void testCRUDQ() throws ServiceException {
         int loopCount = 20;
         int inLoopAttempt = 20;
-        IEntityService entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+        IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
 
         Set<ObjectId> ids = new HashSet<ObjectId>();
         final int total;

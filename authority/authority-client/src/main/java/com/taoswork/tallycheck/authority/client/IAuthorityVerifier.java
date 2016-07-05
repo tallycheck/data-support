@@ -6,7 +6,7 @@ import com.taoswork.tallycheck.authority.core.ProtectionScope;
 /**
  * Created by gaoyuan on 7/2/16.
  */
-public interface AccessClient {
+public interface IAuthorityVerifier {
     /**
      * Get all the possible access for the specified resource.
      * @param auth

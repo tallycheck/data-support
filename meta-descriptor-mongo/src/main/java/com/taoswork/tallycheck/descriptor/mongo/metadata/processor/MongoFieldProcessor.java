@@ -2,8 +2,8 @@ package com.taoswork.tallycheck.descriptor.mongo.metadata.processor;
 
 import com.taoswork.tallycheck.descriptor.metadata.processor.GeneralFieldProcessor;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.fields.basics.BasicFieldHandler;
-import com.taoswork.tallycheck.descriptor.mongo.metadata.processor.handler.MongoAnnotationFieldHandler;
 import com.taoswork.tallycheck.descriptor.mongo.metadata.processor.field.ObjectIdFieldMetaHandler;
+import com.taoswork.tallycheck.descriptor.mongo.metadata.processor.handler.MongoAnnotationFieldHandler;
 
 /**
  * Created by Gao Yuan on 2015/5/27.

@@ -1,14 +1,13 @@
 package com.taoswork.tallycheck.datasolution.core;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
-import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.exception.NoSuchRecordException;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
+import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
-import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierAgent;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.EntityValidationService;
 import com.taoswork.tallycheck.datasolution.service.EntityValueGateService;
@@ -25,7 +24,7 @@ import java.lang.reflect.Field;
 public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
     private static final Logger LOGGER = LoggerFactory.getLogger(SecuredCrudqAccessor.class);
 
-    @Resource(name = SecurityVerifierAgent.COMPONENT_NAME)
+    @Resource(name = ISecurityVerifier.COMPONENT_NAME)
     protected ISecurityVerifier securityVerifier;
 
     @Resource(name = EntityValidationService.COMPONENT_NAME)

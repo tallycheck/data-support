@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.metadata.service;
 
+import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.service.MetaService;
-import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.*;
 import org.junit.After;
 import org.junit.Assert;

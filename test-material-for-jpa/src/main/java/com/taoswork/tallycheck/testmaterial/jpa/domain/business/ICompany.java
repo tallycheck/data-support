@@ -2,8 +2,8 @@ package com.taoswork.tallycheck.testmaterial.jpa.domain.business;
 
 import com.taoswork.tallycheck.datadomain.base.entity.PersistEntity;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
-import com.taoswork.tallycheck.testmaterial.jpa.domain.business.dataprotect.CompanyValidator;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.dataprotect.CompanyGate;
+import com.taoswork.tallycheck.testmaterial.jpa.domain.business.dataprotect.CompanyValidator;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.enumtype.CompanyType;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.common.Address;
 

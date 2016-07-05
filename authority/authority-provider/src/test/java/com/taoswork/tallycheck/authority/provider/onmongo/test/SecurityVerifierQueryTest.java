@@ -1,7 +1,6 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.test;
 
-import com.taoswork.tallycheck.authority.atom.utility.ResourceUtility;
-import com.taoswork.tallycheck.authority.client.AccessClient;
+import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.client.KAccessibleScopeWithProtection;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.core.permission.KAccessibleScope;
@@ -21,13 +20,12 @@ import java.util.List;
  */
 public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
-    private static final String TENANT = "test-tenant";
-    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, TENANT);
+    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, mockuper.TENANT);
 
     @BeforeClass
     public static void beforeClass() {
         setupDatabaseData();
-        makeDatabaseTestData(TENANT);
+        makeDatabaseTestData();
     }
 
     @AfterClass
@@ -37,7 +35,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
     @Test
     public void testQueryWithoutCases() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
 
         Class<CCFile> resourceClz = CCFile.class;
         XFileRepo<CCFile> XFileRepo = new XFileRepo<CCFile>(entityService.getDatastore(), resourceClz);
@@ -88,7 +86,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
     @Test
     public void testQuery_MasterControl_FitAll() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CM1File> resourceClz = CM1File.class;
         XFileRepo<CM1File> XFileRepo = new XFileRepo<CM1File>(entityService.getDatastore(), resourceClz);
 
@@ -182,7 +180,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
     @Test
     public void testQuery_MasterControl_FitAny() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CM0File> resourceClz = CM0File.class;
         XFileRepo<CM0File> XFileRepo = new XFileRepo<CM0File>(entityService.getDatastore(), resourceClz);
 
@@ -276,7 +274,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
     @Test
     public void testQuery_SelfControl_FitAll() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CS1File> resourceClz = CS1File.class;
         XFileRepo<CS1File> XFileRepo = new XFileRepo<CS1File>(entityService.getDatastore(), resourceClz);
         makeResourceInstanceMembers(resourceClz);
@@ -412,7 +410,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
     @Test
     public void testQuery_SelfControl_FitAny() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CS0File> resourceClz = CS0File.class;
         XFileRepo<CS0File> XFileRepo = new XFileRepo<CS0File>(entityService.getDatastore(), resourceClz);
         makeResourceInstanceMembers(resourceClz);

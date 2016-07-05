@@ -7,7 +7,7 @@ import com.taoswork.tallycheck.authority.core.permission.IKPermission;
 /**
  * Created by gaoyuan on 7/2/16.
  */
-public interface AuthorityProvider {
+public interface IAuthorityProvider {
 
     ResProtection getProtection(ProtectionScope scope, String resourceTypeName);
 

@@ -4,7 +4,6 @@ import com.taoswork.tallycheck.authority.atom.ProtectionMode;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * Created by gaoyuan on 7/2/16.

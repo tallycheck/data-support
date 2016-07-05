@@ -1,15 +1,15 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.persistence.impl;
 
-import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
-import com.taoswork.tallycheck.datasolution.core.SecuredCrudqAccessor;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.core.SecuredCrudqAccessor;
 import com.taoswork.tallycheck.datasolution.jpa.core.dao.EntityDao;
 import com.taoswork.tallycheck.datasolution.jpa.core.persistence.PersistenceManager;
 import com.taoswork.tallycheck.datasolution.service.EntityCopierService;
+import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
 import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
 import org.slf4j.Logger;

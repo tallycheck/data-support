@@ -1,14 +1,16 @@
 package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
-import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.business.ICompany;
@@ -29,18 +31,20 @@ import java.util.List;
 public class MongoEntityServiceCompanyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoEntityServiceCompanyTest.class);
 
-    private IDataSolution dataService = null;
+    private IDataSolution dataSolution = null;
 
     @Before
     public void setup() {
-        dataService = new TallyMockupMongoDataSolution();
+        dataSolution = new TallyMockupMongoDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
     public void teardown() {
-        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataService.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
         mdbDef.dropDatabase();
-        dataService = null;
+        dataSolution = null;
     }
 
     @Test
@@ -48,7 +52,7 @@ public class MongoEntityServiceCompanyTest {
         MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER);
         for (int i = 0; i < 10; ++i) {
             try {
-                IEntityService entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+                IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
                 ICompany company = new CompanyImpl();
                 {
                     company.setAsset(Long.valueOf(i));

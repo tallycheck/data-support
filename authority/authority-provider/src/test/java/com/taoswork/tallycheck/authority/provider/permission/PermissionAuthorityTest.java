@@ -2,8 +2,8 @@ package com.taoswork.tallycheck.authority.provider.permission;
 
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.provider.onnothing.Mockuper;
-import com.taoswork.tallycheck.authority.provider.permission.authorities.ISimpleKAuthority;
 import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
+import com.taoswork.tallycheck.authority.provider.permission.authorities.ISimpleKAuthority;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,7 +1,6 @@
 package com.taoswork.tallycheck.authority.core.permission;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.authority.core.permission.IKPermissionCase;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermissionCase;
 import org.junit.Assert;
 import org.junit.Test;

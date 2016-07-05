@@ -1,5 +1,7 @@
 package com.taoswork.tallycheck.datasolution.config;
 
+import com.taoswork.tallycheck.authority.client.filter.EntityFilterManager;
+import com.taoswork.tallycheck.dataservice.IDataService;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDelegate;
@@ -9,9 +11,11 @@ import com.taoswork.tallycheck.datasolution.config.beanlist.IGeneralBeanList;
 import com.taoswork.tallycheck.datasolution.config.helper.DataSolutionBeanCreationHelper;
 import com.taoswork.tallycheck.datasolution.core.description.FriendlyMetaInfoService;
 import com.taoswork.tallycheck.datasolution.core.description.impl.FriendlyMetaInfoServiceImpl;
-import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierAgent;
+import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
+import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierOnAuthority;
 import com.taoswork.tallycheck.datasolution.service.EntityValidationService;
 import com.taoswork.tallycheck.datasolution.service.EntityValueGateService;
+import com.taoswork.tallycheck.datasolution.service.impl.BasicDataService;
 import com.taoswork.tallycheck.datasolution.service.impl.EntityValidationServiceImpl;
 import com.taoswork.tallycheck.datasolution.service.impl.EntityValueGateServiceImpl;
 import com.taoswork.tallycheck.general.solution.property.RuntimeEnvironmentPropertyPlaceholderConfigurer;
@@ -109,13 +113,25 @@ public class DataSolutionBeanBaseConfiguration
         return new FriendlyMetaInfoServiceImpl();
     }
 
+
     @Override
-    @Bean(name = SecurityVerifierAgent.COMPONENT_NAME)
-    public SecurityVerifierAgent securityVerifierAgent() {
-        return new SecurityVerifierAgent();
+    @Bean(name = EntityFilterManager.COMPONENT_NAME)
+    public EntityFilterManager entityFilterManager(){
+        return new EntityFilterManager();
+    }
+
+    @Override
+    @Bean(name = ISecurityVerifier.COMPONENT_NAME)
+    public ISecurityVerifier securityVerifier() {
+        return new SecurityVerifierOnAuthority();
     }
     /* IDataSolutionSupporterBeanList                            */
 
+    @Override
+    @Bean(name = BasicDataService.COMPONENT_NAME)
+    public IDataService dataService() {
+        return new BasicDataService();
+    }
 
     /************************************************************
      * IEntityProtectionBeanList                            *

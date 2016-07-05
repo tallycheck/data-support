@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.authority.core.resource.impl;
 
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
-import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
 import com.taoswork.tallycheck.authority.core.resource.IKProtection;
+import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;

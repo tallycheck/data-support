@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.dataservice;
 
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
 
@@ -18,7 +19,7 @@ public interface IDataService {
 
     CreateResponse create(CreateRequest request);
 
-    ReadResponse read(ReadRequest request);
+    ReadResponse read(ReadRequest request) throws ServiceException;
 
     UpdateResponse update(UpdateRequest request);
 

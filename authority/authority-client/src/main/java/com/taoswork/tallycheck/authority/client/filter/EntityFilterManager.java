@@ -5,24 +5,26 @@ import com.taoswork.tallycheck.authority.client.filter.maker.ByClassFilterMaker;
 import com.taoswork.tallycheck.authority.client.filter.maker.IFilterMaker;
 import org.apache.commons.collections4.map.LRUMap;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by Gao Yuan on 2016/2/10.
  */
-public class FilterManager {
+public class EntityFilterManager {
+
+    public final static String COMPONENT_NAME = "EntityFilterManager";
+
     private final Map<FilterType, IFilterMaker> filterMakers = new HashMap<FilterType, IFilterMaker>();
 
     private final Map<String, IFilter> filterMap = new LRUMap<String, IFilter>(1000);
 
-    public FilterManager registerFilterMaker(FilterType filterType, IFilterMaker filterMaker){
+    public EntityFilterManager registerFilterMaker(FilterType filterType, IFilterMaker filterMaker){
         filterMakers.put(filterType, filterMaker);
         return this;
     }
 
-    public FilterManager registerFilterMaker(FilterType filterType, Class<? extends IFilter> filterClz){
+    public EntityFilterManager registerFilterMaker(FilterType filterType, Class<? extends IFilter> filterClz){
         filterMakers.put(filterType, new ByClassFilterMaker(filterClz));
         return this;
     }

@@ -17,8 +17,16 @@
             <artifactId>authority-provider-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.taoswork.tallycheck</groupId>
+            <artifactId>general-solution</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
     </dependencies>
 

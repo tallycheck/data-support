@@ -43,7 +43,7 @@ public class PermissionObjectMaker {
 //
 //    public static IKProtectionCase makeRcProtectionCase(String resource, ProtectionCase _case){
 //        ResourceProtectionCase rpc = new ResourceProtectionCase(_case.getUuid());
-//        IFilter filter = FilterManager.getFilter(resource, _case.filter, _case.filterParameter);
+//        IFilter filter = EntityFilterManager.getFilter(resource, _case.filter, _case.filterParameter);
 //        rpc.setFilter(filter);
 //        return rpc;
 //    }

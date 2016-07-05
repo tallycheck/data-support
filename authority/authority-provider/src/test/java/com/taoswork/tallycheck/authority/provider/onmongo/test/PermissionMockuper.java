@@ -19,8 +19,8 @@ import com.taoswork.tallycheck.authority.provider.onmongo.common.ClassifiedFilte
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUserAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.XFile;
-import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
+import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
 
@@ -32,6 +32,7 @@ import java.util.Map;
  */
 public class PermissionMockuper {
     public static final String PROTECTION_SPACE = "test";
+    public static final String TENANT = "test-tenant";
 
     public static final String CASE_A_NAME = "A";
     public static final String CASE_B_NAME = "B";

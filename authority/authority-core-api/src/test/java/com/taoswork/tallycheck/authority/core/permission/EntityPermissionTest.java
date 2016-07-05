@@ -1,8 +1,6 @@
 package com.taoswork.tallycheck.authority.core.permission;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.authority.core.permission.IKPermission;
-import com.taoswork.tallycheck.authority.core.permission.IKPermissionCase;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermission;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermissionCase;
 import com.taoswork.tallycheck.authority.core.permission.wirte.IKPermissionW;

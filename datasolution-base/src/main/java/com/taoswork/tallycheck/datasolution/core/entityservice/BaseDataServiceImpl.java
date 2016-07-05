@@ -1,10 +1,9 @@
 package com.taoswork.tallycheck.datasolution.core.entityservice;
 
 import com.taoswork.tallycheck.dataservice.IDataService;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
-import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierAgent;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import org.apache.commons.beanutils.ConvertUtilsBean2;
 import org.slf4j.Logger;
@@ -25,7 +24,7 @@ public abstract class BaseDataServiceImpl
     @Resource(name = EntityMetaAccess.COMPONENT_NAME)
     protected EntityMetaAccess entityMetaAccess;
 
-    @Resource(name = SecurityVerifierAgent.COMPONENT_NAME)
+    @Resource(name = ISecurityVerifier.COMPONENT_NAME)
     protected ISecurityVerifier securityVerifier;
 
     protected final ConvertUtilsBean2 convertUtils;

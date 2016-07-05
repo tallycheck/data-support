@@ -1,12 +1,14 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.ICompany;
@@ -27,16 +29,18 @@ import java.util.List;
 public class JpaEntityServiceCompanyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JpaEntityServiceCompanyTest.class);
 
-    private IDataSolution dataService = null;
+    private IDataSolution dataSolution = null;
 
     @Before
     public void setup() {
-        dataService = new TallyMockupDataSolution();
+        dataSolution = new TallyMockupDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
     public void teardown() {
-        dataService = null;
+        dataSolution = null;
     }
 
     @Test
@@ -44,7 +48,7 @@ public class JpaEntityServiceCompanyTest {
         MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER);
         for (int i = 0; i < 10; ++i) {
             try {
-                IEntityService entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+                IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
                 ICompany company = new CompanyImpl();
                 {
                     company.setAsset(Long.valueOf(i));

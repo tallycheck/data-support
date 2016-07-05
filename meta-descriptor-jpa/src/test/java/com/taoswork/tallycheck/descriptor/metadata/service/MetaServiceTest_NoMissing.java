@@ -1,11 +1,11 @@
 package com.taoswork.tallycheck.descriptor.metadata.service;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.PresentationClass;
+import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
-import com.taoswork.tallycheck.descriptor.service.MetaService;
-import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
 import com.taoswork.tallycheck.descriptor.metadata.utils.GeneralFieldScanMethod;
+import com.taoswork.tallycheck.descriptor.service.MetaService;
 import com.taoswork.tallycheck.general.solution.reflect.FieldScanner;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.CompanyImpl;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.DepartmentImpl;

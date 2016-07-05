@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.mongo.service;
 
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2IPool;
-import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 import com.taoswork.tallycheck.descriptor.mongo.description.builder.m2i.basic.ObjectIdFM2I;
+import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 
 /**
  * Created by Gao Yuan on 2016/3/15.

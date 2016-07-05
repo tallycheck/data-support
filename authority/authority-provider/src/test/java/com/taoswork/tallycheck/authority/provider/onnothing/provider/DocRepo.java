@@ -3,8 +3,8 @@ package com.taoswork.tallycheck.authority.provider.onnothing.provider;
 import com.taoswork.tallycheck.authority.core.permission.KAccessibleScope;
 import com.taoswork.tallycheck.authority.core.resource.IKProtection;
 import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
 import com.taoswork.tallycheck.authority.provider.onnothing.client.ICoreAccessSensitiveRepo;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
 
 import java.util.*;
 

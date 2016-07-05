@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDelegate;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.jpa.JpaDatasourceDefinition;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +27,7 @@ import javax.persistence.EntityManagerFactory;
 public class OpenEntityManagerAop implements ApplicationContextAware {
     private static final Logger LOGGER = LoggerFactory.getLogger(OpenEntityManagerAop.class);
 
-    private IDataSolution dataService;
+    private IDataSolution dataSolution;
 
     private volatile EntityManagerFactory entityManagerFactory;
 
@@ -41,15 +41,15 @@ public class OpenEntityManagerAop implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         if (applicationContext instanceof IDataSolutionDelegate) {
-            dataService = ((IDataSolutionDelegate) applicationContext).theDataSolution();
+            dataSolution = ((IDataSolutionDelegate) applicationContext).theDataSolution();
         }
     }
 
     protected EntityManagerFactory lookupEntityManagerFactory() {
-        JpaDatasourceDefinition dataServiceDefinition = dataService.getService(JpaDatasourceDefinition.DATA_SERVICE_DEFINITION_BEAN_NAME);
+        JpaDatasourceDefinition dataServiceDefinition = dataSolution.getService(JpaDatasourceDefinition.DATA_SERVICE_DEFINITION_BEAN_NAME);
         String emfBeanName = dataServiceDefinition.getEntityManagerName();
         String puName = dataServiceDefinition.getPersistenceUnit();
-        return dataService.getService(EntityManagerFactory.class, emfBeanName);
+        return dataSolution.getService(EntityManagerFactory.class, emfBeanName);
     }
 
     protected EntityManager createEntityManager(EntityManagerFactory emf) {

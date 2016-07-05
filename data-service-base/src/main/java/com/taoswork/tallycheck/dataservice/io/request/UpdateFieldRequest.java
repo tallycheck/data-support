@@ -8,4 +8,12 @@ public class UpdateFieldRequest extends Request {
      * field name
      */
     protected String field;
+
+    public UpdateFieldRequest(String type) {
+        super(type);
+    }
+
+    public UpdateFieldRequest(Class type) {
+        super(type);
+    }
 }

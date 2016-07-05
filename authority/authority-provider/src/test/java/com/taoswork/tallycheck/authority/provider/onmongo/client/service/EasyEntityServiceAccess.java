@@ -1,10 +1,10 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.client.service;
 
-import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
 

@@ -1,13 +1,14 @@
 package com.taoswork.tallycheck.datasolution.service.impl;
 
+import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.EntityType;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDelegate;
 import com.taoswork.tallycheck.datasolution.config.DataSolutionBeanBaseConfiguration;
 import com.taoswork.tallycheck.datasolution.security.EntityFilterType;
+import com.taoswork.tallycheck.datasolution.security.IProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
-import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierAgent;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.general.extension.utils.StringUtility;
 import com.taoswork.tallycheck.general.solution.cache.ehcache.CachedRepoManager;
@@ -86,7 +87,7 @@ public abstract class DataSolutionBase implements IDataSolution {
             class DataSolutionInsideAnnotationConfigApplicationContext
                     extends AnnotationConfigApplicationContext
                     implements IDataSolutionDelegate {
-                private IDataSolution dataService = null;
+                private IDataSolution dataSolution = null;
 
                 @Override
                 protected void onClose() {
@@ -101,21 +102,21 @@ public abstract class DataSolutionBase implements IDataSolution {
 
                 @Override
                 public IDataSolution theDataSolution() {
-                    return dataService;
+                    return dataSolution;
                 }
 
-                public void setDataService(IDataSolution dataService) {
-                    this.dataService = dataService;
+                public void setDataSolution(IDataSolution dataSolution) {
+                    this.dataSolution = dataSolution;
                 }
             }
 
             DataSolutionInsideAnnotationConfigApplicationContext annotationConfigApplicationContext = new DataSolutionInsideAnnotationConfigApplicationContext();
+            annotationConfigApplicationContext.setDataSolution(this);
 
             annotationConfigApplicationContext.setDisplayName(this.getClass().getSimpleName());
             annotationConfigApplicationContext.register(annotatedClasses);
             annotationConfigApplicationContext.refresh();
 
-            annotationConfigApplicationContext.setDataService(this);
 
 //        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(annotatedClasses);
 //        annotationConfigApplicationContext.setDisplayName(this.getClass().getSimpleName());
@@ -127,6 +128,9 @@ public abstract class DataSolutionBase implements IDataSolution {
         } finally {
             postConstruct();
             postLoadCheck();
+
+            BasicDataService basicDataService = (BasicDataService)applicationContext.getBean(BasicDataService.COMPONENT_NAME);
+            basicDataService.setDataSolution(this);
         }
     }
 
@@ -293,9 +297,15 @@ public abstract class DataSolutionBase implements IDataSolution {
     }
 
     @Override
-    public void setSecurityVerifier(ISecurityVerifier securityVerifier) {
-        SecurityVerifierAgent securityVerifierAgent =
-                getService(SecurityVerifierAgent.COMPONENT_NAME);
-        securityVerifierAgent.setVerifier(securityVerifier);
+    public void setAuthorityProvider(IAuthorityProvider provider) {
+        ISecurityVerifier securityVerifier = getService(ISecurityVerifier.COMPONENT_NAME);
+        securityVerifier.setAuthorityProvider(provider);
+    }
+
+    @Override
+    public void setAuthorityContext(IProtectedAccessContext accessContext) {
+        ISecurityVerifier securityVerifier = getService(ISecurityVerifier.COMPONENT_NAME);
+        securityVerifier.setAuthorityContext(accessContext);
+
     }
 }

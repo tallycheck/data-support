@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.datasolution.jpa.config;
 
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
-import com.taoswork.tallycheck.datasolution.jpa.core.entityprotect.valuecoper.JpaEntityCopierServiceImpl;
 import com.taoswork.tallycheck.datasolution.jpa.JpaDatasourceDefinition;
+import com.taoswork.tallycheck.datasolution.jpa.core.entityprotect.valuecoper.JpaEntityCopierServiceImpl;
 import com.taoswork.tallycheck.datasolution.service.EntityCopierService;
 import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaInfoServiceImpl;
 import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;

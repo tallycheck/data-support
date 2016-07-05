@@ -41,6 +41,11 @@
             <artifactId>test-material-for-mongo</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.taoswork.tallycheck</groupId>
+            <artifactId>authority-provider-base</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 

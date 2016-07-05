@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.client.service;
 
-import com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasource.AuthSolutionPersistableConfiguration;
 import com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasource.AuthSolutionDatasourceConfiguration;
+import com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasource.AuthSolutionPersistableConfiguration;
 import com.taoswork.tallycheck.datasolution.annotations.DataSolutionMark;
 import com.taoswork.tallycheck.datasolution.mongo.config.MongoDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.core.MongoDataSolutionBase;

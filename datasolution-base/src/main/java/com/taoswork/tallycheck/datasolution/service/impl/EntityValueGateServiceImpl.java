@@ -1,12 +1,12 @@
 package com.taoswork.tallycheck.datasolution.service.impl;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.field.valuegate.gates.EmailGate;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.field.valuegate.gates.HtmlGate;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.valuegate.EntityValueGate;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.valuegate.EntityValueGateManager;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.valuegate.EntityValueGateOnFields;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.EntityValueGateService;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;

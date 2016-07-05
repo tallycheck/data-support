@@ -7,7 +7,7 @@ import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
  */
 public class TallyMockupDataSolutionDefinition implements IDataSolutionDefinition {
     //DataServiceName
-    public final static String DATA_SERVICE_NAME = "TallyMockupDataSolution";
+    public final static String DATA_SOLUTION_NAME = "TallyMockupDataSolution";
 
     public static final String TMOCKUP_ENTITY_MESSAGES = ENTITY_MESSAGES_FILE_PREFIX +
             "tallymockup/";
@@ -20,7 +20,7 @@ public class TallyMockupDataSolutionDefinition implements IDataSolutionDefinitio
 
     @Override
     public String getDataSolutionName() {
-        return DATA_SERVICE_NAME;
+        return DATA_SOLUTION_NAME;
     }
 
     @Override

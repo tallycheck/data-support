@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.datasolution.security.impl;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 import com.taoswork.tallycheck.dataservice.exception.NoPermissionException;
+import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 
 /**
  * Created by Gao Yuan on 2016/2/26.

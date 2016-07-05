@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.dataservice.manage.impl;
 
+import com.taoswork.tallycheck.dataservice.EntityType;
 import com.taoswork.tallycheck.dataservice.IDataService;
 import com.taoswork.tallycheck.dataservice.manage.DataServiceManager;
-import com.taoswork.tallycheck.dataservice.EntityType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

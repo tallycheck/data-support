@@ -1,11 +1,13 @@
 package com.taoswork.tallycheck.datasolution.mongo;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.nature.Citizen;
@@ -18,37 +20,39 @@ import org.junit.Test;
  * Created by Gao Yuan on 2016/2/15.
  */
 public class MongoDataSolutionTest {
-    private IDataSolution dataService = null;
+    private IDataSolution dataSolution = null;
 
     @Before
     public void setup() {
-        dataService = new TallyMockupMongoDataSolution();
+        dataSolution = new TallyMockupMongoDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
     public void teardown() {
-        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataService.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
         mdbDef.dropDatabase();
-        dataService = null;
+        dataSolution = null;
     }
 
     @Test
     public void testEntityEntries() {
-        IEntityService entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+        IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
         Assert.assertNotNull(entityService);
 
         {
             Class entityType = Citizen.class;
-            String citizenResName = dataService.getEntityResourceName(entityType.getName());
-            String citizenTypeName = dataService.getEntityTypeName(citizenResName);
+            String citizenResName = dataSolution.getEntityResourceName(entityType.getName());
+            String citizenTypeName = dataSolution.getEntityTypeName(citizenResName);
 
             Assert.assertEquals(citizenResName, entityType.getSimpleName().toLowerCase());
             Assert.assertEquals(citizenTypeName, entityType.getName());
 
-            Assert.assertNotNull(dataService.getEntityType(citizenTypeName));
+            Assert.assertNotNull(dataSolution.getEntityType(citizenTypeName));
         }
 
-        EntityMetaAccess entityMetaAccess = dataService.getService(EntityMetaAccess.COMPONENT_NAME);
+        EntityMetaAccess entityMetaAccess = dataSolution.getService(EntityMetaAccess.COMPONENT_NAME);
         Assert.assertNotNull(entityMetaAccess);
 
         try {
@@ -64,7 +68,7 @@ public class MongoDataSolutionTest {
         } catch (ServiceException e) {
             Assert.fail(e.getMessage());
         } finally {
-            //dataService.
+            //dataSolution.
         }
 
         //entityService.create(ctzClz, c);

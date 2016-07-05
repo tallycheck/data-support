@@ -2,19 +2,19 @@ package com.taoswork.tallycheck.authority.provider.onnothing.test;
 
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
-import com.taoswork.tallycheck.authority.client.AccessClient;
+import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.client.KAccessibleScopeWithProtection;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.provider.onnothing.client.MollyOnNothingClient;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
+import com.taoswork.tallycheck.authority.provider.onnothing.provider.GuardedDocInstance;
 import com.taoswork.tallycheck.authority.provider.onnothing.provider.MollyOnNothingProvider;
 import com.taoswork.tallycheck.authority.provider.onnothing.provider.TypedDocRepo;
-import com.taoswork.tallycheck.authority.provider.onnothing.provider.GuardedDocInstance;
 import com.taoswork.tallycheck.authority.provider.permission.IKAuthority;
 import com.taoswork.tallycheck.authority.provider.permission.authorities.ISimpleKAuthority;
 import com.taoswork.tallycheck.authority.provider.resource.link.IKProtectionMapping;
 import com.taoswork.tallycheck.authority.provider.resource.link.KProtectionMapping;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.NativeDoc;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -1018,11 +1018,11 @@ public class SecurityVerifierTest {
     }
 
     class AccessChecker {
-        private final AccessClient client;
+        private final IAuthorityVerifier client;
         private final String user;
         private int checked = 0;
 
-        public AccessChecker(AccessClient client, String user) {
+        public AccessChecker(IAuthorityVerifier client, String user) {
             this.client = client;
             this.user = user;
         }

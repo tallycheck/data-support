@@ -12,16 +12,11 @@ import com.taoswork.tallycheck.authority.provider.resource.link.IKProtectionMapp
 /**
  * Created by gaoyuan on 7/3/16.
  */
-public abstract class BaseAuthorityProvider implements AuthorityProvider {
+public abstract class BaseAuthorityProvider implements IAuthorityProvider {
+    public BaseAuthorityProvider() {
+    }
 
     protected abstract IKProtectionMapping getProtectionMapping(ProtectionScope scope);
-
-    @Override
-    public final ResProtectionWithPermission getProtectionWithPermission(ProtectionScope scope, String resourceTypeName, String userId) {
-        IKPermission permission = this.getPermission(scope, resourceTypeName, userId);
-        ResProtection protection = this.getProtection(scope, resourceTypeName);
-        return new ResProtectionWithPermission(protection, permission);
-    }
 
     protected String correctResource(ProtectionScope scope, String resource){
         IKProtectionMapping mapping = this.getProtectionMapping(scope);
@@ -29,6 +24,13 @@ public abstract class BaseAuthorityProvider implements AuthorityProvider {
             return mapping.correctResource(resource);
         }
         return resource;
+    }
+
+    @Override
+    public final ResProtectionWithPermission getProtectionWithPermission(ProtectionScope scope, String resourceTypeName, String userId) {
+        IKPermission permission = this.getPermission(scope, resourceTypeName, userId);
+        ResProtection protection = this.getProtection(scope, resourceTypeName);
+        return new ResProtectionWithPermission(protection, permission);
     }
 
     @Override
@@ -48,7 +50,6 @@ public abstract class BaseAuthorityProvider implements AuthorityProvider {
     protected abstract IKPermission doGetPermission(ProtectionScope scope, String resourceTypeName, String userId) ;
 
     protected abstract ResProtection doGetProtection(ProtectionScope scope, String resourceTypeName);
-
 
     @Override
     public final boolean canAccessMappedResource(ProtectionScope scope, String virtualResource, Access requiredAccess, String userId) {

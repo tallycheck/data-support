@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.datasolution.jpa.config.beanlist;
 
-import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.PersistenceService;
 import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.JpaEntityService;
+import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.PersistenceService;
 import org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator;
 
 /**

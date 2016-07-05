@@ -1,14 +1,13 @@
 package com.taoswork.tallycheck.datasolution.core.entityservice;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
-import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierAgent;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
@@ -39,7 +38,7 @@ public abstract class BaseEntityServiceImpl<Pb extends Persistable>
     @Resource(name = EntityMetaAccess.COMPONENT_NAME)
     protected EntityMetaAccess entityMetaAccess;
 
-    @Resource(name = SecurityVerifierAgent.COMPONENT_NAME)
+    @Resource(name = ISecurityVerifier.COMPONENT_NAME)
     protected ISecurityVerifier securityVerifier;
 
     protected final ConvertUtilsBean2 convertUtils;

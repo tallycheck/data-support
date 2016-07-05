@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl;
 
 import com.taoswork.tallycheck.datadomain.base.entity.*;
-import com.taoswork.tallycheck.datadomain.base.presentation.PresentationField;
 import com.taoswork.tallycheck.datadomain.base.presentation.FieldType;
+import com.taoswork.tallycheck.datadomain.base.presentation.PresentationField;
 import com.taoswork.tallycheck.datadomain.base.presentation.typed.PresentationExternalForeignKey;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.TallyMockupDataDomain;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.IDepartment;

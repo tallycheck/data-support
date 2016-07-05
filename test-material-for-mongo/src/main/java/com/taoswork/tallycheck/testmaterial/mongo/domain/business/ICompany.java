@@ -2,8 +2,8 @@ package com.taoswork.tallycheck.testmaterial.mongo.domain.business;
 
 import com.taoswork.tallycheck.datadomain.base.entity.PersistEntity;
 import com.taoswork.tallycheck.datadomain.onmongo.PersistableDocument;
-import com.taoswork.tallycheck.testmaterial.mongo.domain.business.dataprotect.CompanyValidator;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.business.dataprotect.CompanyGate;
+import com.taoswork.tallycheck.testmaterial.mongo.domain.business.dataprotect.CompanyValidator;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.business.enumtype.CompanyType;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.common.Address;
 

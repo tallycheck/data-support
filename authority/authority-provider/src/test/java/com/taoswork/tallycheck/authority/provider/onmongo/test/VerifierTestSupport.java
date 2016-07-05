@@ -2,9 +2,11 @@ package com.taoswork.tallycheck.authority.provider.onmongo.test;
 
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
+import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.domain.ResourceAccess;
-import com.taoswork.tallycheck.authority.provider.AuthorityProvider;
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.authority.provider.AuthorityProviderImpl;
+import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
 import com.taoswork.tallycheck.authority.provider.onmongo.client.service.AuthSolutionDataSolution;
 import com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasource.AuthSolutionDatasourceConfiguration;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
@@ -12,6 +14,7 @@ import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUs
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 
 /**
@@ -21,9 +24,9 @@ public class VerifierTestSupport {
     private static ResourceAccess READ_ACCESS = ResourceAccess.createByAccess(Access.Read);
     private static ResourceAccess OPEN_ACCESS = ResourceAccess.createByAccess(new Access(Access.NONE, 1));
 
-    private  static AuthSolutionDataSolution dataService;
+    private  static AuthSolutionDataSolution dataSolution;
 
-    protected static AuthorityProvider authorityProvider;
+    protected static IAuthorityProvider authorityProvider;
     //    protected static PermissionEngine permissionEngine;
     protected static PermissionMockuper mockuper;
     protected static MongoEntityService entityService;
@@ -74,17 +77,20 @@ public class VerifierTestSupport {
     public final int docCount = 11;
 
     protected static void setupDatabaseData() {
-        dataService = new AuthSolutionDataSolution();
-        entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+        dataSolution = new AuthSolutionDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext("1", new ProtectionScope(PermissionMockuper.PROTECTION_SPACE, PermissionMockuper.TENANT)));
+
+        entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
         authorityProvider = new AuthorityProviderImpl(entityService, TUserAuthority.class, TGroupAuthority.class);
-        mockuper = new PermissionMockuper(dataService, NORMAL_ACCESS);
+        mockuper = new PermissionMockuper(dataSolution, NORMAL_ACCESS);
     }
 
     protected static void teardownDatabaseData() {
         authorityProvider = null;
-        AuthSolutionDatasourceConfiguration.DatasourceDefinition mdbDef = dataService.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        AuthSolutionDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
         mdbDef.dropDatabase();
-        dataService = null;
+        dataSolution = null;
     }
 //
 //    @Before
@@ -104,7 +110,8 @@ public class VerifierTestSupport {
 //
 //    }
 
-    protected static void makeDatabaseTestData(String tenant) {
+    protected static void makeDatabaseTestData() {
+        String tenant = mockuper.TENANT;
         mockuper.makeProtectionSpace();
         mockuper.makeSecuredResource(tenant, CM1File.class, true, ProtectionMode.FitAll, true);
         mockuper.makeSecuredResource(tenant, CS1File.class, false, ProtectionMode.FitAll, true);

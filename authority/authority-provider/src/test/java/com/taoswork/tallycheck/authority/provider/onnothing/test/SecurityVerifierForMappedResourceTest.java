@@ -4,10 +4,10 @@ import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.provider.onnothing.client.MollyOnNothingClient;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
 import com.taoswork.tallycheck.authority.provider.onnothing.provider.MollyOnNothingProvider;
 import com.taoswork.tallycheck.authority.provider.resource.link.KProtectionLink;
 import com.taoswork.tallycheck.authority.provider.resource.link.KProtectionMapping;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
 import org.junit.Assert;
 import org.junit.Test;
 

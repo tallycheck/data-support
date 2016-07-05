@@ -5,11 +5,10 @@ import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.BasicFieldMetaO
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.FieldMetaMediate;
 import com.taoswork.tallycheck.descriptor.metadata.processor.ProcessResult;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.BaseFieldHandler;
-
-import java.lang.reflect.Field;
-
 import com.taoswork.tallycheck.descriptor.mongo.metadata.fieldmetadata.ObjectIdFieldMeta;
 import org.bson.types.ObjectId;
+
+import java.lang.reflect.Field;
 
 /**
  * Created by Gao Yuan on 2016/2/23.

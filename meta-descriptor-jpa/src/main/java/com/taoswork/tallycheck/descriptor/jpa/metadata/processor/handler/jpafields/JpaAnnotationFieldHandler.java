@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.jpa.metadata.processor.handler.jpafields;
 
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.FieldMetaMediate;
-import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.MultiMetaHandler;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.IFieldHandler;
+import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.MultiMetaHandler;
 
 import java.lang.reflect.Field;
 

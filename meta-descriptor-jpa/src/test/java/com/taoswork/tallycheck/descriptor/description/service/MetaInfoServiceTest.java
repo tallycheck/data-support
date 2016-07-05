@@ -2,12 +2,12 @@ package com.taoswork.tallycheck.descriptor.description.service;
 
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
-import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.classtree.EntityClassTree;
 import com.taoswork.tallycheck.descriptor.metadata.classtree.EntityClassTreeAccessor;
 import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
 import com.taoswork.tallycheck.descriptor.service.MetaService;
+import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 import com.taoswork.tallycheck.testmaterial.general.domain.meta.A;
 import com.taoswork.tallycheck.testmaterial.general.domain.meta.AA;
 import com.taoswork.tallycheck.testmaterial.general.domain.meta.AAA;

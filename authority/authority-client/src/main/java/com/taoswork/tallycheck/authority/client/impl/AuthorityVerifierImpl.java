@@ -1,19 +1,19 @@
 package com.taoswork.tallycheck.authority.client.impl;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.authority.client.AccessClient;
+import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.client.KAccessibleScopeWithProtection;
-import com.taoswork.tallycheck.authority.client.filter.FilterManager;
+import com.taoswork.tallycheck.authority.client.KCaseFitting;
+import com.taoswork.tallycheck.authority.client.filter.EntityFilterManager;
 import com.taoswork.tallycheck.authority.core.IllegalCodePathException;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
-import com.taoswork.tallycheck.authority.core.resource.IKProtection;
-import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
-import com.taoswork.tallycheck.authority.client.KCaseFitting;
-import com.taoswork.tallycheck.authority.provider.AuthorityProvider;
-import com.taoswork.tallycheck.authority.provider.ResProtection;
-import com.taoswork.tallycheck.authority.provider.ResProtectionWithPermission;
 import com.taoswork.tallycheck.authority.core.permission.IKPermission;
 import com.taoswork.tallycheck.authority.core.permission.KAccessibleScope;
+import com.taoswork.tallycheck.authority.core.resource.IKProtection;
+import com.taoswork.tallycheck.authority.core.resource.IKProtectionCase;
+import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
+import com.taoswork.tallycheck.authority.provider.ResProtection;
+import com.taoswork.tallycheck.authority.provider.ResProtectionWithPermission;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,17 +23,17 @@ import java.util.Set;
 /**
  * Created by gaoyuan on 7/2/16.
  */
-public class AccessClientImpl implements AccessClient {
-    private final AuthorityProvider provider;
-    protected final FilterManager filterManager;
+public class AuthorityVerifierImpl implements IAuthorityVerifier {
+    private IAuthorityProvider provider;
+    protected final EntityFilterManager filterManager;
 
-    public AccessClientImpl(AuthorityProvider provider) {
-        this(provider, new FilterManager());
-    }
-
-    public AccessClientImpl(AuthorityProvider provider, FilterManager filterManager) {
+    public AuthorityVerifierImpl(IAuthorityProvider provider, EntityFilterManager filterManager) {
         this.provider = provider;
         this.filterManager = filterManager;
+    }
+
+    public void setProvider(IAuthorityProvider provider){
+        this.provider = provider;
     }
 
     @Override

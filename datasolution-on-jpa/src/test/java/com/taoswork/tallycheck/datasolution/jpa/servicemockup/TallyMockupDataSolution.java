@@ -16,7 +16,7 @@ public class TallyMockupDataSolution
         extends JpaDataSolutionBase<TallyMockupJpaDatasourceBeanConfiguration,
                 JpaDatasourceConfiguration,
                 IDbConfig> {
-    public static final String COMPONENT_NAME = TallyMockupDataSolutionDefinition.DATA_SERVICE_NAME;
+    public static final String COMPONENT_NAME = TallyMockupDataSolutionDefinition.DATA_SOLUTION_NAME;
 
     public TallyMockupDataSolution(Class<? extends JpaDatasourceConfiguration> dSrcConfClz,
                                    Class<? extends IDbConfig> dbConf) {

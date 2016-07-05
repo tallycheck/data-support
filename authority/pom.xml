@@ -20,5 +20,6 @@
         <module>authority-provider-api</module>
         <module>authority-client</module>
         <module>authority-provider</module>
+        <module>authority-provider-base</module>
     </modules>
 </project>

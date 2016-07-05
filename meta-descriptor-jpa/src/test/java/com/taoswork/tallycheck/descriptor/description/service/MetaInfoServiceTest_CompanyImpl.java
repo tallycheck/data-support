@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.descriptor.description.service;
 
 import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
-import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
 import com.taoswork.tallycheck.descriptor.service.MetaService;
+import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
 import org.junit.After;
 import org.junit.Before;
 

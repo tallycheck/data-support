@@ -1,12 +1,14 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
@@ -32,20 +34,23 @@ import java.util.Set;
 public class JpaEntityServicePerformanceTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JpaEntityServicePerformanceTest.class);
 
-    private IDataSolution dataService = null;
+    private IDataSolution dataSolution = null;
     private EntityTranslator translator = null;
     private EntityMetaAccess metaAccess = null;
 
     @Before
     public void setup() {
-        dataService = new TallyMockupDataSolution();
-        metaAccess = dataService.getService(EntityMetaAccess.COMPONENT_NAME);
+        dataSolution = new TallyMockupDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
+
+        metaAccess = dataSolution.getService(EntityMetaAccess.COMPONENT_NAME);
         translator = new EntityTranslator();
     }
 
     @After
     public void teardown() {
-        dataService = null;
+        dataSolution = null;
         metaAccess = null;
         translator = null;
     }
@@ -54,7 +59,7 @@ public class JpaEntityServicePerformanceTest {
     public void testCRUDQ() throws ServiceException {
         int loopCount = 20;
         int inLoopAttempt = 20;
-        JpaEntityService entityService = dataService.getService(IEntityService.COMPONENT_NAME);
+        JpaEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
 
         Set<Long> ids = new HashSet<Long>();
         final int total;

@@ -2,15 +2,15 @@ package com.taoswork.tallycheck.authority.provider.onnothing.test;
 
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
-import com.taoswork.tallycheck.authority.client.AccessClient;
+import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.provider.onnothing.client.MollyOnNothingClient;
+import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
 import com.taoswork.tallycheck.authority.provider.onnothing.provider.MollyOnNothingProvider;
 import com.taoswork.tallycheck.authority.provider.onnothing.provider.TypedDocRepo;
 import com.taoswork.tallycheck.authority.provider.permission.IKAuthority;
 import com.taoswork.tallycheck.authority.provider.permission.authorities.DelegateKAuthority;
 import com.taoswork.tallycheck.authority.provider.resource.link.KProtectionMapping;
-import com.taoswork.tallycheck.authority.provider.onnothing.common.TypesEnums;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class SecurityVerifierForDeletegateAuthorityTest {
     private static final String userGD = "user:GD:10001";
 
 
-    private AccessChecker accessChecker(AccessClient client, String user) {
+    private AccessChecker accessChecker(IAuthorityVerifier client, String user) {
         return new AccessChecker(client, user);
     }
 
@@ -150,11 +150,11 @@ public class SecurityVerifierForDeletegateAuthorityTest {
     }
 
     class AccessChecker {
-        private final AccessClient client;
+        private final IAuthorityVerifier client;
         private final String user;
         private int checked = 0;
 
-        public AccessChecker(AccessClient client, String user) {
+        public AccessChecker(IAuthorityVerifier client, String user) {
             this.client = client;
             this.user = user;
         }

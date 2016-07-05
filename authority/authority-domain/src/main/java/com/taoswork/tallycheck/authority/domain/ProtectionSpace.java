@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.authority.domain;
 
 import com.taoswork.tallycheck.authority.domain.resource.ProtectionLink;
-import com.taoswork.tallycheck.datadomain.onmongo.AbstractDocument;
 import com.taoswork.tallycheck.datadomain.base.entity.*;
+import com.taoswork.tallycheck.datadomain.onmongo.AbstractDocument;
 import org.apache.commons.lang3.ArrayUtils;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Indexed;

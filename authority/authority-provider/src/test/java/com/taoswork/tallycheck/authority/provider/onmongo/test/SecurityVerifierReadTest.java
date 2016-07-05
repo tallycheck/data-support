@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.authority.provider.onmongo.test;
 
-import com.taoswork.tallycheck.authority.client.AccessClient;
+import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.provider.onmongo.client.MollyOnMongoClient;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
@@ -20,14 +20,12 @@ import java.util.List;
  * Created by Gao Yuan on 2016/2/26.
  */
 public class SecurityVerifierReadTest extends VerifierTestSupport {
-    private static final String TENANT = "test-tenant";
-    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, TENANT);
+    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, mockuper.TENANT);
 
     @BeforeClass
     public static void beforeClass() {
         setupDatabaseData();
-        makeDatabaseTestData(TENANT);
-        System.out.print("xx");
+        makeDatabaseTestData();
     }
 
     @AfterClass
@@ -100,7 +98,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     //
     @Test
     public void testReadWithoutCases() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CCFile.class);
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -137,7 +135,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_MasterControl_FitAll() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -207,19 +205,19 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_MasterControl_FitAll_WithGroups() throws ServiceException {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
 
-        TGroupAuthority d_group_N____ = mockuper.getGroupAuthority(TENANT, Group_N____);
-        TGroupAuthority d_group__AB__ = mockuper.getGroupAuthority(TENANT, Group__AB__);
-        TGroupAuthority d_group_G____ = mockuper.getGroupAuthority(TENANT, Group_G____);
+        TGroupAuthority d_group_N____ = mockuper.getGroupAuthority(mockuper.TENANT, Group_N____);
+        TGroupAuthority d_group__AB__ = mockuper.getGroupAuthority(mockuper.TENANT, Group__AB__);
+        TGroupAuthority d_group_G____ = mockuper.getGroupAuthority(mockuper.TENANT, Group_G____);
 
-        TUserAuthority d_user_N____ = mockuper.getUserAuthority(TENANT, User_N____);
-        TUserAuthority d_user__AB__ = mockuper.getUserAuthority(TENANT, User__AB__);
-        TUserAuthority d_user__ABCD = mockuper.getUserAuthority(TENANT, User__ABCD);
-        TUserAuthority d_user_G____ = mockuper.getUserAuthority(TENANT, User_G____);
-        TUserAuthority d_user_GAB__ = mockuper.getUserAuthority(TENANT, User_GAB__);
-        TUserAuthority d_user_GABCD = mockuper.getUserAuthority(TENANT, User_GABCD);
+        TUserAuthority d_user_N____ = mockuper.getUserAuthority(mockuper.TENANT, User_N____);
+        TUserAuthority d_user__AB__ = mockuper.getUserAuthority(mockuper.TENANT, User__AB__);
+        TUserAuthority d_user__ABCD = mockuper.getUserAuthority(mockuper.TENANT, User__ABCD);
+        TUserAuthority d_user_G____ = mockuper.getUserAuthority(mockuper.TENANT, User_G____);
+        TUserAuthority d_user_GAB__ = mockuper.getUserAuthority(mockuper.TENANT, User_GAB__);
+        TUserAuthority d_user_GABCD = mockuper.getUserAuthority(mockuper.TENANT, User_GABCD);
 
         TUserAuthority[] d_users = new TUserAuthority[]{d_user_N____, d_user__AB__, d_user__ABCD, d_user_G____, d_user_GAB__, d_user_GABCD};
         {
@@ -412,7 +410,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_MasterControl_FitAny() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM0File.class);
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -482,7 +480,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_SelfControl_FitAll() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CS1File.class);
 
         {
@@ -585,7 +583,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_SelfControl_FitAny() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CS0File.class);
 
         {
@@ -688,7 +686,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
 
     @Test
     public void testReadWithCases_MasterControl_FitAll_FileChain() {
-        AccessClient client = new MollyOnMongoClient(authorityProvider);
+        IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
         String resourceEntry = CM1File.class.getName();
 
@@ -722,16 +720,16 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
         }
     }
 
-    private AccessChecker accessChecker(AccessClient client, String user) {
+    private AccessChecker accessChecker(IAuthorityVerifier client, String user) {
         return new AccessChecker(client, user);
     }
 
     class AccessChecker {
-        private final AccessClient client;
+        private final IAuthorityVerifier client;
         private final String user;
         private int checked = 0;
 
-        public AccessChecker(AccessClient client, String user) {
+        public AccessChecker(IAuthorityVerifier client, String user) {
             this.client = client;
             this.user = user;
         }

@@ -1,11 +1,13 @@
 package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 
+import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.*;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
+import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.zoo.ZooKeeper;
@@ -30,6 +32,8 @@ public class MongoEntityServiceTest {
     @Before
     public void setup() {
         dataSolution = new TallyMockupMongoDataSolution();
+        dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
+        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After

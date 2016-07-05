@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.datasolution.core;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 
 /**
  * Created by Gao Yuan on 2016/3/21.

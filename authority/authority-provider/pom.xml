@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.taoswork.tallycheck</groupId>
-            <artifactId>authority-provider-api</artifactId>
+            <artifactId>authority-provider-base</artifactId>
         </dependency>
         <dependency>
             <groupId>com.taoswork.tallycheck</groupId>
@@ -40,10 +40,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
         </dependency>
 
     </dependencies>

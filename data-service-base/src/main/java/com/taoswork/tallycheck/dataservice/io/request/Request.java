@@ -9,11 +9,22 @@ public class Request {
      */
     protected String type;
 
+    public Request(String type) {
+        this.type = type;
+    }
+
+    public Request(Class type) {
+        this.type = type.getName();
+    }
+
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+    public void setType(Class type) {
+        this.type = type.getName();
     }
 }

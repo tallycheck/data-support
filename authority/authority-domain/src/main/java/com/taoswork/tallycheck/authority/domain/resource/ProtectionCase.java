@@ -5,7 +5,6 @@ import com.taoswork.tallycheck.datadomain.base.presentation.FieldType;
 import com.taoswork.tallycheck.datadomain.base.presentation.PresentationClass;
 import com.taoswork.tallycheck.datadomain.base.presentation.PresentationField;
 import com.taoswork.tallycheck.datadomain.base.presentation.Visibility;
-import com.taoswork.tallycheck.datadomain.base.presentation.typed.PresentationEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.mongodb.morphia.annotations.Embedded;
 

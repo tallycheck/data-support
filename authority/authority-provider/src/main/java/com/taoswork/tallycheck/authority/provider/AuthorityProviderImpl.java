@@ -44,6 +44,7 @@ public class AuthorityProviderImpl extends BaseAuthorityProvider{
                             Class<? extends Protection> protectionClz,
                             Class<? extends UserAuthority> userClz,
                             Class<? extends GroupAuthority> groupClz) {
+        super();
         this.entityService = entityService;
         this.datastore = entityService.getDatastore();
         this.psClz = protectionSpaceClz;
