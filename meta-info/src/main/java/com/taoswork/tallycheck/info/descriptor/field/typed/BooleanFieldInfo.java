@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.info.descriptor.field.typed;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.typed.BooleanMode;
+import com.taoswork.tallycheck.info.InfoException;
 import com.taoswork.tallycheck.info.descriptor.field.base.BasicFieldInfoBase;
-import com.taoswork.tallycheck.descriptor.metadata.exception.MetadataException;
 import org.apache.commons.collections4.MapUtils;
 
 import java.util.Collections;
@@ -28,7 +28,7 @@ public class BooleanFieldInfo extends BasicFieldInfoBase {
                 setAsYesNo();
                 break;
             default:
-                throw new MetadataException("Unexpected Boolean mode");
+                throw new InfoException("Unexpected Boolean mode");
         }
     }
 

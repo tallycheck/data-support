@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.dataservice.io.request;
 
-import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
+import java.util.Collection;
 
 /**
  * Created by gaoyuan on 7/1/16.
@@ -14,5 +14,5 @@ public class QueryIdsRequest extends Request {
         super(type);
     }
 
-    public CriteriaTransferObject query;
+    public Collection<String> ids;
 }

@@ -2,8 +2,8 @@ package com.taoswork.tallycheck.info.descriptor.field.typed;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.typed.DateCellMode;
 import com.taoswork.tallycheck.datadomain.base.presentation.typed.DateMode;
+import com.taoswork.tallycheck.info.InfoException;
 import com.taoswork.tallycheck.info.descriptor.field.base.BasicFieldInfoBase;
-import com.taoswork.tallycheck.descriptor.metadata.exception.MetadataException;
 
 /**
  * Created by Gao Yuan on 2015/10/24.
@@ -33,7 +33,7 @@ public class DateFieldInfo extends BasicFieldInfoBase {
                 model = DATATIME_WITH_TIMEZONE;
                 break;
             default:
-                throw new MetadataException("Un expected Date mode");
+                throw new InfoException("Un expected Date mode");
         }
         switch (dateCellMode) {
             case Date:
@@ -46,7 +46,7 @@ public class DateFieldInfo extends BasicFieldInfoBase {
                 cellModel = CELL_DATE_AND_TIME;
                 break;
             default:
-                throw new MetadataException("Un expected Date Cell mode");
+                throw new InfoException("Un expected Date Cell mode");
         }
     }
 

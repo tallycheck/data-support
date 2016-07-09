@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.info.descriptor.field.typed;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.PresentationEnumClass;
+import com.taoswork.tallycheck.info.FriendlyNameHelper;
 import com.taoswork.tallycheck.info.descriptor.field.base.BasicFieldInfoBase;
-import com.taoswork.tallycheck.descriptor.metadata.utils.FriendlyNameHelper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
