@@ -3,12 +3,12 @@ package com.taoswork.tallycheck.descriptor.description.builder;
 import com.taoswork.tallycheck.datadomain.base.presentation.Visibility;
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2I;
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2IPool;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.base.IFieldInfoRW;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
 import com.taoswork.tallycheck.descriptor.metadata.exception.MetadataException;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.embedded.EmbeddedFieldMeta;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.base.IFieldInfoRW;
 
 import java.util.ArrayList;
 import java.util.Collection;

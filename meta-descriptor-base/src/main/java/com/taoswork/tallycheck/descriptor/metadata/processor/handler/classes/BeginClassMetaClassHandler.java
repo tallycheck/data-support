@@ -3,7 +3,7 @@ package com.taoswork.tallycheck.descriptor.metadata.processor.handler.classes;
 import com.taoswork.tallycheck.descriptor.metadata.classmetadata.MutableClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.processor.ProcessResult;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.IClassHandler;
-import com.taoswork.tallycheck.descriptor.metadata.utils.FriendlyNameHelper;
+import com.taoswork.tallycheck.info.FriendlyNameHelper;
 
 public class BeginClassMetaClassHandler implements IClassHandler {
     @Override

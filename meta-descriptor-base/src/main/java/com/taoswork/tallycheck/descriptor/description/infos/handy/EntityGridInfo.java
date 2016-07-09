@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.descriptor.description.infos.handy;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
+import com.taoswork.tallycheck.info.IEntityInfo;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
 import java.util.ArrayList;
 import java.util.List;

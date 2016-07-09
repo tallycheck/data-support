@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.descriptor.mongo.description.descriptor.field.typed;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.base.BasicFieldInfoBase;
+import com.taoswork.tallycheck.info.descriptor.field.base.BasicFieldInfoBase;
 
 /**
  * Created by Gao Yuan on 2016/3/15.

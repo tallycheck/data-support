@@ -2,13 +2,14 @@ package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
+import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.ICompany;
@@ -30,12 +31,12 @@ public class JpaEntityServiceCompanyTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JpaEntityServiceCompanyTest.class);
 
     private IDataSolution dataSolution = null;
+    private SecurityAccessor accessor = new SecurityAccessor();
 
     @Before
     public void setup() {
         dataSolution = new TallyMockupDataSolution();
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
@@ -48,6 +49,7 @@ public class JpaEntityServiceCompanyTest {
         MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER);
         for (int i = 0; i < 10; ++i) {
             try {
+                EasyEntityService easyEntityService = new EasyEntityService(dataSolution);
                 IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
                 ICompany company = new CompanyImpl();
                 {
@@ -57,10 +59,10 @@ public class JpaEntityServiceCompanyTest {
                         privateProducts.add("private " + c);
                     }
                     company.setPrivateProducts(privateProducts);
-                    PersistableResult<ICompany> result = entityService.create(company);
+                    PersistableResult<ICompany> result = entityService.create(accessor, company);
                 }
 
-                PersistableResult<ICompany> readCompanyR = entityService.read(ICompany.class, company.getId());
+                PersistableResult<ICompany> readCompanyR = easyEntityService.read(accessor, ICompany.class, company.getId());
                 ICompany companyByRead = readCompanyR.getValue();
                 {
                     Assert.assertEquals(company.getId(), companyByRead.getId());
@@ -75,7 +77,7 @@ public class JpaEntityServiceCompanyTest {
                 {
                     CriteriaTransferObject cto = new CriteriaTransferObject();
                     cto.addFilterCriteria(new PropertyFilterCriteria("asset", "" + company.getAsset()));
-                    CriteriaQueryResult<ICompany> companys = entityService.query(ICompany.class, cto);
+                    CriteriaQueryResult<ICompany> companys = easyEntityService.query(accessor, ICompany.class, cto);
                     Assert.assertEquals(Long.valueOf(1), companys.getTotalCount());
                     ICompany theComp = companys.getEntityCollection().get(0);
                     Assert.assertNotNull(theComp);
@@ -89,7 +91,7 @@ public class JpaEntityServiceCompanyTest {
                 }
 
                 {
-                    CriteriaQueryResult<ICompany> companys = entityService.query(ICompany.class, null);
+                    CriteriaQueryResult<ICompany> companys = easyEntityService.query(accessor, ICompany.class, null);
                     Assert.assertNotNull(companys);
                     Assert.assertEquals(i + 1, companys.fetchedCount());
                 }

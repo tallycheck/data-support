@@ -1,10 +1,10 @@
 package com.taoswork.tallycheck.descriptor.description.builder.m2i.list;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.base.IFieldInfoRW;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection.AdornedLookupCollectionFieldInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.list.AdornedLookupListFieldMeta;
+import com.taoswork.tallycheck.info.descriptor.field.base.IFieldInfoRW;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection.AdornedLookupCollectionFieldInfo;
 
 import java.util.Collection;
 

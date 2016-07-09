@@ -1,10 +1,10 @@
 package com.taoswork.tallycheck.descriptor.description.infos.main;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.NamedInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.ITabInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
+import com.taoswork.tallycheck.info.IEntityInfo;
+import com.taoswork.tallycheck.info.descriptor.base.NamedInfo;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 
 import java.util.List;
 import java.util.Map;

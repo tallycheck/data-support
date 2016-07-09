@@ -52,18 +52,18 @@ public class SecurityVerifierTest {
         MollyOnNothingClient client = new MollyOnNothingClient(mollyProvider);
 
         for (String user : new String[]{MollyOnNothingProvider.userAB, MollyOnNothingProvider.userG, MollyOnNothingProvider.userGAB}) {
-            Assert.assertTrue(client.canAccess(PS, resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS, TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS, TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS, TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertTrue(client.canAccess(PS, user, resourceEntry, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user, TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user, TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user, TypesEnums.Menu, NORMAL_ACCESS));
         }
 
         {
             String user = MollyOnNothingProvider.userN;
-            Assert.assertFalse(client.canAccess(PS,  resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertFalse(client.canAccess(PS, user,  resourceEntry, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Menu, NORMAL_ACCESS));
         }
     }
 
@@ -76,36 +76,36 @@ public class SecurityVerifierTest {
         MollyOnNothingClient client = new MollyOnNothingClient(mollyProvider);
 
         for (String user : new String[]{MollyOnNothingProvider.userAB, MollyOnNothingProvider.userG, MollyOnNothingProvider.userGAB}) {
-            Assert.assertTrue(client.canAccess(PS,  resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertTrue(client.canAccess(PS, user,  resourceEntry, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Menu, NORMAL_ACCESS));
         }
 
         {
             String user = MollyOnNothingProvider.userN;
-            Assert.assertFalse(client.canAccess(PS,  resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertFalse(client.canAccess(PS, user,  resourceEntry, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Menu, NORMAL_ACCESS));
         }
 
         protectionMapping.registerAlias(resourceEntry, TypesEnums.Image)
                 .registerAlias(resourceEntry, TypesEnums.File)
                 .registerAlias(resourceEntry, TypesEnums.Menu);
         for (String user : new String[]{MollyOnNothingProvider.userAB, MollyOnNothingProvider.userG, MollyOnNothingProvider.userGAB}) {
-            Assert.assertTrue(client.canAccess(PS,  resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertTrue(client.canAccess(PS,  TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertTrue(client.canAccess(PS,  TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertTrue(client.canAccess(PS,  TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertTrue(client.canAccess(PS, user,  resourceEntry, NORMAL_ACCESS));
+            Assert.assertTrue(client.canAccess(PS, user,  TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertTrue(client.canAccess(PS, user,  TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertTrue(client.canAccess(PS, user,  TypesEnums.Menu, NORMAL_ACCESS));
         }
 
         {
             String user = MollyOnNothingProvider.userN;
-            Assert.assertFalse(client.canAccess(PS,  resourceEntry, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Image, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.File, NORMAL_ACCESS, user));
-            Assert.assertFalse(client.canAccess(PS,  TypesEnums.Menu, NORMAL_ACCESS, user));
+            Assert.assertFalse(client.canAccess(PS, user,  resourceEntry, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Image, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.File, NORMAL_ACCESS));
+            Assert.assertFalse(client.canAccess(PS, user,  TypesEnums.Menu, NORMAL_ACCESS));
         }
     }
 
@@ -628,7 +628,7 @@ public class SecurityVerifierTest {
         MollyOnNothingClient client = new MollyOnNothingClient(mollyProvider);
 
         for (String user : new String[]{MollyOnNothingProvider.userN, MollyOnNothingProvider.userAB, MollyOnNothingProvider.userABCD}) {
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -646,7 +646,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userG;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -664,7 +664,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -682,7 +682,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -709,7 +709,7 @@ public class SecurityVerifierTest {
         MollyOnNothingClient client = new MollyOnNothingClient(mollyProvider);
 
         for (String user : new String[]{MollyOnNothingProvider.userN, MollyOnNothingProvider.userAB, MollyOnNothingProvider.userABCD}) {
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -727,7 +727,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userG;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -745,7 +745,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -763,7 +763,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -791,7 +791,7 @@ public class SecurityVerifierTest {
 
         {
             String user = MollyOnNothingProvider.userN;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -809,7 +809,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -827,7 +827,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -845,7 +845,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userG;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -863,7 +863,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -881,7 +881,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -909,7 +909,7 @@ public class SecurityVerifierTest {
 
         {
             String user = MollyOnNothingProvider.userN;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -927,7 +927,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -945,7 +945,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, false)
@@ -963,7 +963,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userG;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -981,7 +981,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGAB;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -999,7 +999,7 @@ public class SecurityVerifierTest {
         }
         {
             String user = MollyOnNothingProvider.userGABCD;
-            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, resourceEntry, NORMAL_ACCESS, user);
+            KAccessibleScopeWithProtection accessibleScope = client.calcAccessibleScope(PS, user, resourceEntry, NORMAL_ACCESS);
             List<NativeDoc> results = mollyProvider.docRepo.query(accessibleScope.accessibleScope, accessibleScope.protection);
             queryLikeChecker(results)
                     .check(TYPED_RES_REPO.docG, true)
@@ -1028,7 +1028,7 @@ public class SecurityVerifierTest {
         }
 
         public AccessChecker multiCheck(boolean allowed, Serializable... instances) {
-            boolean canAccess = client.canAccess(PS, resourceEntry, NORMAL_ACCESS, user, instances);
+            boolean canAccess = client.canAccess(PS, user, resourceEntry, NORMAL_ACCESS, instances);
 
             if (allowed) {
                 Assert.assertTrue(canAccess);

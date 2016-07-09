@@ -6,9 +6,9 @@ import com.taoswork.tallycheck.descriptor.description.builder.m2i.map.AdornedLoo
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.map.BasicMapFM2I;
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.map.EntityMapFM2I;
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.map.LookupMapFM2I;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
 import java.util.Collection;
 import java.util.Map;

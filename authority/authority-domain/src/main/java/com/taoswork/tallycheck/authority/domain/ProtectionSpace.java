@@ -68,4 +68,8 @@ public class ProtectionSpace extends AbstractDocument{
         this.protectionLinks = protectionLinks;
     }
 
+    @Override
+    public String getInstanceName() {
+        return getSpaceName();
+    }
 }

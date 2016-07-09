@@ -8,7 +8,6 @@ import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.config.db.TestDbConfig;
 import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.EntityCreateHelper;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.impl.ZooKeeperImpl;
 import org.junit.After;
@@ -30,7 +29,7 @@ public class EntityDaoTest {
     public void setup() {
         dataSolution = new TallyMockupDataSolution(TestDbConfig.class);
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext());
+//        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After

@@ -23,4 +23,8 @@ public class Dormitory extends AbstractDocument {
     protected ZooKeeperImpl zooKeeper;
     public static final String ZOOKEEPER_COLUMN_NAME = "zooKeeper";
 
+    @Override
+    public String getInstanceName() {
+        return name;
+    }
 }

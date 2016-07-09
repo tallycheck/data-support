@@ -88,4 +88,9 @@ public abstract class Animal extends AbstractDocument {
         this.nickNameList = nickNameList;
         return this;
     }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

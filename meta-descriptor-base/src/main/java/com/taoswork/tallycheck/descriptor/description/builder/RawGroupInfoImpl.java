@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedOrderedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoImpl;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.datasolution.service.impl;
 
+import com.taoswork.tallycheck.authority.provider.AllBlockAuthorityProvider;
 import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.EntityType;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
@@ -7,7 +8,6 @@ import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDelegate;
 import com.taoswork.tallycheck.datasolution.config.DataSolutionBeanBaseConfiguration;
 import com.taoswork.tallycheck.datasolution.security.EntityFilterType;
-import com.taoswork.tallycheck.datasolution.security.IProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.general.extension.utils.StringUtility;
@@ -45,12 +45,13 @@ public abstract class DataSolutionBase implements IDataSolution {
 
     public DataSolutionBase(
             IDataSolutionDefinition dsDef,
+            Class<? extends DataSolutionBeanBaseConfiguration> solutionConfig,
             List<Class> annotatedClasses) {
         TimeCounter counter = new TimeCounter();
         this.dsDef = dsDef;
         List<Class> annotatedClassesList = new ArrayList<Class>();
 
-        annotatedClassesList.add(DataSolutionBeanBaseConfiguration.class);
+        annotatedClassesList.add(solutionConfig);
 
         if (annotatedClasses != null) {
             for (Class ac : annotatedClasses) {
@@ -131,6 +132,7 @@ public abstract class DataSolutionBase implements IDataSolution {
 
             BasicDataService basicDataService = (BasicDataService)applicationContext.getBean(BasicDataService.COMPONENT_NAME);
             basicDataService.setDataSolution(this);
+            this.setAuthorityProvider(new AllBlockAuthorityProvider());
         }
     }
 
@@ -300,12 +302,5 @@ public abstract class DataSolutionBase implements IDataSolution {
     public void setAuthorityProvider(IAuthorityProvider provider) {
         ISecurityVerifier securityVerifier = getService(ISecurityVerifier.COMPONENT_NAME);
         securityVerifier.setAuthorityProvider(provider);
-    }
-
-    @Override
-    public void setAuthorityContext(IProtectedAccessContext accessContext) {
-        ISecurityVerifier securityVerifier = getService(ISecurityVerifier.COMPONENT_NAME);
-        securityVerifier.setAuthorityContext(accessContext);
-
     }
 }

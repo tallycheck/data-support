@@ -2,12 +2,12 @@ package com.taoswork.tallycheck.datasolution.mongo;
 
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.nature.Citizen;
@@ -21,12 +21,12 @@ import org.junit.Test;
  */
 public class MongoDataSolutionTest {
     private IDataSolution dataSolution = null;
+    private SecurityAccessor accessor = new SecurityAccessor();
 
     @Before
     public void setup() {
         dataSolution = new TallyMockupMongoDataSolution();
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
@@ -61,7 +61,7 @@ public class MongoDataSolutionTest {
                 c.setFirstName("First");
                 c.setLastName("Last");
 
-                PersistableResult<Citizen> result = entityService.create(c);
+                PersistableResult<Citizen> result = entityService.create(accessor, c);
 
             }
 

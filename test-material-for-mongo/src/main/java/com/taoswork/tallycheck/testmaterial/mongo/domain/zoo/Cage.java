@@ -29,4 +29,9 @@ public class Cage extends AbstractDocument {
         this.createDate = createDate;
         return this;
     }
+
+    @Override
+    public String getInstanceName() {
+        return null;
+    }
 }

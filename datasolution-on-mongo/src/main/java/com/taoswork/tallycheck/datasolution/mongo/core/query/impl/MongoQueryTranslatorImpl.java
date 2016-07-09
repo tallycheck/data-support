@@ -19,6 +19,7 @@ import org.mongodb.morphia.query.Criteria;
 import org.mongodb.morphia.query.Query;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -57,7 +58,7 @@ public class MongoQueryTranslatorImpl implements MongoQueryTranslator {
 
         for (PropertyFilterCriteria pfc : cto.getFilterCriteriasCollection()) {
             String propertyName = pfc.getPropertyName();
-            List<String> values = pfc.getFilterValues();
+            Collection<String> values = pfc.getFilterValues();
             if (!CollectionUtility.isEmpty(values)) {
                 IFieldMeta fieldMeta = ClassMetaUtils.getRoutedFieldMeta(classTreeMeta, propertyName);
                 if (fieldMeta == null) {

@@ -54,9 +54,9 @@ public class SecuredEntityAccess extends SecuredCrudqAccessor {
     protected <T extends Persistable> boolean doDelete(Class<T> projectedEntityType, T entity) {
         String collection = getCollectionName(projectedEntityType);
         Object idVal = null;
-        if(entity instanceof AbstractDocument){
+        if (entity instanceof AbstractDocument) {
             idVal = ((AbstractDocument) entity).getId();
-        }else {
+        } else {
             try {
                 IClassMeta cm = this.entityMetaAccess.getClassMeta(projectedEntityType, false);
                 Field idField = cm.getIdField();
@@ -67,12 +67,12 @@ public class SecuredEntityAccess extends SecuredCrudqAccessor {
                 throw new UnexpectedException(e);
             }
         }
-        if(idVal == null){
+        if (idVal == null) {
             throw new UnexpectedException();
         }
         WriteResult wr = datastore.delete(collection, projectedEntityType, idVal);
         int n = wr.getN();
-        if(n > 1)
+        if (n > 1)
             throw new UnexpectedException();
         return n == 1;
     }
@@ -93,7 +93,7 @@ public class SecuredEntityAccess extends SecuredCrudqAccessor {
         return queryResult;
     }
 
-    private String getCollectionName(Class projectedEntityType){
+    private String getCollectionName(Class projectedEntityType) {
         return datastore.getCollection(projectedEntityType).getName();
     }
 }

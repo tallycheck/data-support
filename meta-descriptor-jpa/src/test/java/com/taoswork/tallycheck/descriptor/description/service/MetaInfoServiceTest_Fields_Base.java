@@ -1,13 +1,13 @@
 package com.taoswork.tallycheck.descriptor.description.service;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection._CollectionFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.jpa.service.JpaMetaServiceImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
 import com.taoswork.tallycheck.descriptor.service.MetaService;
 import com.taoswork.tallycheck.descriptor.service.impl.BaseMetaInfoServiceImpl;
+import com.taoswork.tallycheck.info.IEntityInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection._CollectionFieldInfo;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.CompanyImpl;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.DepartmentImpl;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.EmployeeImpl;

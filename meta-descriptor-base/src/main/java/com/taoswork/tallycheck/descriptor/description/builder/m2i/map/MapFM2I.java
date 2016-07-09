@@ -1,11 +1,11 @@
 package com.taoswork.tallycheck.descriptor.description.builder.m2i.map;
 
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2I;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
 import com.taoswork.tallycheck.descriptor.metadata.exception.MetadataException;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.map.MapFieldMeta;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
 import java.util.Collection;
 

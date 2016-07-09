@@ -142,6 +142,16 @@ public class ZooKeeperImpl
     }
 
     @Override
+    public Object getInstanceId() {
+        return id;
+    }
+
+    @Override
+    public String getInstanceName() {
+        return name;
+    }
+
+    @Override
     public String toString() {
         return "ZooKeeper[#" + id +
                 " '" + name + '\'' +

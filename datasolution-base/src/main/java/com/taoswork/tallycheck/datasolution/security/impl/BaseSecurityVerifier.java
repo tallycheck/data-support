@@ -1,6 +1,7 @@
 package com.taoswork.tallycheck.datasolution.security.impl;
 
 import com.taoswork.tallycheck.authority.atom.Access;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.NoPermissionException;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 
@@ -10,19 +11,18 @@ import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 public abstract class BaseSecurityVerifier implements ISecurityVerifier {
 
     @Override
-    public void checkAccess(String resourceEntity, Access access) throws NoPermissionException {
-        boolean canAccess = this.canAccess(resourceEntity, access);
-        if(!canAccess){
+    public void checkAccess(SecurityAccessor accessor, String resourceEntity, Access access) throws NoPermissionException {
+        boolean canAccess = this.canAccess(accessor, resourceEntity, access);
+        if (!canAccess) {
             throw new SecurityException("Not allowed to access " + resourceEntity);
         }
     }
 
     @Override
-    public void checkAccess(String resourceEntity, Access access, Object... instances) throws NoPermissionException {
-        boolean canAccess = this.canAccess(resourceEntity, access, instances);
-        if(!canAccess){
+    public void checkAccess(SecurityAccessor accessor, String resourceEntity, Access access, Object... instances) throws NoPermissionException {
+        boolean canAccess = this.canAccess(accessor, resourceEntity, access, instances);
+        if (!canAccess) {
             throw new SecurityException("Not allowed to access ");
         }
     }
-
 }

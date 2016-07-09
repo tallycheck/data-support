@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.description.infos.handy;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoImpl;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
+import com.taoswork.tallycheck.info.IEntityInfo;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoImpl;
 
 /**
  * Created by Gao Yuan on 2015/9/21.

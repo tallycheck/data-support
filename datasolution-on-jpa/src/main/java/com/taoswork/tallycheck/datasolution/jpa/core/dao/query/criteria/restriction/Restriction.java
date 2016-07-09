@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datasolution.core.dao.query.criteria.converter.Fi
 import com.taoswork.tallycheck.datasolution.jpa.core.dao.query.criteria.predicate.PredicateProvider;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -36,7 +37,7 @@ public class Restriction {
         return this;
     }
 
-    public List<Object> convertValues(Class type, List<String> valueStrings) {
+    public List<Object> convertValues(Class type, Collection<String> valueStrings) {
         List<Object> vals = new ArrayList<Object>();
         for (String valString : valueStrings) {
             Object val = filterValueConverter.convert(type, valString);

@@ -94,6 +94,11 @@ public class ZooKeeperImpl extends AbstractDocument implements ZooKeeper {
     }
 
     @Override
+    public String getInstanceName() {
+        return getName();
+    }
+
+    @Override
     public String toString() {
         return "ZooKeeperImpl[#" + this.getId() +
                 " '" + name + '\'' +

@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityFormInfo
 import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityFullInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityGridInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.impl.EntityInfoImpl;
+import com.taoswork.tallycheck.info.IEntityInfo;
 
 import java.util.*;
 

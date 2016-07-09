@@ -386,4 +386,14 @@ public class EmployeeImpl implements IEmployee {
     public void setPhoneNumbers(Map<PhoneType, String> phoneNumbers) {
         this.phoneNumbers = phoneNumbers;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return id;
+    }
+
+    @Override
+    public String getInstanceName() {
+        return lastName;
+    }
 }

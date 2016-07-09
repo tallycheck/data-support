@@ -22,7 +22,8 @@ public class DataServiceManagerImpl implements DataServiceManager {
 
     private final Map<String, String> entityResNameToTypeName = new HashMap<String, String>();
 
-    public DataServiceManager buildingAppendDataService(String dataServiceBeanName, IDataService dataService) {
+    public DataServiceManagerImpl buildingAppendDataService(IDataService dataService) {
+        String dataServiceBeanName = dataService.getName();
         dataServiceMap.put(dataServiceBeanName, dataService);
         for (final EntityType entityType : dataService.getEntityTypes()) {
             String typeName = entityType.getEntityInterfaceName();

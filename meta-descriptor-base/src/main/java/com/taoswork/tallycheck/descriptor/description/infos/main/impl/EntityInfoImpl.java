@@ -1,12 +1,12 @@
 package com.taoswork.tallycheck.descriptor.description.infos.main.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoImpl;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.ITabInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
+import com.taoswork.tallycheck.info.IEntityInfo;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

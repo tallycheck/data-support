@@ -37,17 +37,21 @@ public class AuthorityVerifierImpl implements IAuthorityVerifier {
     }
 
     @Override
-    public Access getAllPossibleAccess(ProtectionScope scope, String resourceTypeName, String userId) {
+    public Access getAllPossibleAccess(ProtectionScope scope, String userId, String resourceTypeName, Access mask) {
         IKPermission permission = provider.getPermission(scope, resourceTypeName, userId);
         Access access = permission.getQuickCheckAccess();
         if (permission == null) {
             return Access.None;
         }
-        return access;
+        if (mask == null) {
+            return access;
+        } else {
+            return mask.and(access);
+        }
     }
 
     @Override
-    public boolean canAccess(ProtectionScope scope, String resourceTypeName, Access requiredAccess, String userId) {
+    public boolean canAccess(ProtectionScope scope, String userId, String resourceTypeName, Access requiredAccess) {
         IKPermission permission = provider.getPermission(scope, resourceTypeName, userId);
         if (permission == null) {
             return false;
@@ -57,7 +61,7 @@ public class AuthorityVerifierImpl implements IAuthorityVerifier {
     }
 
     @Override
-    public boolean canAccess(ProtectionScope scope, String resourceTypeName, Access requiredAccess, String userId,
+    public boolean canAccess(ProtectionScope scope, String userId, String resourceTypeName, Access requiredAccess,
                              Object... instances) {
         ResProtectionWithPermission resProtectionWithPermission = provider.getProtectionWithPermission(scope, resourceTypeName, userId);
         if (resProtectionWithPermission == null) {
@@ -79,7 +83,7 @@ public class AuthorityVerifierImpl implements IAuthorityVerifier {
     }
 
     @Override
-    public KAccessibleScopeWithProtection calcAccessibleScope(ProtectionScope scope, String resourceTypeName, Access access, String userId) {
+    public KAccessibleScopeWithProtection calcAccessibleScope(ProtectionScope scope, String userId, String resourceTypeName, Access access) {
         ResProtectionWithPermission resProtectionWithPermission = provider.getProtectionWithPermission(scope, resourceTypeName, userId);
         ResProtection resProtection = resProtectionWithPermission.resProtection;
         IKPermission permission = resProtectionWithPermission.permission;
@@ -231,7 +235,7 @@ public class AuthorityVerifierImpl implements IAuthorityVerifier {
     }
 
     @Override
-    public boolean canAccessMappedResource(ProtectionScope scope, String virtualResource, Access requiredAccess, String userId) {
+    public boolean canAccessMappedResource(ProtectionScope scope, String userId, String virtualResource, Access requiredAccess) {
         return provider.canAccessMappedResource(scope, virtualResource, requiredAccess, userId);
     }
 }

@@ -2,6 +2,7 @@ package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
@@ -10,7 +11,7 @@ import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
+import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
@@ -40,12 +41,12 @@ public class MongoEntityServicePerformanceTest {
     private IDataSolution dataSolution = null;
     private EntityTranslator translator = null;
     private EntityMetaAccess metaAccess = null;
+    private SecurityAccessor accessor = new SecurityAccessor();
 
     @Before
     public void setup() {
         dataSolution = new TallyMockupMongoDataSolution();
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext());
 
         metaAccess = dataSolution.getService(EntityMetaAccess.COMPONENT_NAME);
         translator = new EntityTranslator();
@@ -64,6 +65,7 @@ public class MongoEntityServicePerformanceTest {
     public void testCRUDQ() throws ServiceException {
         int loopCount = 20;
         int inLoopAttempt = 20;
+        EasyEntityService easyEntityService = new EasyEntityService(dataSolution);
         IEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
 
         Set<ObjectId> ids = new HashSet<ObjectId>();
@@ -79,7 +81,7 @@ public class MongoEntityServicePerformanceTest {
                             .setType(ZooKeeperImpl.class)
                             .setProperty("name", nameAAA + i);
                     ZooKeeper adminP = (ZooKeeper)translator.translate(metaAccess, adminEntity, null);
-                    PersistableResult<ZooKeeper> adminRes = entityService.create(adminP);
+                    PersistableResult<ZooKeeper> adminRes = entityService.create(accessor, adminP);
                     ZooKeeper admin = adminRes.getValue();
                     ids.add(admin.getId());
                     created++;
@@ -98,7 +100,7 @@ public class MongoEntityServicePerformanceTest {
             for (ObjectId id : ids) {
                 CriteriaTransferObject cto = new CriteriaTransferObject();
                 cto.addFilterCriteria(new PropertyFilterCriteria("id", "" + id));
-                CriteriaQueryResult<ZooKeeper> zooKeepers = entityService.query(ZooKeeper.class, cto);
+                CriteriaQueryResult<ZooKeeper> zooKeepers = easyEntityService.query(accessor, ZooKeeper.class, cto);
                 query++;
             }
             methodTimeCounter.noticePerActionCostOnExit(query);
@@ -111,7 +113,7 @@ public class MongoEntityServicePerformanceTest {
                 for (int i = 0; i < inLoopAttempt; ++i) {
                     CriteriaTransferObject cto = new CriteriaTransferObject();
                     cto.addFilterCriteria(new PropertyFilterCriteria("name", nameAAA));
-                    CriteriaQueryResult<ZooKeeper> zooKeepers = entityService.query(ZooKeeper.class, cto);
+                    CriteriaQueryResult<ZooKeeper> zooKeepers = easyEntityService.query(accessor, ZooKeeper.class, cto);
                     query++;
                 }
             }
@@ -121,7 +123,7 @@ public class MongoEntityServicePerformanceTest {
             int read = 0;
             MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER, "READ");
             for (ObjectId id : ids) {
-                PersistableResult<ZooKeeper> adminFromDbRes = entityService.read(ZooKeeper.class, (id));
+                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(accessor, ZooKeeper.class, (id));
                 Assert.assertEquals(id, adminFromDbRes.getValue().getId());
                 read++;
             }
@@ -131,12 +133,12 @@ public class MongoEntityServicePerformanceTest {
             int updated = 0;
             MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER, "UPDATE");
             for (ObjectId id : ids) {
-                PersistableResult<ZooKeeper> adminFromDbRes = entityService.read(ZooKeeper.class, (id));
+                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(accessor, ZooKeeper.class, (id));
                 ZooKeeper admin = adminFromDbRes.getValue();
                 String oldEmail = admin.getEmail();
                 String newEmail = admin.getName() + "@xxx.com";
                 admin.setEmail(newEmail);
-                PersistableResult<ZooKeeper> freshAdminFrom = entityService.update(admin);
+                PersistableResult<ZooKeeper> freshAdminFrom = entityService.update(accessor, admin);
                 Assert.assertEquals(newEmail, freshAdminFrom.getValue().getEmail());
                 updated++;
             }
@@ -146,10 +148,10 @@ public class MongoEntityServicePerformanceTest {
             int deleted = 0;
             MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER, "DELETE");
             for (ObjectId id : ids) {
-                PersistableResult<ZooKeeper> adminFromDbRes = entityService.read(ZooKeeper.class, (id));
+                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(accessor, ZooKeeper.class, (id));
                 ZooKeeperImpl zk = new ZooKeeperImpl();
                 zk.setId(id);
-                boolean delOk = entityService.delete(zk);
+                boolean delOk = easyEntityService.delete(accessor, zk);
                 Assert.assertTrue(delOk);
                 deleted++;
             }

@@ -1,9 +1,11 @@
 package com.taoswork.tallycheck.dataservice.io.request;
 
+import java.io.Serializable;
+
 /**
  * Created by gaoyuan on 7/1/16.
  */
-public class Request {
+public class Request implements Serializable {
     /**
      * Entity type: basically interface/class name
      */

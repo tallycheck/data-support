@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoRW;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
 import java.io.Serializable;
 import java.util.Collection;

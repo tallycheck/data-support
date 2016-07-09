@@ -54,4 +54,14 @@ public class ProductImpl implements IProduct {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

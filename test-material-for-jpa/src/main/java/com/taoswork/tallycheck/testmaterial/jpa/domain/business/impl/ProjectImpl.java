@@ -58,4 +58,14 @@ public class ProjectImpl implements IProject {
     public void setEmployees(Collection<IEmployee> employees) {
         this.employees = employees;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

@@ -24,6 +24,10 @@
             <groupId>com.taoswork.tallycheck</groupId>
             <artifactId>authority-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.taoswork.tallycheck</groupId>
+            <artifactId>meta-info</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

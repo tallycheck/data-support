@@ -1,11 +1,12 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.*;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
+import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.zoo.ZooKeeper;
@@ -26,12 +27,12 @@ public class JpaEntityServiceTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JpaEntityServiceTest.class);
 
     private IDataSolution dataSolution = null;
+    private SecurityAccessor accessor = new SecurityAccessor();
 
     @Before
     public void setup() {
         dataSolution = new TallyMockupDataSolution();
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After
@@ -42,6 +43,7 @@ public class JpaEntityServiceTest {
     @Test
     public void testDynamicEntityService() throws ServiceException {
         MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER);
+        EasyEntityService easyEntityService = new EasyEntityService(dataSolution);
         JpaEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
         Assert.assertNotNull(entityService);
 
@@ -54,7 +56,7 @@ public class JpaEntityServiceTest {
         {
             //Test count all
             CriteriaTransferObject ctoFetchAll = new CriteriaTransferObject();
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchAll);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchAll);
 
             Assert.assertEquals(persons.fetchedCount(), 0);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(created));
@@ -68,7 +70,7 @@ public class JpaEntityServiceTest {
         {
             //Test count all
             CriteriaTransferObject ctoFetchAll = new CriteriaTransferObject();
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchAll);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchAll);
 
             Assert.assertEquals(persons.fetchedCount(), createAttemptA);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(created));
@@ -76,7 +78,7 @@ public class JpaEntityServiceTest {
 
             for (int skipLeading = 2; skipLeading < createAttemptA; skipLeading++) {
                 ctoFetchAll.setFirstResult(skipLeading);
-                persons = entityService.query(ZooKeeper.class, ctoFetchAll);
+                persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchAll);
 
                 Assert.assertEquals(persons.fetchedCount(), createAttemptA - skipLeading);
                 Assert.assertEquals(persons.getTotalCount(), Long.valueOf(created));
@@ -89,6 +91,7 @@ public class JpaEntityServiceTest {
     @Test
     public void testDynamicEntityService_1() throws ServiceException {
         MethodTimeCounter methodTimeCounter = new MethodTimeCounter(LOGGER);
+        EasyEntityService easyEntityService = new EasyEntityService(dataSolution);
         JpaEntityService entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
         Assert.assertNotNull(entityService);
 
@@ -103,7 +106,7 @@ public class JpaEntityServiceTest {
         {
             //Test count all
             CriteriaTransferObject ctoFetchAll = new CriteriaTransferObject();
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchAll);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchAll);
 
             Assert.assertEquals(persons.fetchedCount(), 0);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(created));
@@ -119,7 +122,7 @@ public class JpaEntityServiceTest {
         {
             //Test count all
             CriteriaTransferObject ctoFetchAll = new CriteriaTransferObject();
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchAll);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchAll);
 
             Assert.assertEquals(persons.fetchedCount(), CriteriaTransferObject.SINGLE_QUERY_DEFAULT_PAGE_SIZE);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(created));
@@ -129,7 +132,7 @@ public class JpaEntityServiceTest {
             //Test count A
             CriteriaTransferObject ctoFetchA = new CriteriaTransferObject();
             ctoFetchA.addFilterCriteria(new PropertyFilterCriteria(nameFieldName).addFilterValue(nameAAA));
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchA);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchA);
 
             Assert.assertEquals(persons.fetchedCount(), CriteriaTransferObject.SINGLE_QUERY_DEFAULT_PAGE_SIZE);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(createAttemptA));
@@ -139,7 +142,7 @@ public class JpaEntityServiceTest {
             //Test count B
             CriteriaTransferObject ctoFetchB = new CriteriaTransferObject();
             ctoFetchB.addFilterCriteria(new PropertyFilterCriteria(nameFieldName).addFilterValue(nameBBB));
-            CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchB);
+            CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchB);
 
             Assert.assertEquals(persons.fetchedCount(), CriteriaTransferObject.SINGLE_QUERY_DEFAULT_PAGE_SIZE);
             Assert.assertEquals(persons.getTotalCount(), Long.valueOf(createAttemptB));
@@ -154,7 +157,7 @@ public class JpaEntityServiceTest {
                         .setPageSize(requestCount)
                         .addSortCriteria(new PropertySortCriteria(nameFieldName, SortDirection.ASCENDING));
                 {
-                    CriteriaQueryResult<ZooKeeper> personsAAA = entityService.query(ZooKeeper.class, ctoFetchFirst25AAA);
+                    CriteriaQueryResult<ZooKeeper> personsAAA = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchFirst25AAA);
 
                     Assert.assertEquals(personsAAA.fetchedCount(), requestCount);
                     Assert.assertEquals(personsAAA.getTotalCount(), Long.valueOf(created));
@@ -172,7 +175,7 @@ public class JpaEntityServiceTest {
                         .setFirstResult(startIndex)
                         .addSortCriteria(new PropertySortCriteria(nameFieldName, SortDirection.ASCENDING));
                 {
-                    CriteriaQueryResult<ZooKeeper> personsAAA = entityService.query(ZooKeeper.class, ctoFetchFirst25AfterAAA);
+                    CriteriaQueryResult<ZooKeeper> personsAAA = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchFirst25AfterAAA);
 
                     Assert.assertEquals(personsAAA.fetchedCount(), requestCount);
                     Assert.assertEquals(personsAAA.getTotalCount(), Long.valueOf(created));
@@ -191,7 +194,7 @@ public class JpaEntityServiceTest {
                 CriteriaTransferObject ctoFetchFirst25BBB = new CriteriaTransferObject().setPageSize(requestCount)
                         .addSortCriteria(new PropertySortCriteria(nameFieldName, SortDirection.DESCENDING));
                 {
-                    CriteriaQueryResult<ZooKeeper> personsBBB = entityService.query(ZooKeeper.class, ctoFetchFirst25BBB);
+                    CriteriaQueryResult<ZooKeeper> personsBBB = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchFirst25BBB);
 
                     Assert.assertEquals(personsBBB.fetchedCount(), requestCount);
                     Assert.assertEquals(personsBBB.getTotalCount(), Long.valueOf(created));
@@ -208,7 +211,7 @@ public class JpaEntityServiceTest {
                         .setFirstResult(startIndex)
                         .addSortCriteria(new PropertySortCriteria(nameFieldName, SortDirection.DESCENDING));
                 {
-                    CriteriaQueryResult<ZooKeeper> personsBBB = entityService.query(ZooKeeper.class, ctoFetchFirst25BBB);
+                    CriteriaQueryResult<ZooKeeper> personsBBB = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchFirst25BBB);
 
                     Assert.assertEquals(personsBBB.fetchedCount(), requestCount);
                     Assert.assertEquals(personsBBB.getTotalCount(), Long.valueOf(created));
@@ -230,7 +233,7 @@ public class JpaEntityServiceTest {
             do {
                 CriteriaTransferObject ctoFetchB = new CriteriaTransferObject().setFirstResult(startIndex).setPageSize(eachQuerySize);
                 ctoFetchB.addFilterCriteria(new PropertyFilterCriteria(nameFieldName).addFilterValue(nameBBB));
-                CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchB);
+                CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchB);
 
                 if (persons.fetchedCount() == eachQuerySize) {
                     fullPageCount++;
@@ -250,13 +253,13 @@ public class JpaEntityServiceTest {
             Assert.assertTrue(returned == createAttemptB);
 
             for (ZooKeeper p : cache) {
-                entityService.delete(p);
+                easyEntityService.delete(accessor, p);
             }
 
             {
                 CriteriaTransferObject ctoFetchB = new CriteriaTransferObject();
                 ctoFetchB.addFilterCriteria(new PropertyFilterCriteria(nameFieldName).addFilterValue(nameBBB));
-                CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchB);
+                CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchB);
 
                 Assert.assertEquals(persons.getTotalCount().intValue(), 0);
             }
@@ -264,7 +267,7 @@ public class JpaEntityServiceTest {
             {
                 CriteriaTransferObject ctoFetchA = new CriteriaTransferObject();
                 ctoFetchA.addFilterCriteria(new PropertyFilterCriteria(nameFieldName).addFilterValue(nameAAA));
-                CriteriaQueryResult<ZooKeeper> persons = entityService.query(ZooKeeper.class, ctoFetchA);
+                CriteriaQueryResult<ZooKeeper> persons = easyEntityService.query(accessor, ZooKeeper.class, ctoFetchA);
 
                 Assert.assertEquals(persons.getTotalCount().intValue(), createAttemptA);
             }

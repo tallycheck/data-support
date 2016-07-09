@@ -20,6 +20,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class Cto2QueryTranslatorImpl implements Cto2QueryTranslator {
 
         for (PropertyFilterCriteria pfc : cto.getFilterCriteriasCollection()) {
             String propertyName = pfc.getPropertyName();
-            List<String> values = pfc.getFilterValues();
+            Collection<String> values = pfc.getFilterValues();
             if (!CollectionUtility.isEmpty(values)) {
                 FieldPathBuilder fieldPathBuilder = new FieldPathBuilder();
                 //IFieldMeta fieldMeta = classTreeMeta.getFieldMeta(propertyName);

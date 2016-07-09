@@ -131,4 +131,14 @@ public abstract class AnimalImpl implements Animal {
         this.nickNameList = nickNameList;
         return this;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

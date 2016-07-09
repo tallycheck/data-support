@@ -1,17 +1,17 @@
 package com.taoswork.tallycheck.datasolution.core.description.impl;
 
 import com.taoswork.tallycheck.datasolution.core.description.FriendlyMetaInfoService;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.NamedInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoRW;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.base.IFieldInfoRW;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typed.BooleanFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typed.EnumFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.group.IGroupInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.ITabInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.general.extension.utils.CloneUtility;
 import com.taoswork.tallycheck.general.solution.threading.annotations.ThreadSafe;
+import com.taoswork.tallycheck.info.descriptor.base.NamedInfo;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.base.IFieldInfoRW;
+import com.taoswork.tallycheck.info.descriptor.field.typed.BooleanFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typed.EnumFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.group.IGroupInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;

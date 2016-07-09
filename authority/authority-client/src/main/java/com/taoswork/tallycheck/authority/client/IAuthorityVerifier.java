@@ -13,12 +13,12 @@ public interface IAuthorityVerifier {
      * @param resource
      * @return
      */
-    Access getAllPossibleAccess(ProtectionScope scope, String resourceTypeName, String userId);
+    Access getAllPossibleAccess(ProtectionScope scope, String userId, String resourceTypeName, Access mask);
 
     /**
      * Check if auth can access the resource type
      */
-    boolean canAccess(ProtectionScope scope, String resourceTypeName, Access requiredAccess, String userId);
+    boolean canAccess(ProtectionScope scope, String userId, String resourceTypeName, Access requiredAccess);
 
     /**
      * check if auth can access the resource instance
@@ -27,15 +27,15 @@ public interface IAuthorityVerifier {
      *      2. work out the merged access according to KCaseFitting
      *      3. check if merged access qualified
      */
-    boolean canAccess(ProtectionScope scope, String resourceTypeName, Access requiredAccess, String userId, Object... instances);
+    boolean canAccess(ProtectionScope scope, String userId, String resourceTypeName, Access requiredAccess, Object... instances);
 
     /**
      * A shortcut for calcAccessibleScope(IKPermission entityPermission, Access access);
      */
-    KAccessibleScopeWithProtection calcAccessibleScope(ProtectionScope scope, String resourceTypeName, Access access, String userId);
+    KAccessibleScopeWithProtection calcAccessibleScope(ProtectionScope scope, String userId, String resourceTypeName, Access access);
 
     /**
      * Check if auth can access the virtual resource type
      */
-    boolean canAccessMappedResource(ProtectionScope scope, String virtualResource, Access requiredAccess, String userId);
+    boolean canAccessMappedResource(ProtectionScope scope, String userId, String virtualResource, Access requiredAccess);
 }

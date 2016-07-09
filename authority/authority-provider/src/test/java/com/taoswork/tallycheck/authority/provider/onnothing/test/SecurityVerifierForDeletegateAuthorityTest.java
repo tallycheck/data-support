@@ -160,7 +160,7 @@ public class SecurityVerifierForDeletegateAuthorityTest {
         }
 
         public AccessChecker multiCheck(boolean allowed, Serializable... instances) {
-            boolean canAccess = client.canAccess(PS, resourceEntry, NORMAL_ACCESS, user, instances);
+            boolean canAccess = client.canAccess(PS, user, resourceEntry, NORMAL_ACCESS, instances);
 
             if (allowed) {
                 Assert.assertTrue(canAccess);

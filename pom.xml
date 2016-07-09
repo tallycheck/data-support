@@ -144,6 +144,11 @@
             </dependency>
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>data-service-frontend</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
                 <artifactId>datasolution-base</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
@@ -160,6 +165,11 @@
             <dependency>
                 <groupId>com.taoswork.tallycheck</groupId>
                 <artifactId>datasolution-server</artifactId>
+                <version>${tallycheck.datasupport.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.taoswork.tallycheck</groupId>
+                <artifactId>meta-info</artifactId>
                 <version>${tallycheck.datasupport.version}</version>
             </dependency>
             <dependency>
@@ -455,6 +465,8 @@
         <module>test-material-for-jpa</module>
         <module>test-material-for-mongo</module>
         <module>data-service-base</module>
+        <module>data-service-frontend</module>
+        <module>meta-info</module>
     </modules>
 
 

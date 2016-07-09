@@ -5,6 +5,10 @@ import org.mongodb.morphia.annotations.Entity;
 
 @Entity
 public class EmployeeImpl extends AbstractDocument {
+    @Override
+    public String getInstanceName() {
+        return null;
+    }
 }
 //        implements IEmployee {
 //

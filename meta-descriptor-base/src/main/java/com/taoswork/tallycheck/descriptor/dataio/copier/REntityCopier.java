@@ -3,7 +3,6 @@ package com.taoswork.tallycheck.descriptor.dataio.copier;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.datadomain.base.entity.valuecopier.EntityCopierPool;
 import com.taoswork.tallycheck.datadomain.base.entity.valuecopier.IEntityCopier;
-import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMetaAccess;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
@@ -13,6 +12,7 @@ import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.basic.ForeignEn
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.embedded.EmbeddedFieldMeta;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.list.ListFieldMeta;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.map.MapFieldMeta;
+import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
 
 import java.lang.reflect.Field;
 import java.util.Collection;

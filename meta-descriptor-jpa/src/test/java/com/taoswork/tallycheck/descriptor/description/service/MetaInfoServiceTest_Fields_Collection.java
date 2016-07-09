@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.description.service;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.typedcollection.entry.StringEntry;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection.PrimitiveCollectionFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection._CollectionFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection.PrimitiveCollectionFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection._CollectionFieldInfo;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.embed.VacationEntry;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.EmployeeImpl;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.NicknameEntry;

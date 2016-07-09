@@ -1,5 +1,7 @@
 package com.taoswork.tallycheck.dataservice;
 
+import com.taoswork.tallycheck.authority.atom.Access;
+import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
@@ -15,7 +17,7 @@ public class DataServiceDelegate implements IDataService {
     public DataServiceDelegate() {
     }
 
-    public void setDataService(IDataService dataService){
+    public void setDataService(IDataService dataService) {
         this.dataService = dataService;
     }
 
@@ -30,42 +32,52 @@ public class DataServiceDelegate implements IDataService {
     }
 
     @Override
-    public NewInstanceResponse newInstance(NewInstanceRequest request) {
+    public NewInstanceResponse newInstance(NewInstanceRequest request)throws ServiceException {
         return dataService.newInstance(request);
     }
 
     @Override
-    public CreateResponse create(CreateRequest request) {
-        return dataService.create(request);
+    public CreateResponse create(SecurityAccessor accessor, CreateRequest request) throws ServiceException{
+        return dataService.create(accessor, request);
     }
 
     @Override
-    public ReadResponse read(ReadRequest request) throws ServiceException {
-        return dataService.read(request);
+    public ReadResponse read(SecurityAccessor accessor, ReadRequest request) throws ServiceException {
+        return dataService.read(accessor, request);
     }
 
     @Override
-    public UpdateResponse update(UpdateRequest request) {
-        return dataService.update(request);
+    public UpdateResponse update(SecurityAccessor accessor, UpdateRequest request) throws ServiceException{
+        return dataService.update(accessor, request);
     }
 
     @Override
-    public UpdateFieldResponse update(UpdateFieldRequest request) {
-        return dataService.update(request);
+    public UpdateFieldResponse update(SecurityAccessor accessor, UpdateFieldRequest request) {
+        return dataService.update(accessor, request);
     }
 
     @Override
-    public DeleteResponse delete(DeleteRequest request) {
-        return dataService.delete(request);
+    public DeleteResponse delete(SecurityAccessor accessor, DeleteRequest request) throws ServiceException{
+        return dataService.delete(accessor, request);
     }
 
     @Override
-    public QueryResponse query(QueryRequest request) {
-        return dataService.query(request);
+    public QueryResponse query(SecurityAccessor accessor, QueryRequest request) throws ServiceException{
+        return dataService.query(accessor, request);
+    }
+
+    @Override
+    public QueryResponse query(SecurityAccessor accessor, QueryIdsRequest request) throws ServiceException {
+        return dataService.query(accessor, request);
     }
 
     @Override
     public InfoResponse info(InfoRequest request) {
         return dataService.info(request);
+    }
+
+    @Override
+    public Access getAuthorizeAccess(SecurityAccessor accessor, Class<? extends Persistable> entityType, Access mask) {
+        return dataService.getAuthorizeAccess(accessor, entityType, mask);
     }
 }

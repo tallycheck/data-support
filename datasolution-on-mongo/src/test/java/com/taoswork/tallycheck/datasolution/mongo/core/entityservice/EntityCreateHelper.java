@@ -1,8 +1,10 @@
 package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
+import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
@@ -17,11 +19,16 @@ import org.junit.Assert;
  * Created by Gao Yuan on 2015/9/23.
  */
 public class EntityCreateHelper {
-    public static int createPeopleEntityWith(IDataSolution dataService,
+    public static SecurityAccessor createSecurityAccessor(){
+        return new SecurityAccessor();
+    }
+    public static int createPeopleEntityWith(IDataSolution dataSolution,
                                              String namePrefix, int postfixStartingIndex, int createAttempt) {
+        SecurityAccessor accessor = createSecurityAccessor();
         EntityTranslator translator = new EntityTranslator();
-        MongoEntityService jpaEntityService = dataService.getService(IEntityService.COMPONENT_NAME);
-        EntityMetaAccess metaAccess = dataService.getService(EntityMetaAccess.COMPONENT_NAME);
+        EasyEntityService easyEntityService = new EasyEntityService(dataSolution);
+        MongoEntityService jpaEntityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
+        EntityMetaAccess metaAccess = dataSolution.getService(EntityMetaAccess.COMPONENT_NAME);
         int created = 0;
         try {
             for (int i = 0; i < createAttempt; ++i) {
@@ -33,12 +40,12 @@ public class EntityCreateHelper {
                         .setType(ZooKeeperImpl.class)
                         .setProperty("name", name);
                 ZooKeeper adminP = (ZooKeeper)translator.translate(metaAccess, adminEntity, null);
-                PersistableResult<ZooKeeper> adminRes = jpaEntityService.create(adminP);
+                PersistableResult<ZooKeeper> adminRes = jpaEntityService.create(accessor, adminP);
                 ZooKeeper admin = adminRes.getValue();
 
                 ObjectId id = admin.getId();
-                PersistableResult<ZooKeeper> adminFromDbRes = jpaEntityService.read(ZooKeeper.class, id);
-                PersistableResult<ZooKeeperImpl> admin2FromDbRes = jpaEntityService.read(ZooKeeperImpl.class, id);
+                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(accessor, ZooKeeper.class, id);
+                PersistableResult<ZooKeeperImpl> admin2FromDbRes = easyEntityService.read(accessor, ZooKeeperImpl.class, id);
 
                 ZooKeeper adminFromDb = adminFromDbRes.getValue();
                 ZooKeeper admin2FromDb = admin2FromDbRes.getValue();

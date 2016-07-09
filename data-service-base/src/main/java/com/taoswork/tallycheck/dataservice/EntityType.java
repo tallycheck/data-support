@@ -2,13 +2,18 @@ package com.taoswork.tallycheck.dataservice;
 
 import com.taoswork.tallycheck.datadomain.base.entity.PersistEntityHelper;
 
+import java.io.Serializable;
+
 /**
  * Created by gaoyuan on 6/30/16.
  */
-public class EntityType {
-    private final String dataServiceName;
-    private final String resourceName;
-    private final String entityInterfaceName;
+public class EntityType implements Serializable{
+    private String dataServiceName;
+    private String resourceName;
+    private String entityInterfaceName;
+
+    public EntityType() {
+    }
 
     public EntityType(String dataServiceName, Class<?> entityInterface) {
         this.dataServiceName = dataServiceName;

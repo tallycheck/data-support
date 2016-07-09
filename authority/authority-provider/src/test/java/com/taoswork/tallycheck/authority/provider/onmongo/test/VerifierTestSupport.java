@@ -12,9 +12,10 @@ import com.taoswork.tallycheck.authority.provider.onmongo.client.service.datasou
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUserAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
-import com.taoswork.tallycheck.datasolution.security.ProtectedAccessContext;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 
 /**
@@ -76,10 +77,11 @@ public class VerifierTestSupport {
     protected XFile file__ABCDE = null;
     public final int docCount = 11;
 
+    public final static SecurityAccessor securityAccessor = new SecurityAccessor(new ProtectionScope(PermissionMockuper.PROTECTION_SPACE, PermissionMockuper.TENANT),"1");
+
     protected static void setupDatabaseData() {
         dataSolution = new AuthSolutionDataSolution();
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-        dataSolution.setAuthorityContext(new ProtectedAccessContext("1", new ProtectionScope(PermissionMockuper.PROTECTION_SPACE, PermissionMockuper.TENANT)));
 
         entityService = dataSolution.getService(IEntityService.COMPONENT_NAME);
         authorityProvider = new AuthorityProviderImpl(entityService, TUserAuthority.class, TGroupAuthority.class);
@@ -110,7 +112,7 @@ public class VerifierTestSupport {
 //
 //    }
 
-    protected static void makeDatabaseTestData() {
+    protected static void makeDatabaseTestData() throws ServiceException {
         String tenant = mockuper.TENANT;
         mockuper.makeProtectionSpace();
         mockuper.makeSecuredResource(tenant, CM1File.class, true, ProtectionMode.FitAll, true);
@@ -145,7 +147,7 @@ public class VerifierTestSupport {
         }
     }
 
-    protected void makeResourceInstanceMembers(Class<? extends XFile> resource){
+    protected void makeResourceInstanceMembers(Class<? extends XFile> resource)throws ServiceException{
         file_G_____ = mockuper.fetchInstance(resource, FILE_G_____);
         file__A____ = mockuper.fetchInstance(resource, FILE__A____);
         file____C__ = mockuper.fetchInstance(resource, FILE____C__);

@@ -5,6 +5,7 @@ import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
 import com.taoswork.tallycheck.datasolution.mongo.config.MongoDatasourceBeanConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.config.MongoDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.config.MongoPersistableConfiguration;
+import com.taoswork.tallycheck.datasolution.mongo.config.MongoSolutionConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.datasolution.mongo.core.script.DataScript;
 import com.taoswork.tallycheck.datasolution.mongo.core.script.MongoDataImporter;
@@ -35,7 +36,7 @@ public abstract class MongoDataSolutionBase<
     public MongoDataSolutionBase(IDataSolutionDefinition dSrvDef,
                                  Class<? extends EntityTypeConf> entityTypeConf,
                                  Class<? extends DSrcConf> dSrcConf, Class... confs) {
-        super(dSrvDef, new ListBuilder<Class>()
+        super(dSrvDef, MongoSolutionConfiguration.class, new ListBuilder<Class>()
                 .append(MongoDatasourceBeanConfiguration.class)
                 .append(entityTypeConf).append(dSrcConf).append(confs));
     }

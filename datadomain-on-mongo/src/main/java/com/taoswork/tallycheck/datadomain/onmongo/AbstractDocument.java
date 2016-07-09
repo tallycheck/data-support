@@ -56,4 +56,9 @@ public abstract class AbstractDocument implements PersistableDocument {
     public int hashCode() {
         return id == null ? 0 : id.hashCode();
     }
+
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
 }

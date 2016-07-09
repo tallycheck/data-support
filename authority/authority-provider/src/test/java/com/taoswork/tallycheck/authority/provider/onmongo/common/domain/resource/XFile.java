@@ -73,6 +73,11 @@ public class XFile extends AbstractDocument implements IClassifiable {
     }
 
     @Override
+    public String getInstanceName() {
+        return title;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

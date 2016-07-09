@@ -163,4 +163,14 @@ public class DepartmentImpl implements IDepartment {
     public void setEmployeesByUnTypedName(Map employeesByUnTypedName) {
         this.employeesByUnTypedName = employeesByUnTypedName;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

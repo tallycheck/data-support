@@ -102,4 +102,9 @@ public abstract class BaseAuthority
     public void setVersion(Long version) {
         this.version = version;
     }
+
+    @Override
+    public String getInstanceName() {
+        return null;
+    }
 }

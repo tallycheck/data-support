@@ -1,15 +1,15 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2IPool;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.NamedOrderedInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.group.GroupInfoImpl;
-import com.taoswork.tallycheck.descriptor.description.descriptor.group.IGroupInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.ITabInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.TabInfoImpl;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.impl.EntityInfoImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
+import com.taoswork.tallycheck.info.descriptor.base.NamedOrderedInfo;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.group.GroupInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.group.IGroupInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.TabInfoImpl;
 
 import java.util.*;
 

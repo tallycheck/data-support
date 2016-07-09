@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.authority.client.filter.EntityFilterManager;
 import com.taoswork.tallycheck.dataservice.IDataService;
 import com.taoswork.tallycheck.datasolution.core.description.FriendlyMetaInfoService;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
+import com.taoswork.tallycheck.descriptor.dataio.in.translator.IEntityTranslator;
 import com.taoswork.tallycheck.general.solution.property.RuntimeEnvironmentPropertyPlaceholderConfigurer;
 import org.springframework.context.MessageSource;
 
@@ -21,6 +22,8 @@ public interface IDataSolutionSupporterBeanList {
     FriendlyMetaInfoService friendlyMetaInfoService();
 
     EntityFilterManager entityFilterManager();
+
+    IEntityTranslator entityTranslator();
 
     ISecurityVerifier securityVerifier();
 

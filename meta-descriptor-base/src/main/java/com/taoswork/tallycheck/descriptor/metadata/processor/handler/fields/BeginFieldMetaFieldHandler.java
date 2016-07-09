@@ -4,7 +4,7 @@ import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.BasicFieldMetaO
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.FieldMetaMediate;
 import com.taoswork.tallycheck.descriptor.metadata.processor.ProcessResult;
 import com.taoswork.tallycheck.descriptor.metadata.processor.handler.basic.IFieldHandler;
-import com.taoswork.tallycheck.descriptor.metadata.utils.FriendlyNameHelper;
+import com.taoswork.tallycheck.info.FriendlyNameHelper;
 
 import java.lang.reflect.Field;
 

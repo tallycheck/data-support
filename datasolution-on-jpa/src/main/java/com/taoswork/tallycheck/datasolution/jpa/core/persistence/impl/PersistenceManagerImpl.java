@@ -2,6 +2,7 @@ package com.taoswork.tallycheck.datasolution.jpa.core.persistence.impl;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
@@ -11,12 +12,13 @@ import com.taoswork.tallycheck.datasolution.jpa.core.persistence.PersistenceMana
 import com.taoswork.tallycheck.datasolution.service.EntityCopierService;
 import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
-import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
+import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,14 +65,14 @@ public class PersistenceManagerImpl
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> create(Class<T> projectedEntityType, T entity) throws ServiceException {
-        T result = securedCreate(projectedEntityType, entity);
+    public <T extends Persistable> PersistableResult<T> create(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException {
+        T result = securedCreate(accessor, projectedEntityType, entity);
         return makePersistableResult(result);
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> read(Class<T> projectedEntityType, Object key, ExternalReference externalReference) throws ServiceException {
-        T result = securedRead(projectedEntityType, key);
+    public <T extends Persistable> PersistableResult<T> read(SecurityAccessor accessor, Class<T> projectedEntityType, Object key, ExternalReference externalReference) throws ServiceException {
+        T result = securedRead(accessor, projectedEntityType, key);
 
         CopierContext copierContext = new CopierContext(this.entityMetaAccess, externalReference);
         T safeResult = this.entityCopierService.makeSafeCopy(copierContext, result, CopyLevel.Read);
@@ -79,20 +81,39 @@ public class PersistenceManagerImpl
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> update(Class<T> projectedEntityType, T entity) throws ServiceException {
-        T result = securedUpdate(projectedEntityType, entity);
+    public <T extends Persistable> PersistableResult<T> update(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException {
+        T result = securedUpdate(accessor, projectedEntityType, entity);
         return makePersistableResult(result);
     }
 
     @Override
-    public <T extends Persistable> boolean delete(Class<T> projectedEntityType, Object key) throws ServiceException {
-        return securedDelete(projectedEntityType, key);
+    public <T extends Persistable> boolean delete(SecurityAccessor accessor, Class<T> projectedEntityType, Object key) throws ServiceException {
+        return securedDelete(accessor, projectedEntityType, key);
     }
 
     @Override
-    public <T extends Persistable> CriteriaQueryResult<T> query(
-            Class<T> projectedEntityType, CriteriaTransferObject query,
-            ExternalReference externalReference, CopyLevel copyLevel) throws ServiceException {
+    public <T extends Persistable> CriteriaQueryResult<T> query(SecurityAccessor accessor,
+                                                                Class<T> projectedEntityType, CriteriaTransferObject query,
+                                                                ExternalReference externalReference, CopyLevel copyLevel) throws ServiceException {
+        if (query == null)
+            query = new CriteriaTransferObject();
+        CriteriaQueryResult<T> criteriaQueryResult = securedQuery(accessor, projectedEntityType, query);
+        return makeSafeCriteriaQueryResult(externalReference, copyLevel, criteriaQueryResult);
+    }
+
+    @Override
+    public <T extends Persistable> CriteriaQueryResult<T> queryIds(SecurityAccessor accessor,
+                                                                Class<T> projectedEntityType, Collection<String> ids,
+                                                                ExternalReference externalReference, CopyLevel copyLevel) throws ServiceException {
+        CriteriaQueryResult<T> criteriaQueryResult = securedQueryIds(accessor, projectedEntityType, ids);
+        return makeSafeCriteriaQueryResult(externalReference, copyLevel, criteriaQueryResult);
+    }
+
+    private <T extends Persistable> CriteriaQueryResult<T> makeSafeCriteriaQueryResult(ExternalReference externalReference, CopyLevel copyLevel, CriteriaQueryResult<T> criteriaQueryResult) throws ServiceException {
+        CriteriaQueryResult<T> safeResult = new CriteriaQueryResult<T>(criteriaQueryResult.getEntityType())
+                .setStartIndex(criteriaQueryResult.getStartIndex())
+                .setTotalCount(criteriaQueryResult.getTotalCount());
+        List<T> records = criteriaQueryResult.getEntityCollection();
         switch (copyLevel){
             case Read:
             case List:
@@ -102,13 +123,6 @@ public class PersistenceManagerImpl
             default:
                 throw new IllegalArgumentException();
         }
-        if (query == null)
-            query = new CriteriaTransferObject();
-        CriteriaQueryResult<T> criteriaQueryResult = securedQuery(projectedEntityType, query);
-        CriteriaQueryResult<T> safeResult = new CriteriaQueryResult<T>(criteriaQueryResult.getEntityType())
-                .setStartIndex(criteriaQueryResult.getStartIndex())
-                .setTotalCount(criteriaQueryResult.getTotalCount());
-        List<T> records = criteriaQueryResult.getEntityCollection();
         if (records != null) {
             List<T> entities = new ArrayList();
             CopierContext copierContext = new CopierContext(this.entityMetaAccess, externalReference);

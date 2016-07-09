@@ -7,6 +7,7 @@ import com.taoswork.tallycheck.authority.core.permission.KAccessibleScope;
 import com.taoswork.tallycheck.authority.core.resource.IKProtection;
 import com.taoswork.tallycheck.authority.provider.onmongo.client.MollyOnMongoClient;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
+import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,7 +24,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, mockuper.TENANT);
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass() throws ServiceException {
         setupDatabaseData();
         makeDatabaseTestData();
     }
@@ -34,7 +35,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testQueryWithoutCases() {
+    public void testQueryWithoutCases() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
 
         Class<CCFile> resourceClz = CCFile.class;
@@ -43,7 +44,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         String resourceEntry = resourceClz.getName();
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
             List<? extends XFile> results = XFileRepo.query(accessibleScope, protection);
@@ -63,7 +64,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         for (String user : new String[]{User_G____, User_GAB__, User_GABCD}) {
             {
-                KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+                KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
                 KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
                 IKProtection protection = accessibleScopeWithProtection.protection;
                 List<? extends XFile> results = XFileRepo.query(accessibleScope, protection);
@@ -85,7 +86,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testQuery_MasterControl_FitAll() {
+    public void testQuery_MasterControl_FitAll() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CM1File> resourceClz = CM1File.class;
         XFileRepo<CM1File> XFileRepo = new XFileRepo<CM1File>(entityService.getDatastore(), resourceClz);
@@ -94,7 +95,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         String resourceEntry = resourceClz.getName();
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -115,7 +116,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_G____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -136,7 +137,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GAB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -157,7 +158,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -179,7 +180,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testQuery_MasterControl_FitAny() {
+    public void testQuery_MasterControl_FitAny() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CM0File> resourceClz = CM0File.class;
         XFileRepo<CM0File> XFileRepo = new XFileRepo<CM0File>(entityService.getDatastore(), resourceClz);
@@ -188,7 +189,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         String resourceEntry = resourceClz.getName();
 
         for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -209,7 +210,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_G____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -230,7 +231,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GAB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -251,7 +252,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -273,7 +274,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testQuery_SelfControl_FitAll() {
+    public void testQuery_SelfControl_FitAll() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CS1File> resourceClz = CS1File.class;
         XFileRepo<CS1File> XFileRepo = new XFileRepo<CS1File>(entityService.getDatastore(), resourceClz);
@@ -282,7 +283,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
         {
             String user = User_N____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -303,7 +304,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User__AB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -324,7 +325,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User__ABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -345,7 +346,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_G____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -366,7 +367,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GAB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -387,7 +388,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -409,7 +410,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testQuery_SelfControl_FitAny() {
+    public void testQuery_SelfControl_FitAny() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         Class<CS0File> resourceClz = CS0File.class;
         XFileRepo<CS0File> XFileRepo = new XFileRepo<CS0File>(entityService.getDatastore(), resourceClz);
@@ -418,7 +419,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
         {
             String user = User_N____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -439,7 +440,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User__AB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -460,7 +461,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User__ABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -481,7 +482,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_G____;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -502,7 +503,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GAB__;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 
@@ -523,7 +524,7 @@ public class SecurityVerifierQueryTest extends VerifierTestSupport {
         }
         {
             String user = User_GABCD;
-            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, resourceEntry, mockuper.normalAccess, user);
+            KAccessibleScopeWithProtection accessibleScopeWithProtection = client.calcAccessibleScope(PS, user, resourceEntry, mockuper.normalAccess);
             KAccessibleScope accessibleScope = accessibleScopeWithProtection.accessibleScope;
             IKProtection protection = accessibleScopeWithProtection.protection;
 

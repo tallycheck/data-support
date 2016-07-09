@@ -33,7 +33,7 @@ import org.springframework.context.annotation.Configuration;
  * Created by Gao Yuan on 2016/2/13.
  */
 @Configuration
-public class DataSolutionBeanBaseConfiguration
+public abstract class DataSolutionBeanBaseConfiguration
     implements
         ApplicationContextAware,
         IGeneralBeanList,

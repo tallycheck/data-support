@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedOrderedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoRW;
 
 import java.io.Serializable;
 import java.util.Collection;

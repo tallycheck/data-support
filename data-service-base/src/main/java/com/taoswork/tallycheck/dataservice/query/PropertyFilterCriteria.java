@@ -9,7 +9,7 @@ import java.util.*;
  * Created by Gao Yuan on 2015/6/15.
  */
 public class PropertyFilterCriteria extends PropertyCriteria {
-    protected List<String> filterValues = new ArrayList<String>();
+    protected Collection<String> filterValues = new ArrayList<String>();
 
     public PropertyFilterCriteria(String propertyName) {
         super(propertyName);
@@ -20,7 +20,7 @@ public class PropertyFilterCriteria extends PropertyCriteria {
         setFilterValue(filterValue);
     }
 
-    public PropertyFilterCriteria(String propertyName, List<String> filterValues) {
+    public PropertyFilterCriteria(String propertyName, Collection<String> filterValues) {
         super(propertyName);
         setFilterValues(filterValues);
     }
@@ -53,13 +53,13 @@ public class PropertyFilterCriteria extends PropertyCriteria {
         return this;
     }
 
-    public PropertyFilterCriteria setFilterValues(List<String> filterValues) {
+    public PropertyFilterCriteria setFilterValues(Collection<String> filterValues) {
         this.filterValues = filterValues;
         return this;
     }
 
-    public List<String> getFilterValues() {
-        return Collections.unmodifiableList(filterValues);
+    public Collection<String> getFilterValues() {
+        return Collections.unmodifiableCollection(filterValues);
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.basic;
 import com.taoswork.tallycheck.descriptor.dataio.copier.CopierContext;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.BaseFieldCopier;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.IFieldCopierSolution;
-import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.fieldmetadata.basic.ExternalForeignEntityFieldMeta;
+import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
 
 import java.lang.reflect.Field;
 

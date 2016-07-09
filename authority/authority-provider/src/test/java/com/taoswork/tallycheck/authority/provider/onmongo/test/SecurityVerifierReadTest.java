@@ -6,6 +6,7 @@ import com.taoswork.tallycheck.authority.provider.onmongo.client.MollyOnMongoCli
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TGroupAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUserAuthority;
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -20,10 +21,11 @@ import java.util.List;
  * Created by Gao Yuan on 2016/2/26.
  */
 public class SecurityVerifierReadTest extends VerifierTestSupport {
-    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, mockuper.TENANT);
+    private SecurityAccessor securityAccessor = VerifierTestSupport.securityAccessor;
+    private ProtectionScope PS = VerifierTestSupport.securityAccessor.protectionScope;
 
     @BeforeClass
-    public static void beforeClass() {
+    public static void beforeClass() throws ServiceException {
         setupDatabaseData();
         makeDatabaseTestData();
     }
@@ -97,7 +99,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     //    }
     //
     @Test
-    public void testReadWithoutCases() {
+    public void testReadWithoutCases() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CCFile.class);
 
@@ -134,7 +136,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testReadWithCases_MasterControl_FitAll() {
+    public void testReadWithCases_MasterControl_FitAll() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
 
@@ -225,7 +227,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group_N____);
                 du.setGroups(ga);
-                entityService.update(du);
+                entityService.update(securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -297,7 +299,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group__AB__);
                 du.setGroups(ga);
-                entityService.update(du);
+                entityService.update(securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -352,7 +354,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group_G____);
                 du.setGroups(ga);
-                entityService.update(du);
+                entityService.update(securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User_G____}) {
@@ -404,12 +406,12 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
         for (TUserAuthority du : d_users) {
             List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
             du.setGroups(ga);
-            entityService.update(du);
+            entityService.update(securityAccessor, du);
         }
     }
 
     @Test
-    public void testReadWithCases_MasterControl_FitAny() {
+    public void testReadWithCases_MasterControl_FitAny() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM0File.class);
 
@@ -479,7 +481,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testReadWithCases_SelfControl_FitAll() {
+    public void testReadWithCases_SelfControl_FitAll() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CS1File.class);
 
@@ -582,7 +584,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testReadWithCases_SelfControl_FitAny() {
+    public void testReadWithCases_SelfControl_FitAny() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CS0File.class);
 
@@ -685,7 +687,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
     }
 
     @Test
-    public void testReadWithCases_MasterControl_FitAll_FileChain() {
+    public void testReadWithCases_MasterControl_FitAll_FileChain() throws ServiceException {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
         String resourceEntry = CM1File.class.getName();
@@ -735,7 +737,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
         }
 
         public AccessChecker multiCheck(boolean allowed, String resourceEntry, Serializable... instances) {
-            boolean canAccess = client.canAccess(PS, resourceEntry, NORMAL_ACCESS, user, instances);
+            boolean canAccess = client.canAccess(PS, user, resourceEntry, NORMAL_ACCESS, instances);
 
             if (allowed) {
                 Assert.assertTrue(canAccess);

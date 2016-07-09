@@ -6,7 +6,7 @@ import com.taoswork.tallycheck.authority.client.filter.EntityFilterManager;
 import com.taoswork.tallycheck.authority.client.impl.AuthorityVerifierImpl;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
-import com.taoswork.tallycheck.datasolution.security.IProtectedAccessContext;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 
 import javax.annotation.Resource;
 
@@ -21,8 +21,6 @@ public final class SecurityVerifierOnAuthority
 
     private IAuthorityVerifier authorityVerifier;
 
-    private IProtectedAccessContext accessContext;
-
     public SecurityVerifierOnAuthority() {
         setAuthorityProvider(null);
     }
@@ -33,49 +31,33 @@ public final class SecurityVerifierOnAuthority
     }
 
     @Override
-    public void setAuthorityContext(IProtectedAccessContext accessContext) {
-        this.accessContext = accessContext;
-    }
-
-    private IProtectedAccessContext vc(){
-        if(accessContext == null){
-            throw new RuntimeException("IProtectedAccessContext not set.");
-        }
-        return accessContext;
+    public Access getAllPossibleAccess(SecurityAccessor accessor, String resourceEntity, Access mask) {
+        Access access = authorityVerifier.getAllPossibleAccess(accessor.protectionScope, accessor.userId, resourceEntity, mask);
+        return access;
     }
 
     @Override
-    public Access getAllPossibleAccess(String resourceEntity, Access mask) {
-        String userId = vc().getCurrentUserId();
-        ProtectionScope PS = vc().getCurrentProtectionScope();
-        Access access = authorityVerifier.getAllPossibleAccess(PS, resourceEntity, userId);
-        if (mask == null) {
-            return access;
+    public boolean canAccess(SecurityAccessor accessor, String resourceEntity, Access access) {
+        return canAccess(accessor, resourceEntity, access, null);
+    }
+
+    @Override
+    public boolean canAccess(SecurityAccessor accessor, String resourceEntity, Access access, Object... instances) {
+        String userId = accessor.userId;
+        ProtectionScope PS = accessor.protectionScope;
+        if (instances == null || instances.length == 0) {
+            boolean can = authorityVerifier.canAccess(PS, userId, resourceEntity, access);
+            return can;
         } else {
-            return mask.and(access);
+            boolean can = authorityVerifier.canAccess(PS, userId, resourceEntity, access, instances);
+            return can;
         }
     }
 
     @Override
-    public boolean canAccess(String resourceEntity, Access access) {
-        String userId = vc().getCurrentUserId();
-        ProtectionScope PS = vc().getCurrentProtectionScope();
-        boolean can = authorityVerifier.canAccess(PS, resourceEntity, access, userId);
-        return can;
-    }
-
-    @Override
-    public boolean canAccess(String resourceEntity, Access access, Object... instances) {
-        String userId = vc().getCurrentUserId();
-        ProtectionScope PS = vc().getCurrentProtectionScope();
-        boolean can = authorityVerifier.canAccess(PS, resourceEntity, access, userId, instances);
-        return can;
-    }
-
-    @Override
-    public boolean canAccessMappedResource(String mappedResource, Access access) {
-        String userId = vc().getCurrentUserId();
-        ProtectionScope PS = vc().getCurrentProtectionScope();
-        return authorityVerifier.canAccessMappedResource(PS, mappedResource, access, userId);
+    public boolean canAccessMappedResource(SecurityAccessor accessor,
+                                           String mappedResource, Access access) {
+        return authorityVerifier.canAccessMappedResource(accessor.protectionScope, accessor.userId,
+                mappedResource, access);
     }
 }

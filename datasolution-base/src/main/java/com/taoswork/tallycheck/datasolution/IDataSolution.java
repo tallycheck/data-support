@@ -3,7 +3,6 @@ package com.taoswork.tallycheck.datasolution;
 import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.EntityType;
 import com.taoswork.tallycheck.datasolution.security.EntityFilterType;
-import com.taoswork.tallycheck.datasolution.security.IProtectedAccessContext;
 
 import java.util.Collection;
 
@@ -66,7 +65,5 @@ public interface IDataSolution {
     String getEntityTypeName(String resourceName);
 
     void setAuthorityProvider(IAuthorityProvider provider);
-
-    void setAuthorityContext(IProtectedAccessContext accessContext);
 
 }

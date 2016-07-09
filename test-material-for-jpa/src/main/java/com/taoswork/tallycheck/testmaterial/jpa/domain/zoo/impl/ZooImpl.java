@@ -36,4 +36,14 @@ public class ZooImpl implements Zoo {
 
     @OneToMany(targetEntity = ZooKeeperImpl.class, mappedBy = "zoo")
     private Collection<ZooKeeper> zooKeepers;
+
+    @Override
+    public Object getInstanceId() {
+        return id;
+    }
+
+    @Override
+    public String getInstanceName() {
+        return name;
+    }
 }

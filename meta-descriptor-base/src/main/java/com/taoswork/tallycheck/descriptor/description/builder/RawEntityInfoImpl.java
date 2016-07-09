@@ -1,10 +1,10 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.FieldType;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.OrderedName;
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoImpl;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IBasicFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.base.OrderedName;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.field.IBasicFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
 import java.util.*;
 

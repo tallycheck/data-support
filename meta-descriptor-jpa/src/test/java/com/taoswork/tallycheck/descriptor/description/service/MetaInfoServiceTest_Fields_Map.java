@@ -1,8 +1,8 @@
 package com.taoswork.tallycheck.descriptor.description.service;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection.BasicCollectionFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.typedcollection.EntityCollectionFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection.BasicCollectionFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.field.typedcollection.EntityCollectionFieldInfo;
 import com.taoswork.tallycheck.testmaterial.jpa.domain.business.impl.PhoneNumberByType;
 import org.junit.Assert;
 import org.junit.Test;

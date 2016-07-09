@@ -187,4 +187,8 @@ public class Protection
         return version;
     }
 
+    @Override
+    public String getInstanceName() {
+        return null;
+    }
 }

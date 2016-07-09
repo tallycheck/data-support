@@ -30,4 +30,5 @@ public interface Animal extends Persistable {
     List<String> getNickNameList();
 
     Animal setNickNameList(List<String> nickNameList);
+
 }

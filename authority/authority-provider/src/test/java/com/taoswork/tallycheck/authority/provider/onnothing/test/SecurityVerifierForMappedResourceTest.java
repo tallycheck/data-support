@@ -52,26 +52,26 @@ public class SecurityVerifierForMappedResourceTest {
 
 
         for (String user : new String[]{MollyOnNothingProvider.userAB, MollyOnNothingProvider.userG, MollyOnNothingProvider.userGAB}) {
-            Assert.assertTrue(client.canAccessMappedResource(PS, docMenu, menuVisible, user));
-            Assert.assertTrue(client.canAccessMappedResource(PS, docMenu, menuClick, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, docMenu, menuDbClick, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, imgMenu, menuClick, user));
+            Assert.assertTrue(client.canAccessMappedResource(PS, user,docMenu, menuVisible));
+            Assert.assertTrue(client.canAccessMappedResource(PS, user,docMenu, menuClick));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,docMenu, menuDbClick));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,imgMenu, menuClick));
 
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.Image, menuVisible, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.File, menuVisible, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.Menu, menuVisible, user));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.Image, menuVisible));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.File, menuVisible));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.Menu, menuVisible));
         }
 
         {
             String user = MollyOnNothingProvider.userN;
-            Assert.assertFalse(client.canAccessMappedResource(PS, docMenu, menuVisible, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, docMenu, menuClick, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, docMenu, menuDbClick, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, imgMenu, menuClick, user));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,docMenu, menuVisible));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,docMenu, menuClick));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,docMenu, menuDbClick));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,imgMenu, menuClick));
 
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.Image, menuVisible, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.File, menuVisible, user));
-            Assert.assertFalse(client.canAccessMappedResource(PS, TypesEnums.Menu, menuVisible, user));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.Image, menuVisible));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.File, menuVisible));
+            Assert.assertFalse(client.canAccessMappedResource(PS, user,TypesEnums.Menu, menuVisible));
         }
     }
 }

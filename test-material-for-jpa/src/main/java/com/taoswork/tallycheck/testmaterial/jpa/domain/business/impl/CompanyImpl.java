@@ -368,6 +368,16 @@ public class CompanyImpl implements ICompany {
         this.address = address;
     }
 
+    @Override
+    public Object getInstanceId() {
+        return id;
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
+
     public static class Presentation {
         public static class Tab {
             public static final String General = "General";

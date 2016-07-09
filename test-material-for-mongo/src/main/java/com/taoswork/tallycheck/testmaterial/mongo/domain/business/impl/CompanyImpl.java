@@ -335,4 +335,13 @@ public class CompanyImpl extends AbstractDocument implements ICompany {
         }
     }
 
+    @Override
+    public Object getInstanceId() {
+        return getId();
+    }
+
+    @Override
+    public String getInstanceName() {
+        return getName();
+    }
 }

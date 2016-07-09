@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.datasolution.core.entityservice;
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
@@ -11,11 +12,11 @@ import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
-import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.metadata.IFieldMeta;
+import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
+import com.taoswork.tallycheck.info.IEntityInfo;
 import org.apache.commons.beanutils.ConvertUtilsBean2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,55 +53,15 @@ public abstract class BaseEntityServiceImpl<Pb extends Persistable>
     }
 
     @Override
-    public <T extends Pb> PersistableResult<T> read(T entity) throws ServiceException {
-        Class directClz = entity.getClass();
-        Object key =  getEntityId(directClz, entity);
-        return read(directClz, key);
-    }
-
-    @Override
-    public <T extends Pb> PersistableResult<T> read(Class<T> entityClz, Object key) throws ServiceException {
-        return read(entityClz, key, null);
-    }
-
-    @Override
-    public <T extends Pb> boolean delete(final T entity) throws ServiceException {
-        Class directClz = entity.getClass();
-        Object key =  getEntityId(directClz, entity);
-        return delete(directClz, key);
-    }
-
-    @Override
-    public <T extends Pb> CriteriaQueryResult<T> query(Class<T> entityClz, CriteriaTransferObject query) throws ServiceException {
-        return this.query(entityClz, query, null, CopyLevel.List);
-    }
-
-    @Override
-    public <T extends Pb> CriteriaQueryResult<T> query(Class<T> entityClz, CriteriaTransferObject query, CopyLevel copyLevel) throws ServiceException {
-        return this.query(entityClz, query, null, copyLevel);
-    }
-
-    @Override
-    public <T extends Pb> T queryOne(Class<T> entityClz, CriteriaTransferObject query, CopyLevel copyLevel) throws ServiceException {
-        CriteriaQueryResult<T> result = this.query(entityClz, query, copyLevel);
-        List<T> list = result.getEntityCollection();
-        if(list != null && !list.isEmpty()){
-            T entity = list.get(0);
-            return entity;
-        }
-        return null;
-    }
-
-    @Override
-    public <T extends Pb> T straightRead(Class<T> entityClz, Object key) throws ServiceException {
-        PersistableResult<T> result = read(entityClz, key, new ExternalReference());
+    public <T extends Pb> T straightRead(SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
+        PersistableResult<T> result = read(accessor, entityClz, key, new ExternalReference());
         return result.getValue();
     }
 
     @Override
-    public <T extends Pb> Access getAuthorizeAccess(Class<T> entityType, Access mask) {
+    public <T extends Pb> Access getAuthorizeAccess(SecurityAccessor accessor, Class<T> entityType, Access mask) {
         if (mask == null) mask = Access.Crudq;
-        Access access = securityVerifier.getAllPossibleAccess(entityType.getName(), mask);
+        Access access = securityVerifier.getAllPossibleAccess(accessor, entityType.getName(), mask);
         return access;
     }
 
@@ -146,25 +107,12 @@ public abstract class BaseEntityServiceImpl<Pb extends Persistable>
         return entityMetaAccess.getEntityInfo(entityType, withHierarchy, locale, infoType);
     }
 
-    protected <T extends Persistable> Object getEntityId(Class projectedEntityType, T entity) throws ServiceException {
-        try {
-            IClassMeta rootClzMeta = entityMetaAccess.getClassMeta(projectedEntityType, false);
-            Field idField = rootClzMeta.getIdField();
-
-            Object id = idField.get(entity);
-            return id;
-        } catch (IllegalAccessException e) {
-            LOGGER.error(e.getMessage());
-            throw new ServiceException(e);
-        }
-    }
-
-    protected Object keyTypeAdjust(Class entityClz, Object key){
+    protected Object keyTypeAdjust(Class entityClz, Object key) {
         IClassMeta cm = this.entityMetaAccess.getClassMeta(entityClz, false);
         String idFieldName = cm.getIdFieldName();
         IFieldMeta fm = cm.getFieldMeta(idFieldName);
         Class targetClass = fm.getFieldClass();
-        if(key.getClass().equals(targetClass)){
+        if (key.getClass().equals(targetClass)) {
             return key;
         }
         return convertUtils.convert(key, targetClass);

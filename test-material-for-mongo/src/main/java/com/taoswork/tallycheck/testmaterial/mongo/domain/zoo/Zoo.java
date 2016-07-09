@@ -24,4 +24,9 @@ public class Zoo extends AbstractDocument {
 
     @Reference
     private Collection<ZooKeeperImpl> zooKeepers;
+
+    @Override
+    public String getInstanceName() {
+        return name;
+    }
 }

@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.datasolution.jpa.core;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDefinition;
 import com.taoswork.tallycheck.datasolution.jpa.config.JpaDatasourceBeanConfiguration;
 import com.taoswork.tallycheck.datasolution.jpa.config.JpaDatasourceConfiguration;
+import com.taoswork.tallycheck.datasolution.jpa.config.JpaSolutionConfiguration;
 import com.taoswork.tallycheck.datasolution.jpa.config.db.IDbConfig;
 import com.taoswork.tallycheck.datasolution.service.impl.DataSolutionBase;
 import com.taoswork.tallycheck.general.extension.collections.ListBuilder;
@@ -26,7 +27,7 @@ public abstract class JpaDataSolutionBase<
                                Class<? extends DSrcBeanConf> dSrcBeanConfClz,
                                Class<? extends DSrcConf> dSrcConfClz,
                                Class<? extends JpaDbConf> dbConf) {
-        super(dsDef, new ListBuilder<Class>()
+        super(dsDef, JpaSolutionConfiguration.class, new ListBuilder<Class>()
                 .append(dSrcBeanConfClz)
                 .append(dSrcConfClz)
                 .append(dbConf));

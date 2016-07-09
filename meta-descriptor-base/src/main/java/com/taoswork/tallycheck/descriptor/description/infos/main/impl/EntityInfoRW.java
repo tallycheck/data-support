@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.descriptor.description.infos.main.impl;
 
-import com.taoswork.tallycheck.descriptor.description.descriptor.base.impl.NamedInfoRW;
-import com.taoswork.tallycheck.descriptor.description.descriptor.field.IFieldInfo;
-import com.taoswork.tallycheck.descriptor.description.descriptor.tab.ITabInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
+import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 
 import java.util.List;
 import java.util.Map;

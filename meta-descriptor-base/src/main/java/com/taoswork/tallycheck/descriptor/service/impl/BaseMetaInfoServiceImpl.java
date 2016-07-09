@@ -3,11 +3,11 @@ package com.taoswork.tallycheck.descriptor.service.impl;
 import com.taoswork.tallycheck.descriptor.description.builder.EntityInfoBuilder;
 import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2IPool;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.descriptor.service.MetaInfoService;
 import com.taoswork.tallycheck.general.solution.threading.annotations.ThreadSafe;
+import com.taoswork.tallycheck.info.IEntityInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

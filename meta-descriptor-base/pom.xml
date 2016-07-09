@@ -21,6 +21,10 @@
             <artifactId>general-solution</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.taoswork.tallycheck</groupId>
+            <artifactId>meta-info</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>

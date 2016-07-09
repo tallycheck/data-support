@@ -90,4 +90,14 @@ public class ParkingSpaceImpl implements IParkingSpace {
     public void setEmployeeImpl(EmployeeImpl employeeImpl) {
         this.employeeImpl = employeeImpl;
     }
+
+    @Override
+    public Object getInstanceId() {
+        return id;
+    }
+
+    @Override
+    public String getInstanceName() {
+        return "";
+    }
 }

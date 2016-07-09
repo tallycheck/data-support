@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.datasolution.service;
 
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMetaAccess;
 import com.taoswork.tallycheck.descriptor.metadata.classtree.EntityClassTree;
+import com.taoswork.tallycheck.info.IEntityInfo;
 
 import java.util.Collection;
 import java.util.Locale;

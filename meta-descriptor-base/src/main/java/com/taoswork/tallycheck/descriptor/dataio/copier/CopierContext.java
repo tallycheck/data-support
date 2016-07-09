@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.descriptor.dataio.copier;
 
-import com.taoswork.tallycheck.descriptor.dataio.reference.ExternalReference;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMetaAccess;
+import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
 
 /**
  * Created by Gao Yuan on 2015/11/11.

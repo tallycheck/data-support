@@ -3,10 +3,12 @@ package com.taoswork.tallycheck.datasolution.core;
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
+import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.NoSuchRecordException;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
+import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
 import com.taoswork.tallycheck.datasolution.service.EntityValidationService;
@@ -17,11 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.lang.reflect.Field;
+import java.util.Collection;
 
 /**
  * Created by Gao Yuan on 2016/2/15.
  */
-public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
+public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
     private static final Logger LOGGER = LoggerFactory.getLogger(SecuredCrudqAccessor.class);
 
     @Resource(name = ISecurityVerifier.COMPONENT_NAME)
@@ -37,13 +40,13 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
     protected EntityMetaAccess entityMetaAccess;
 
     @Override
-    public <T extends Persistable> T securedCreate(Class<T> projectedEntityType, T entity) throws ServiceException {
+    public <T extends Persistable> T securedCreate(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException {
         if (projectedEntityType == null) {
             projectedEntityType = (Class<T>) entity.getClass();
         }
         Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
         String guardianName = guardian.getName();
-        securityVerifier.checkAccess(guardianName, Access.Create, entity);
+        securityVerifier.checkAccess(accessor, guardianName, Access.Create, entity);
         PersistableResult persistableResult = makePersistableResult(entity);
 
         //store before validate, for security reason
@@ -56,12 +59,12 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
     protected abstract <T extends Persistable> T doCreate(Class<T> projectedEntityType, T entity);
 
     @Override
-    public <T extends Persistable> T securedRead(Class<T> projectedEntityType, Object key) throws ServiceException {
+    public <T extends Persistable> T securedRead(SecurityAccessor accessor, Class<T> projectedEntityType, Object key) throws ServiceException {
         Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
         String guardianName = guardian.getName();
-        securityVerifier.checkAccess(guardianName, Access.Read);
+        securityVerifier.checkAccess(accessor, guardianName, Access.Read);
         T result = doRead(projectedEntityType, key);
-        if(result == null){
+        if (result == null) {
             throw new NoSuchRecordException(projectedEntityType, key);
         }
         entityValueGateService.fetch(result);
@@ -71,14 +74,14 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
     protected abstract <T extends Persistable> T doRead(Class<T> projectedEntityType, Object key);
 
     @Override
-    public <T extends Persistable> T securedUpdate(Class<T> projectedEntityType, T entity) throws ServiceException {
+    public <T extends Persistable> T securedUpdate(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException {
         if (projectedEntityType == null) {
             projectedEntityType = (Class<T>) entity.getClass();
         }
         Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
         String guardianName = guardian.getName();
         PersistableResult<T> oldEntity = getManagedEntity(projectedEntityType, entity);
-        securityVerifier.checkAccess(guardianName, Access.Update, oldEntity.getValue(), entity);
+        securityVerifier.checkAccess(accessor, guardianName, Access.Update, oldEntity.getValue(), entity);
         PersistableResult persistableResult = makePersistableResult(entity);
 
         //store before validate, for security reason
@@ -88,30 +91,42 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
         return doUpdate(projectedEntityType, entity);
     }
 
-    protected abstract  <T extends Persistable> T doUpdate(Class<T> projectedEntityType, T entity);
+    protected abstract <T extends Persistable> T doUpdate(Class<T> projectedEntityType, T entity);
 
     @Override
-    public <T extends Persistable> boolean securedDelete(Class<T> projectedEntityType, Object id) throws ServiceException {
+    public <T extends Persistable> boolean securedDelete(SecurityAccessor accessor, Class<T> projectedEntityType, Object id) throws ServiceException {
         Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
         String guardianName = guardian.getName();
         PersistableResult<T> oldEntity = getManagedEntityById(projectedEntityType, id);
-        if(oldEntity == null){
+        if (oldEntity == null) {
             throw new NoSuchRecordException(projectedEntityType, id);
         }
         Persistable entity = oldEntity.getValue();
-        securityVerifier.checkAccess(guardianName, Access.Delete, entity);
-        return doDelete(projectedEntityType, (T)entity);
+        securityVerifier.checkAccess(accessor, guardianName, Access.Delete, entity);
+        return doDelete(projectedEntityType, (T) entity);
     }
 
     protected abstract <T extends Persistable> boolean doDelete(Class<T> projectedEntityType, T entity);
 
     @Override
-    public <T extends Persistable> CriteriaQueryResult<T> securedQuery(Class<T> projectedEntityType, CriteriaTransferObject query) throws ServiceException {
+    public <T extends Persistable> CriteriaQueryResult<T> securedQuery(SecurityAccessor accessor, Class<T> projectedEntityType, CriteriaTransferObject query) throws ServiceException {
         Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
         String guardianName = guardian.getName();
-        securityVerifier.checkAccess(guardianName, Access.Query);
+        securityVerifier.checkAccess(accessor, guardianName, Access.Query);
         CriteriaQueryResult<T> result = doQuery(projectedEntityType, query);
-        for(T one : result.getEntityCollection()){
+        for (T one : result.getEntityCollection()) {
+            entityValueGateService.fetch(one);
+        }
+        return result;
+    }
+
+    @Override
+    public <T extends Persistable> CriteriaQueryResult<T> securedQueryIds(SecurityAccessor accessor, Class<T> projectedEntityType, Collection<String> ids) throws ServiceException {
+        CriteriaTransferObject cto = new CriteriaTransferObject();
+        IClassMeta cm = this.entityMetaAccess.getClassMeta(projectedEntityType, false);
+        cto.addFilterCriteria(new PropertyFilterCriteria(cm.getIdFieldName(), ids));
+        CriteriaQueryResult<T> result = doQuery(projectedEntityType, cto);
+        for (T one : result.getEntityCollection()) {
             entityValueGateService.fetch(one);
         }
         return result;
@@ -160,7 +175,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor{
             persistableResult.setIdKey(idField.getName())
                     .setIdValue((id == null) ? null : id.toString())
                     .setValue(entity);
-            if(nameField != null){
+            if (nameField != null) {
                 Object name = nameField.get(entity);
                 persistableResult.setName((name == null) ? null : name.toString());
             }

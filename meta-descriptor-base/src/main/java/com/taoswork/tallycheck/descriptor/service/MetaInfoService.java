@@ -1,9 +1,9 @@
 package com.taoswork.tallycheck.descriptor.service;
 
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.description.infos.IEntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
+import com.taoswork.tallycheck.info.IEntityInfo;
 
 /**
  * Created by Gao Yuan on 2015/5/27.
