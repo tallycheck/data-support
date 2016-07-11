@@ -43,7 +43,7 @@ public class MongoDatasourceBeanConfiguration
             morphia.mapPackageFromClass(mdd.getRootDataClass());
         }
         Class[] pEntities = persistableEntities;
-        if (pEntities != null) {
+        if (pEntities != null && pEntities.length != 0) {
             morphia.map(pEntities);
         }
 
