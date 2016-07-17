@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.info.IEntityInfo;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedImpl;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 import org.slf4j.Logger;
@@ -17,17 +17,17 @@ import java.util.*;
  * Created by Gao Yuan on 2015/8/9.
  */
 public class EntityInfoImpl
-        extends NamedInfoImpl
-        implements EntityInfo, EntityInfoRW {
+        extends NamedImpl
+        implements EntityInfoRW {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EntityInfoImpl.class);
 
     private boolean withHierarchy = true;
     private Class type = null;
 
-    private String idField;
-    private String nameField;
-    private String primarySearchField;
+    private String idField = "id";
+    private String nameField = "name";
+    private String primarySearchField = "name";
 
     private Map<String, IFieldInfo> fields = new HashMap<String, IFieldInfo>();
     private List<ITabInfo> tabs = new ArrayList<ITabInfo>();

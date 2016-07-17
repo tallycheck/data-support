@@ -20,7 +20,10 @@ public abstract class _CollectionFieldInfo extends CollectionFieldInfoBase {
      * The difference between the 4 types are handled in the metadata,
      */
 
-    private final String instanceType;
+    private String instanceType;
+
+    public _CollectionFieldInfo() {
+    }
 
     public _CollectionFieldInfo(String name, String friendlyName, boolean editable, String instanceType) {
         super(name, friendlyName, editable);

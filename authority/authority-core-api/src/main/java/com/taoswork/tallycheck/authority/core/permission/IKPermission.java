@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.authority.core.permission;
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Collection;
  * Note:
  * ProtectionMode is on the resource side, NOT here
  */
-public interface IKPermission {
+public interface IKPermission extends Serializable {
     /**
      * The resource this IKPermission protects
      * @return

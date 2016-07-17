@@ -1,9 +1,7 @@
 package com.taoswork.tallycheck.authority.domain.resource;
 
-import com.taoswork.tallycheck.authority.atom.utility.ResourceUtility;
 import com.taoswork.tallycheck.authority.domain.resource.protection.ProtectionGate;
 import com.taoswork.tallycheck.authority.domain.resource.protection.ProtectionValidator;
-import com.taoswork.tallycheck.authority.domain.resource.protection.ResourceNameFieldGate;
 import com.taoswork.tallycheck.datadomain.base.entity.MapField;
 import com.taoswork.tallycheck.datadomain.base.entity.MapMode;
 import com.taoswork.tallycheck.datadomain.base.entity.PersistEntity;
@@ -29,12 +27,12 @@ import java.util.UUID;
 @Entity
 @Indexes(
         {
-                @Index(value = "protectionSpace", fields ={
-                        @Field(Protection.FN_PROTECTION_SPACE)}),
-                @Index(fields = @Field(Protection.FN_NAMESPACE)),
+                @Index(value = "protectionSpec", fields ={
+                        @Field(Protection.FN_PROTECTION_SPEC)}),
+                @Index(fields = @Field(Protection.FN_PROTECTION_REGION)),
                 @Index(value = "scopedResource", fields = {
-                        @Field(Protection.FN_PROTECTION_SPACE),
-                        @Field(Protection.FN_NAMESPACE),
+                        @Field(Protection.FN_PROTECTION_SPEC),
+                        @Field(Protection.FN_PROTECTION_REGION),
                         @Field("resource")
                 }, unique = true)
         }
@@ -49,11 +47,11 @@ public class Protection
 
     @PersistField(fieldType = FieldType.STRING, required = true)
     @PresentationField(order = 3, visibility = Visibility.HIDDEN_ALL)
-    protected String protectionSpace;
-    public static final String FN_PROTECTION_SPACE = "protectionSpace";
+    protected String protectionSpec;
+    public static final String FN_PROTECTION_SPEC = "protectionSpec";
 
-    private String namespace;
-    public static final String FN_NAMESPACE = "namespace";
+    private String protectionRegion;
+    public static final String FN_PROTECTION_REGION = "protectionRegion";
 
     @PersistField(fieldType = FieldType.NAME, required = true, length = 100)
     @PresentationField(order = 1)
@@ -64,7 +62,7 @@ public class Protection
     protected String description;
 
     @Indexed
-    @PersistField(fieldType = FieldType.STRING, required = true, fieldValueGateOverride= ResourceNameFieldGate.class)
+    @PersistField(fieldType = FieldType.STRING, required = true)
     @PresentationField(order = 3)
     protected String resource;
     public static final String FN_RESOURCE_ENTITY = "resource";
@@ -90,20 +88,20 @@ public class Protection
     @Version
     protected Long version = null;
 
-    public String getProtectionSpace() {
-        return protectionSpace;
+    public String getProtectionSpec() {
+        return protectionSpec;
     }
 
-    public void setProtectionSpace(String protectionSpace) {
-        this.protectionSpace = protectionSpace;
+    public void setProtectionSpec(String protectionSpec) {
+        this.protectionSpec = protectionSpec;
     }
 
-    public String getNamespace() {
-        return namespace;
+    public String getProtectionRegion() {
+        return protectionRegion;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public void setProtectionRegion(String protectionRegion) {
+        this.protectionRegion = protectionRegion;
     }
 
     public String getName() {
@@ -133,7 +131,7 @@ public class Protection
     }
 
     public void setResource(String resource) {
-        this.resource = ResourceUtility.unifiedResourceName(resource);
+        this.resource = resource;
     }
 
     public String getCategory() {

@@ -210,16 +210,16 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
         IAuthorityVerifier client = new MollyOnMongoClient(authorityProvider);
         makeResourceInstanceMembers(CM1File.class);
 
-        TGroupAuthority d_group_N____ = mockuper.getGroupAuthority(mockuper.TENANT, Group_N____);
-        TGroupAuthority d_group__AB__ = mockuper.getGroupAuthority(mockuper.TENANT, Group__AB__);
-        TGroupAuthority d_group_G____ = mockuper.getGroupAuthority(mockuper.TENANT, Group_G____);
+        TGroupAuthority d_group_N____ = mockuper.getGroupAuthority(mockuper.PROTECTION_REGION, Group_N____);
+        TGroupAuthority d_group__AB__ = mockuper.getGroupAuthority(mockuper.PROTECTION_REGION, Group__AB__);
+        TGroupAuthority d_group_G____ = mockuper.getGroupAuthority(mockuper.PROTECTION_REGION, Group_G____);
 
-        TUserAuthority d_user_N____ = mockuper.getUserAuthority(mockuper.TENANT, User_N____);
-        TUserAuthority d_user__AB__ = mockuper.getUserAuthority(mockuper.TENANT, User__AB__);
-        TUserAuthority d_user__ABCD = mockuper.getUserAuthority(mockuper.TENANT, User__ABCD);
-        TUserAuthority d_user_G____ = mockuper.getUserAuthority(mockuper.TENANT, User_G____);
-        TUserAuthority d_user_GAB__ = mockuper.getUserAuthority(mockuper.TENANT, User_GAB__);
-        TUserAuthority d_user_GABCD = mockuper.getUserAuthority(mockuper.TENANT, User_GABCD);
+        TUserAuthority d_user_N____ = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User_N____);
+        TUserAuthority d_user__AB__ = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User__AB__);
+        TUserAuthority d_user__ABCD = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User__ABCD);
+        TUserAuthority d_user_G____ = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User_G____);
+        TUserAuthority d_user_GAB__ = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User_GAB__);
+        TUserAuthority d_user_GABCD = mockuper.getUserAuthority(mockuper.PROTECTION_REGION, User_GABCD);
 
         TUserAuthority[] d_users = new TUserAuthority[]{d_user_N____, d_user__AB__, d_user__ABCD, d_user_G____, d_user_GAB__, d_user_GABCD};
         {

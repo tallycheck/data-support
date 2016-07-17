@@ -5,7 +5,10 @@ package com.taoswork.tallycheck.info.descriptor.field.typed;
  */
 public class ExternalForeignKeyFieldInfo extends ForeignKeyFieldInfo {
 
-    public final String entityFieldName;
+    public String entityFieldName;
+
+    public ExternalForeignKeyFieldInfo() {
+    }
 
     public ExternalForeignKeyFieldInfo(String name, String friendlyName, boolean editable,
                                        Class declareType, Class entityType, String entityFieldName,

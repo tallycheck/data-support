@@ -27,7 +27,10 @@ public class PrimitiveCollectionFieldInfo extends _CollectionFieldInfo {
         supportedActions = CollectionAction.convertToTypes(tempActions, new HashSet<String>());
     }
 
-    private final Map<String, String> actionRefUrls;
+    private Map<String, String> actionRefUrls;
+
+    public PrimitiveCollectionFieldInfo() {
+    }
 
     public PrimitiveCollectionFieldInfo(String name, String friendlyName,
                                         boolean editable, String instanceType) {

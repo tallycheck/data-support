@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.info.descriptor.tab;
 
-import com.taoswork.tallycheck.info.descriptor.base.NamedOrderedInfo;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.NamedOrdered;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedImpl;
 import com.taoswork.tallycheck.info.descriptor.group.IGroupInfo;
 
 import java.util.List;
@@ -9,14 +9,17 @@ import java.util.List;
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public class TabInfoImpl extends NamedOrderedInfoImpl implements ITabInfo {
+public class TabInfoImpl extends NamedOrderedImpl implements ITabInfo {
     /**
      * groups are ordered
      */
-    private final List<IGroupInfo> groups;
+    private List<IGroupInfo> groups;
+
+    public TabInfoImpl() {
+    }
 
     public TabInfoImpl(List<IGroupInfo> groups) {
-        this.groups = NamedOrderedInfo.NameSorter.makeObjectOrdered(groups);
+        this.groups = NamedOrdered.NameSorter.makeObjectOrdered(groups);
     }
 
     @Override

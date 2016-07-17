@@ -13,14 +13,17 @@ import java.util.Map;
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public final class EntityFullInfo extends _BaseEntityHandyInfo implements IEntityInfo {
-    private final String idField;
-    private final String nameField;
-    public final String primarySearchField;
-    public final Map<String, IFieldInfo> fields;
-    public final List<ITabInfo> tabs;
-    public final List<String> gridFields;
-    private final Map<String, IEntityInfo> referencingEntryInfos;
+public final class EntityFullInfo extends _BaseEntityHandyInfo {
+    private String idField = "id";
+    private String nameField = "name";
+    public String primarySearchField = "name";
+    public Map<String, IFieldInfo> fields;
+    public List<ITabInfo> tabs;
+    public List<String> gridFields;
+    private Map<String, IEntityInfo> referencingEntryInfos;
+
+    public EntityFullInfo() {
+    }
 
     public EntityFullInfo(EntityInfo entityInfo) {
         super(entityInfo);

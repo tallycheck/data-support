@@ -13,12 +13,15 @@ import java.util.Map;
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public final class EntityFormInfo extends _BaseEntityHandyInfo implements IEntityInfo {
-    private final String idField;
-    private final String nameField;
-    public final Map<String, IFieldInfo> fields;
-    public final List<ITabInfo> tabs;
-    private final Map<String, IEntityInfo> referencingInfos;
+public final class EntityFormInfo extends _BaseEntityHandyInfo {
+    private String idField = "id";
+    private String nameField = "name";
+    public Map<String, IFieldInfo> fields;
+    public List<ITabInfo> tabs;
+    private Map<String, IEntityInfo> referencingInfos;
+
+    public EntityFormInfo() {
+    }
 
     public EntityFormInfo(EntityInfo entityInfo) {
         super(entityInfo);

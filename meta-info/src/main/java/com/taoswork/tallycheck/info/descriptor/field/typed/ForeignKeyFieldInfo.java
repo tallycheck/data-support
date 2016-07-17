@@ -9,11 +9,14 @@ import com.taoswork.tallycheck.info.descriptor.field.base.BasicFieldInfoBase;
  * Created by Gao Yuan on 2015/10/24.
  */
 public class ForeignKeyFieldInfo extends BasicFieldInfoBase {
-    public final String entityType;
-    public final String selectUri;
-    public final String recordUri;
-    public final String idFieldName;
-    public final String displayFieldName;
+    public String entityType;
+    public String selectUri;
+    public String recordUri;
+    public String idFieldName = "id";
+    public String displayFieldName = "name";
+
+    public ForeignKeyFieldInfo() {
+    }
 
     public ForeignKeyFieldInfo(String name, String friendlyName, boolean editable,
                                Class declareType, Class entityType,

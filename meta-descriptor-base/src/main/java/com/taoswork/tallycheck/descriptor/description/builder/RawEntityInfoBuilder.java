@@ -9,8 +9,8 @@ import com.taoswork.tallycheck.descriptor.metadata.TabMeta;
 import com.taoswork.tallycheck.descriptor.metadata.friendly.IFriendly;
 import com.taoswork.tallycheck.descriptor.metadata.friendly.IFriendlyOrdered;
 import com.taoswork.tallycheck.info.FriendlyNameHelper;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.base.Named;
+import com.taoswork.tallycheck.info.descriptor.base.NamedOrdered;
 import com.taoswork.tallycheck.info.descriptor.field.IBasicFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -158,12 +158,12 @@ final class RawEntityInfoBuilder {
             return rawTabInfo;
         }
 
-        static void copyOrderedFriendlyMetadata(IFriendlyOrdered source, NamedOrderedInfoRW target) {
+        static void copyOrderedFriendlyMetadata(IFriendlyOrdered source, NamedOrdered target) {
             copyFriendlyMetadata(source, target);
             target.setOrder(source.getOrder());
         }
 
-        static void copyFriendlyMetadata(IFriendly source, NamedInfoRW target) {
+        static void copyFriendlyMetadata(IFriendly source, Named target) {
             target.setFriendlyName(source.getFriendlyName())
                     .setName(source.getName());
         }

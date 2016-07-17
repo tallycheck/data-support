@@ -134,7 +134,7 @@ public class MollyOnNothingProvider extends BaseAuthorityProvider {
 
     public void registerProtection(String resource, boolean masterControlled,
                                    ProtectionMode protectionMode) {
-        String unifiedResource = ResourceUtility.unifiedResourceName(resource);
+        String unifiedResource = (resource);
         ResProtection resProtection = new ResProtection();
         resProtection.resource = unifiedResource;
         resProtection.masterControlled = masterControlled;
@@ -149,7 +149,6 @@ public class MollyOnNothingProvider extends BaseAuthorityProvider {
     }
 
     protected KPermission permissionWith(String resource, boolean g, boolean a, boolean b, boolean c, boolean d) {
-        resource = ResourceUtility.unifiedResourceName(resource);
         KPermission entityPermission = new KPermission(resource);
         KPermissionCase accessA = Mockuper.permissionCase(docCaseA, normalAccess);
         KPermissionCase accessB = Mockuper.permissionCase(docCaseB, normalAccess);

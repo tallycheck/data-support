@@ -1,9 +1,11 @@
 package com.taoswork.tallycheck.dataservice.query;
 
+import java.io.Serializable;
+
 /**
  * Created by Gao Yuan on 2015/6/15.
  */
-public abstract class PropertyCriteria implements Cloneable {
+public abstract class PropertyCriteria implements Cloneable, Serializable {
 
     protected String propertyName;
 

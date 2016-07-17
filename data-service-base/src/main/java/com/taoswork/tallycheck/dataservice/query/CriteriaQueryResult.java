@@ -3,12 +3,13 @@ package com.taoswork.tallycheck.dataservice.query;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.general.extension.collections.CollectionUtility;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Gao Yuan on 2015/6/17.
  */
-public class CriteriaQueryResult<T extends Persistable> {
+public class CriteriaQueryResult<T extends Persistable> implements Serializable {
     private final Class<T> entityType;
     private List<T> entityCollection;
     private Long totalCount;

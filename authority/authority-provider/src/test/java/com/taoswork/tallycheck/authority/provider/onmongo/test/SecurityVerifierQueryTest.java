@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class SecurityVerifierQueryTest extends VerifierTestSupport {
 
-    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPACE, mockuper.TENANT);
+    private final ProtectionScope PS = new ProtectionScope(mockuper.PROTECTION_SPEC, mockuper.PROTECTION_REGION);
 
     @BeforeClass
     public static void beforeClass() throws ServiceException {

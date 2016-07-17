@@ -4,8 +4,7 @@ import com.taoswork.tallycheck.datasolution.core.description.FriendlyMetaInfoSer
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.general.extension.utils.CloneUtility;
 import com.taoswork.tallycheck.general.solution.threading.annotations.ThreadSafe;
-import com.taoswork.tallycheck.info.descriptor.base.NamedInfo;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.base.Named;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.field.base.IFieldInfoRW;
 import com.taoswork.tallycheck.info.descriptor.field.typed.BooleanFieldInfo;
@@ -51,8 +50,8 @@ public class FriendlyMetaInfoServiceImpl implements FriendlyMetaInfoService {
     }
 
     private void makeEntityInfoFriendly(EntityInfo entityInfo, Locale locale) {
-        if (entityInfo instanceof NamedInfoRW) {
-            makeNamedInfoFriendly(entityInfo, (NamedInfoRW) entityInfo, locale);
+        if (entityInfo instanceof Named) {
+            makeNamedInfoFriendly(entityInfo, (Named) entityInfo, locale);
         } else {
             LOGGER.error("new EntityInfo by Clone has un-writeable IEntityInfo {}", entityInfo);
         }
@@ -60,14 +59,14 @@ public class FriendlyMetaInfoServiceImpl implements FriendlyMetaInfoService {
             makeFieldInfoFriendly(fieldInfo, locale);
         }
         for (ITabInfo tabInfo : entityInfo.getTabs()) {
-            if (tabInfo instanceof NamedInfoRW) {
-                makeNamedInfoFriendly(tabInfo, (NamedInfoRW) tabInfo, locale);
+            if (tabInfo instanceof Named) {
+                makeNamedInfoFriendly(tabInfo, (Named) tabInfo, locale);
             } else {
                 LOGGER.error("new EntityInfo by Clone has un-writeable IFieldInfo {}", tabInfo);
             }
             for (IGroupInfo groupInfo : tabInfo.getGroups()) {
-                if (groupInfo instanceof NamedInfoRW) {
-                    makeNamedInfoFriendly(groupInfo, (NamedInfoRW) groupInfo, locale);
+                if (groupInfo instanceof Named) {
+                    makeNamedInfoFriendly(groupInfo, (Named) groupInfo, locale);
                 } else {
                     LOGGER.error("new EntityInfo by Clone has un-writeable IFieldInfo {}", tabInfo);
                 }
@@ -75,7 +74,7 @@ public class FriendlyMetaInfoServiceImpl implements FriendlyMetaInfoService {
         }
     }
 
-    private void makeNamedInfoFriendly(NamedInfo source, NamedInfoRW target, Locale locale) {
+    private void makeNamedInfoFriendly(Named source, Named target, Locale locale) {
         String oldFriendly = source.getFriendlyName();
         String newFriendly = entityMessageSource.getMessage(oldFriendly, null, oldFriendly, locale);
         if (oldFriendly.equals(newFriendly)) {
@@ -93,7 +92,7 @@ public class FriendlyMetaInfoServiceImpl implements FriendlyMetaInfoService {
 
     private void makeFieldInfoFriendly(IFieldInfo fieldInfo, Locale locale) {
         if (fieldInfo instanceof IFieldInfoRW) {
-            makeNamedInfoFriendly(fieldInfo, (NamedInfoRW) fieldInfo, locale);
+            makeNamedInfoFriendly(fieldInfo, (Named) fieldInfo, locale);
         } else {
             LOGGER.error("new EntityInfo by Clone has un-writeable IFieldInfo {}", fieldInfo);
         }

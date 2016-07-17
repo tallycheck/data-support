@@ -1,7 +1,7 @@
 package com.taoswork.tallycheck.descriptor.description.infos.main.impl;
 
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.base.Named;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.tab.ITabInfo;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public interface EntityInfoRW extends EntityInfo, NamedInfoRW {
+public interface EntityInfoRW extends EntityInfo, Named {
     void setIdField(String idField);
 
     void setNameField(String nameField);

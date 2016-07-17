@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.authority.domain.user;
 
+import com.taoswork.tallycheck.authority.atom.utility.ResourceUtility;
 import com.taoswork.tallycheck.authority.domain.permission.Permission;
 import com.taoswork.tallycheck.datadomain.base.entity.MapField;
 import com.taoswork.tallycheck.datadomain.base.entity.MapMode;
@@ -23,12 +24,12 @@ import java.util.Map;
 @PersistEntity(
 )
 @Indexes({
-        @Index(fields = @Field(BaseAuthority.FN_PROTECTION_SPACE)),
-        @Index(fields = {@Field(BaseAuthority.FN_PROTECTION_SPACE),
-                @Field(BaseAuthority.FN_NAMESPACE)}),
-        @Index(fields = {@Field(BaseAuthority.FN_PROTECTION_SPACE),
+        @Index(fields = @Field(BaseAuthority.FN_PROTECTION_SPEC)),
+        @Index(fields = {@Field(BaseAuthority.FN_PROTECTION_SPEC),
+                @Field(BaseAuthority.FN_PROTECTION_REGION)}),
+        @Index(fields = {@Field(BaseAuthority.FN_PROTECTION_SPEC),
                 @Field(BaseAuthority.FN_OWNER_ID),
-                @Field(BaseAuthority.FN_NAMESPACE)}, unique = true),
+                @Field(BaseAuthority.FN_PROTECTION_REGION)}, unique = true),
         @Index(fields = {@Field(BaseAuthority.FN_OWNER_ID)})
 })
 public abstract class BaseAuthority
@@ -36,37 +37,37 @@ public abstract class BaseAuthority
 
     @PersistField(fieldType = FieldType.STRING, required = true)
     @PresentationField(order = 2, visibility = Visibility.HIDDEN_ALL)
-    protected String protectionSpace;
-    public static final String FN_PROTECTION_SPACE = "protectionSpace";
+    protected String protectionSpec;
+    public static final String FN_PROTECTION_SPEC = "protectionSpec";
 
     @PersistField(fieldType = FieldType.STRING, required = true)
-    protected String namespace;
-    public static final String FN_NAMESPACE = "namespace";
+    protected String protectionRegion;
+    public static final String FN_PROTECTION_REGION = "protectionRegion";
 
     private String ownerId;
     public static final String FN_OWNER_ID = "ownerId";
 
     @MapField(mode = MapMode.Entity, keyFieldOnValue = Permission.FN_RESOURCE)
-    //the key is resource name;
+    //the key is resource name; ResourceUtility.unifiedResourceName(resource);
     protected Map<String, Permission> permissions = new HashMap<String, Permission>();
 
     @Version
     protected Long version = null;
 
-    public String getProtectionSpace() {
-        return protectionSpace;
+    public String getProtectionSpec() {
+        return protectionSpec;
     }
 
-    public void setProtectionSpace(String protectionSpace) {
-        this.protectionSpace = protectionSpace;
+    public void setProtectionSpec(String protectionSpec) {
+        this.protectionSpec = protectionSpec;
     }
 
-    public String getNamespace() {
-        return namespace;
+    public String getProtectionRegion() {
+        return protectionRegion;
     }
 
-    public void setNamespace(String namespace) {
-        this.namespace = namespace;
+    public void setProtectionRegion(String protectionRegion) {
+        this.protectionRegion = protectionRegion;
     }
 
     public String getOwnerId() {
@@ -82,11 +83,13 @@ public abstract class BaseAuthority
     }
 
     public Permission getPermission(String resource) {
-        return permissions.get(resource);
+        String uRes = ResourceUtility.unifiedResourceName(resource);
+        return permissions.get(uRes);
     }
 
     public void addPermission(Permission permission) {
-        this.permissions.put(permission.getResource(), permission);
+        String uRes =  ResourceUtility.unifiedResourceName(permission.getResource());
+        this.permissions.put(uRes, permission);
     }
 
     public void setPermissions(Map<String, Permission> permissions) {

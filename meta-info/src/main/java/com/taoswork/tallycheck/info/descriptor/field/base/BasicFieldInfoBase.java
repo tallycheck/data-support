@@ -13,6 +13,9 @@ public abstract class BasicFieldInfoBase
     private boolean supportSort = true;
     private boolean supportFilter = true;
 
+    public BasicFieldInfoBase() {
+    }
+
     public BasicFieldInfoBase(String name, String friendlyName, boolean editable) {
         super(name, friendlyName, editable);
     }

@@ -21,10 +21,10 @@ public class ProtectionValidator extends BaseEntityValidator<Protection> {
             validationErrors.appendFieldError("resource", errorCode);
             ok = false;
         }
-        if(StringUtils.isBlank(entity.getProtectionSpace())){
+        if(StringUtils.isBlank(entity.getProtectionSpec())){
             String errorCode = "Protection.reqires.protection.scope";
             validationErrors.appendError(errorCode);
-            validationErrors.appendFieldError(Protection.FN_PROTECTION_SPACE, errorCode);
+            validationErrors.appendFieldError(Protection.FN_PROTECTION_SPEC, errorCode);
             ok = false;
         }
         Map<String, ProtectionCase> cases = entity.getCases();

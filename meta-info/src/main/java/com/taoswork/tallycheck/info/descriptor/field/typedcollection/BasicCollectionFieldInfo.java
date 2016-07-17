@@ -28,7 +28,10 @@ public class BasicCollectionFieldInfo extends _CollectionFieldInfo {
         supportedActions = CollectionAction.convertToTypes(tempActions, new HashSet<String>());
     }
 
-    private final Map<String, String> actionRefUrls;
+    private Map<String, String> actionRefUrls;
+
+    public BasicCollectionFieldInfo() {
+    }
 
     /**
      * @param name

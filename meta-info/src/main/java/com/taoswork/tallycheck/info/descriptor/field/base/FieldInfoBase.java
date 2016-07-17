@@ -2,21 +2,24 @@ package com.taoswork.tallycheck.info.descriptor.field.base;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.FieldType;
 import com.taoswork.tallycheck.datadomain.base.presentation.Visibility;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedImpl;
 
 /**
  * Created by Gao Yuan on 2015/6/25.
  */
 abstract class FieldInfoBase
-        extends NamedOrderedInfoImpl
+        extends NamedOrderedImpl
         implements IFieldInfoRW {
 
-    private final boolean editable;
     public int visibility = Visibility.DEFAULT;
-    public boolean required = false;
-    private boolean _ignored = false;
+    public FieldType fieldType = FieldType.UNKNOWN;
 
-    private FieldType fieldType = FieldType.UNKNOWN;
+    public boolean editable = true;
+    public boolean required = false;
+    public boolean _ignored = false;
+
+    public FieldInfoBase() {
+    }
 
     public FieldInfoBase(String name, String friendlyName, boolean editable) {
         super(name, friendlyName);

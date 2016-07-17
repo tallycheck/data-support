@@ -36,14 +36,14 @@ public abstract class BaseAuthorityProvider implements IAuthorityProvider {
     @Override
     public final IKPermission getPermission(ProtectionScope scope, String resourceTypeName, String userId) {
         String correctedResourceType = correctResource(scope, resourceTypeName);
-        correctedResourceType = ResourceUtility.unifiedResourceName(correctedResourceType);
+//        correctedResourceType = ResourceUtility.unifiedResourceName(correctedResourceType);
         return doGetPermission(scope, correctedResourceType, userId);
     }
 
     @Override
     public final ResProtection getProtection(ProtectionScope scope, String resourceTypeName) {
         String correctedResourceType = correctResource(scope, resourceTypeName);
-        correctedResourceType = ResourceUtility.unifiedResourceName(correctedResourceType);
+//        correctedResourceType = ResourceUtility.unifiedResourceName(correctedResourceType);
         return doGetProtection(scope, correctedResourceType);
     }
 

@@ -1,19 +1,19 @@
 package com.taoswork.tallycheck.info.descriptor.base.impl;
 
-import com.taoswork.tallycheck.info.descriptor.base.NamedInfo;
+import com.taoswork.tallycheck.info.descriptor.base.Named;
 
 /**
  * Created by Gao Yuan on 2015/6/25.
  */
-public class NamedInfoImpl implements NamedInfoRW {
+public class NamedImpl implements Named {
     public String name;
     public String friendlyName;
 
-    public NamedInfoImpl() {
+    public NamedImpl() {
         this("", "");
     }
 
-    public NamedInfoImpl(String name, String friendlyName) {
+    public NamedImpl(String name, String friendlyName) {
         this.name = name;
         this.friendlyName = friendlyName;
     }
@@ -24,7 +24,7 @@ public class NamedInfoImpl implements NamedInfoRW {
     }
 
     @Override
-    public NamedInfoImpl setName(String name) {
+    public NamedImpl setName(String name) {
         this.name = name;
         return this;
     }
@@ -35,13 +35,12 @@ public class NamedInfoImpl implements NamedInfoRW {
     }
 
     @Override
-    public NamedInfoImpl setFriendlyName(String friendlyName) {
+    public NamedImpl setFriendlyName(String friendlyName) {
         this.friendlyName = friendlyName;
         return this;
     }
 
-    @Override
-    public void copyNamedInfo(NamedInfo source) {
+    public void copyNamedInfo(Named source) {
         this.name = source.getName();
         this.friendlyName = source.getFriendlyName();
     }

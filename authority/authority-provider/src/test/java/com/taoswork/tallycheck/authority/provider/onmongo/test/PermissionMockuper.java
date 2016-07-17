@@ -4,7 +4,7 @@ import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.atom.ProtectionMode;
 import com.taoswork.tallycheck.authority.atom.utility.ResourceUtility;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
-import com.taoswork.tallycheck.authority.domain.ProtectionSpace;
+import com.taoswork.tallycheck.authority.domain.ProtectionSpec;
 import com.taoswork.tallycheck.authority.domain.ResourceAccess;
 import com.taoswork.tallycheck.authority.domain.permission.Permission;
 import com.taoswork.tallycheck.authority.domain.permission.PermissionCase;
@@ -34,10 +34,10 @@ import java.util.Map;
  * Created by Gao Yuan on 2016/2/24.
  */
 public class PermissionMockuper {
-    public static final String PROTECTION_SPACE = "test";
-    public static final String TENANT = "test-tenant";
+    public static final String PROTECTION_SPEC = "test";
+    public static final String PROTECTION_REGION = "test-region";
 
-    public static final ProtectionScope PS = new ProtectionScope(PROTECTION_SPACE, TENANT);
+    public static final ProtectionScope PS = new ProtectionScope(PROTECTION_SPEC, PROTECTION_REGION);
 
     public static final String CASE_A_NAME = "A";
     public static final String CASE_B_NAME = "B";
@@ -73,18 +73,18 @@ public class PermissionMockuper {
         this.normalAccess = normalAccess;
     }
 
-    public void makeProtectionSpace() {
-        ProtectionSpace ps = new ProtectionSpace();
-        ps.setSpaceName(PROTECTION_SPACE);
+    public void makeProtectionSpec() {
+        ProtectionSpec ps = new ProtectionSpec();
+        ps.setSpecName(PROTECTION_SPEC);
         easyEntityAccess.create(accessor, ps);
     }
 
-    public void makeSecuredResource(String tenant, Class resource,
+    public void makeSecuredResource(String region, Class resource,
                                     boolean masterControlled,
                                     ProtectionMode pm, boolean addCases) {
         Protection sr = new Protection();
-        sr.setProtectionSpace(PROTECTION_SPACE);
-        sr.setNamespace(tenant);
+        sr.setProtectionSpec(PROTECTION_SPEC);
+        sr.setProtectionRegion(region);
         sr.setResource(resource.getName());
         sr.setName(resource.getSimpleName());
         sr.setProtectionMode(DProtectionMode.fromNativeType(pm));
@@ -107,58 +107,58 @@ public class PermissionMockuper {
 
     public Protection getResource(String tanantId, Class resource) throws ServiceException {
         CriteriaTransferObject cto = new CriteriaTransferObject();
-        cto.addFilterCriteria(Protection.FN_PROTECTION_SPACE, PROTECTION_SPACE)
-                .addFilterCriteria(Protection.FN_NAMESPACE, tanantId)
-                .addFilterCriteria(Protection.FN_RESOURCE_ENTITY, ResourceUtility.unifiedResourceName(resource.getName()));
+        cto.addFilterCriteria(Protection.FN_PROTECTION_SPEC, PROTECTION_SPEC)
+                .addFilterCriteria(Protection.FN_PROTECTION_REGION, tanantId)
+                .addFilterCriteria(Protection.FN_RESOURCE_ENTITY, resource.getName());
         Protection sr = easyEntityAccess.queryOne(accessor, Protection.class, cto, CopyLevel.Swap);
         return sr;
     }
 
-    public <T extends UserAuthority> T getUserAuthority(String tenant, String userId) throws ServiceException {
+    public <T extends UserAuthority> T getUserAuthority(String region, String userId) throws ServiceException {
         CriteriaTransferObject cto = new CriteriaTransferObject();
-        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPACE, PROTECTION_SPACE)
-                .addFilterCriteria(UserAuthority.FN_NAMESPACE, tenant)
+        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPEC, PROTECTION_SPEC)
+                .addFilterCriteria(UserAuthority.FN_PROTECTION_REGION, region)
                 .addFilterCriteria(UserAuthority.FN_OWNER_ID, userId);
         BaseAuthority pp = easyEntityAccess.queryOne(accessor, UserAuthority.class, cto, CopyLevel.Swap);
         return (T) pp;
     }
 
-    public <T extends GroupAuthority> T getGroupAuthority(String tenant, String groupId) throws ServiceException {
+    public <T extends GroupAuthority> T getGroupAuthority(String region, String groupId) throws ServiceException {
         CriteriaTransferObject cto = new CriteriaTransferObject();
-        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPACE, PROTECTION_SPACE)
-                .addFilterCriteria(UserAuthority.FN_NAMESPACE, tenant)
+        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPEC, PROTECTION_SPEC)
+                .addFilterCriteria(UserAuthority.FN_PROTECTION_REGION, region)
                 .addFilterCriteria(UserAuthority.FN_OWNER_ID, groupId);
         BaseAuthority pp = easyEntityAccess.queryOne(accessor, GroupAuthority.class, cto, CopyLevel.Swap);
         return (T) pp;
     }
 
-    public void makePerson(String tenant, String userId, Class resource,
+    public void makePerson(String region, String userId, Class resource,
                            boolean g, boolean a, boolean b, boolean c, boolean d) throws ServiceException {
         UserAuthority ua = new TUserAuthority();
-        makeAuthorizable(tenant, userId, resource, UserAuthority.class, ua, g, a, b, c, d);
+        makeAuthorizable(region, userId, resource, UserAuthority.class, ua, g, a, b, c, d);
     }
 
-    public void makeGroup(String tenant, String userId, Class resource,
+    public void makeGroup(String region, String userId, Class resource,
                            boolean g, boolean a, boolean b, boolean c, boolean d) throws ServiceException {
         GroupAuthority ga = new TGroupAuthority();
         ga.setName(userId);
-        makeAuthorizable(tenant, userId, resource, GroupAuthority.class, ga, g, a, b, c, d);
+        makeAuthorizable(region, userId, resource, GroupAuthority.class, ga, g, a, b, c, d);
     }
 
-    public <T extends BaseAuthority> void makeAuthorizable(String tenant, String ownerId, Class resource,
+    public <T extends BaseAuthority> void makeAuthorizable(String region, String ownerId, Class resource,
                                                            Class<T> authorizableClz, T newInstance,
                            boolean g, boolean a, boolean b, boolean c, boolean d) throws ServiceException {
-        String resourceName = ResourceUtility.unifiedResourceName(resource);
+        String resourceName = resource.getName();
         CriteriaTransferObject cto = new CriteriaTransferObject();
-        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPACE, PROTECTION_SPACE)
-                .addFilterCriteria(UserAuthority.FN_NAMESPACE, tenant)
+        cto.addFilterCriteria(UserAuthority.FN_PROTECTION_SPEC, PROTECTION_SPEC)
+                .addFilterCriteria(UserAuthority.FN_PROTECTION_REGION, region)
                 .addFilterCriteria(UserAuthority.FN_OWNER_ID, ownerId);
         BaseAuthority pp = easyEntityAccess.queryOne(accessor, authorizableClz, cto, CopyLevel.Swap);
         boolean isNew = false;
         if (pp == null) {
             pp = newInstance;
-            pp.setProtectionSpace(PROTECTION_SPACE);
-            pp.setNamespace(tenant);
+            pp.setProtectionSpec(PROTECTION_SPEC);
+            pp.setProtectionRegion(region);
             pp.setOwnerId(ownerId);
             isNew = true;
         }
@@ -173,7 +173,7 @@ public class PermissionMockuper {
         if (g)
             rp.setAccess(ResourceAccess.createByAccess(normalAccess));
         rp.clearPermissionCases();
-        Protection protection = this.getResource(tenant, resource);
+        Protection protection = this.getResource(region, resource);
         Map<String, ProtectionCase> resourceCases = protection.getCases();
         if (resourceCases == null) {
             resourceCases = new HashMap<String, ProtectionCase>();

@@ -12,11 +12,15 @@ import java.util.Map;
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public final class EntityGridInfo extends _BaseEntityHandyInfo implements IEntityInfo {
-    private final String idField;
-    private final String nameField;
-    public final String primarySearchField;
-    public final List<IFieldInfo> fields;
+public final class EntityGridInfo extends _BaseEntityHandyInfo {
+    private String idField = "id";
+    private String nameField = "name";
+    public String primarySearchField = "name";
+    public List<IFieldInfo> fields;
+
+    public EntityGridInfo() {
+        super();
+    }
 
     public EntityGridInfo(EntityInfo entityInfo) {
         super(entityInfo);

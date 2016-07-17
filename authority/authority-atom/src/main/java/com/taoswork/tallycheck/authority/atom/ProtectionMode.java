@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.authority.atom;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import java.util.Map;
  * When the ProtectionMode is FitAll, the user should holds both A and B permission
  * When the ProtectionMode is FitAny, the user should holds at least one of A or B
  */
-public enum ProtectionMode {
+public enum ProtectionMode implements Serializable {
     FitAny("any", "Any"),
     FitAll("all", "All");
 

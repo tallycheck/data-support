@@ -18,10 +18,10 @@ import java.util.function.BiFunction;
  */
 @Entity
 @PersistEntity
-public class ProtectionSpace extends AbstractDocument{
+public class ProtectionSpec extends AbstractDocument{
     @Indexed(unique = true)
-    private String spaceName;
-    public static final String FN_SPACE_NAME = "spaceName";
+    private String specName;
+    public static final String FN_SPEC_NAME = "specName";
 
     //Key is actual resource
     @MapField(mode = MapMode.Sloth)
@@ -30,12 +30,12 @@ public class ProtectionSpace extends AbstractDocument{
     @CollectionField(mode = CollectionMode.Basic)
     private List<ProtectionLink> protectionLinks;
 
-    public String getSpaceName() {
-        return spaceName;
+    public String getSpecName() {
+        return specName;
     }
 
-    public void setSpaceName(String spaceName) {
-        this.spaceName = spaceName;
+    public void setSpecName(String specName) {
+        this.specName = specName;
     }
 
     public void addAliases(String resource, final String[] _aliases){
@@ -70,6 +70,6 @@ public class ProtectionSpace extends AbstractDocument{
 
     @Override
     public String getInstanceName() {
-        return getSpaceName();
+        return getSpecName();
     }
 }

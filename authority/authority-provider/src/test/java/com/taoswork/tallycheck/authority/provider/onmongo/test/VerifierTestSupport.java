@@ -77,7 +77,7 @@ public class VerifierTestSupport {
     protected XFile file__ABCDE = null;
     public final int docCount = 11;
 
-    public final static SecurityAccessor securityAccessor = new SecurityAccessor(new ProtectionScope(PermissionMockuper.PROTECTION_SPACE, PermissionMockuper.TENANT),"1");
+    public final static SecurityAccessor securityAccessor = new SecurityAccessor(new ProtectionScope(PermissionMockuper.PROTECTION_SPEC, PermissionMockuper.PROTECTION_REGION),"1");
 
     protected static void setupDatabaseData() {
         dataSolution = new AuthSolutionDataSolution();
@@ -113,8 +113,8 @@ public class VerifierTestSupport {
 //    }
 
     protected static void makeDatabaseTestData() throws ServiceException {
-        String tenant = mockuper.TENANT;
-        mockuper.makeProtectionSpace();
+        String tenant = mockuper.PROTECTION_REGION;
+        mockuper.makeProtectionSpec();
         mockuper.makeSecuredResource(tenant, CM1File.class, true, ProtectionMode.FitAll, true);
         mockuper.makeSecuredResource(tenant, CS1File.class, false, ProtectionMode.FitAll, true);
         mockuper.makeSecuredResource(tenant, CM0File.class, true, ProtectionMode.FitAny, true);
@@ -162,11 +162,11 @@ public class VerifierTestSupport {
     }
 
 //    protected void makeAuthoritiesUserMembers(String tenant){
-//        user_N____ = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User_N____);
-//        user__AB__ = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User__AB__);
-//        user__ABCD = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User__ABCD);
-//        user_G____ = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User_G____);
-//        user_GAB__ = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User_GAB__);
-//        user_GABCD = permissionEngine.getAuthority(mockuper.PROTECTION_SPACE, tenant, User_GABCD);
+//        user_N____ = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User_N____);
+//        user__AB__ = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User__AB__);
+//        user__ABCD = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User__ABCD);
+//        user_G____ = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User_G____);
+//        user_GAB__ = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User_GAB__);
+//        user_GABCD = permissionEngine.getAuthority(mockuper.PROTECTION_SPEC, tenant, User_GABCD);
 //    }
 }

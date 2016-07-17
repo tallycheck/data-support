@@ -1,14 +1,14 @@
 package com.taoswork.tallycheck.info;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.taoswork.tallycheck.info.descriptor.base.NamedInfo;
+import com.taoswork.tallycheck.info.descriptor.base.Named;
 
 import java.util.Map;
 
 /**
  * Created by Gao Yuan on 2015/8/9.
  */
-public interface IEntityInfo extends NamedInfo {
+public interface IEntityInfo extends Named {
     String getInfoType();
 
     String getType();

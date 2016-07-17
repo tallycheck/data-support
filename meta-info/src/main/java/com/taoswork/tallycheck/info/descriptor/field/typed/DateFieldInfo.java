@@ -17,8 +17,11 @@ public class DateFieldInfo extends BasicFieldInfoBase {
     private final static String CELL_TIME = "time";
     private final static String CELL_DATE_AND_TIME = "datetime";
 
-    private final String model;
-    private final String cellModel;
+    private String model = DATE;
+    private String cellModel = CELL_DATE;
+
+    public DateFieldInfo() {
+    }
 
     public DateFieldInfo(String name, String friendlyName, boolean editable, DateMode dateMode, DateCellMode dateCellMode) {
         super(name, friendlyName, editable);

@@ -8,7 +8,7 @@ import com.taoswork.tallycheck.authority.domain.resource.Protection;
 public class AuthorityDomain {
     public static Class[] domainEntities(){
         return new Class<?>[]{
-                ProtectionSpace.class,  //feature
+                ProtectionSpec.class,  //feature
                 Protection.class,  //feature + tenant
 //                UserAuthority.class,//feature + tenant + userid
 //                GroupAuthority.class,

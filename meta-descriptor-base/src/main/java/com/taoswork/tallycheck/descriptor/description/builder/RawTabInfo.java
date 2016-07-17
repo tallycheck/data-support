@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoRW;
+import com.taoswork.tallycheck.info.descriptor.base.NamedOrdered;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.Collection;
 /**
  * Created by Gao Yuan on 2015/6/25.
  */
-interface RawTabInfo extends NamedOrderedInfoRW, Serializable {
+interface RawTabInfo extends NamedOrdered, Serializable {
 
     void addGroup(RawGroupInfo groupInfoByComp);
 

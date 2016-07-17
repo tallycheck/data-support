@@ -4,7 +4,7 @@ import com.taoswork.tallycheck.descriptor.description.builder.m2i.FM2IPool;
 import com.taoswork.tallycheck.descriptor.description.infos.main.EntityInfo;
 import com.taoswork.tallycheck.descriptor.description.infos.main.impl.EntityInfoImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
-import com.taoswork.tallycheck.info.descriptor.base.NamedOrderedInfo;
+import com.taoswork.tallycheck.info.descriptor.base.NamedOrdered;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.group.GroupInfoImpl;
 import com.taoswork.tallycheck.info.descriptor.group.IGroupInfo;
@@ -55,19 +55,19 @@ public final class EntityInfoBuilder {
             for (RawTabInfo rawTabInfo : rawEntityInfo.getTabs()) {
                 List<IGroupInfo> groupTemp = new ArrayList<IGroupInfo>();
                 for (RawGroupInfo rawGroupInfo : rawTabInfo.getGroups()) {
-                    List<String> groupFieldsOrdered = NamedOrderedInfo.NameSorter.makeNamesOrdered(rawGroupInfo.getFields(), fields);
+                    List<String> groupFieldsOrdered = NamedOrdered.NameSorter.makeNamesOrdered(rawGroupInfo.getFields(), fields);
                     IGroupInfo groupInfo = InfoCreator.createGroupFormInfo(rawGroupInfo, groupFieldsOrdered);
                     groupTemp.add(groupInfo);
                 }
                 ITabInfo tabInfo = InfoCreator.createTabFormInfo(rawTabInfo, groupTemp);
                 tabTemp.add(tabInfo);
             }
-            List<ITabInfo> tabs = NamedOrderedInfo.NameSorter.makeObjectOrdered(tabTemp);
+            List<ITabInfo> tabs = NamedOrdered.NameSorter.makeObjectOrdered(tabTemp);
             entityInfo = new EntityInfoImpl(entityType, withHierarchy, tabs, rawEntityInfo.getFields());
         }
 
         {// make grid field list
-            List<String> orderedGridNameList = NamedOrderedInfo.NameSorter.makeNamesOrdered(rawEntityInfo.getGridFields(), fields);
+            List<String> orderedGridNameList = NamedOrdered.NameSorter.makeNamesOrdered(rawEntityInfo.getGridFields(), fields);
             entityInfo.setGridFields(orderedGridNameList);
         }
 

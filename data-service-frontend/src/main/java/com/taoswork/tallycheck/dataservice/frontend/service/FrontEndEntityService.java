@@ -73,7 +73,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
     public static FrontEndEntityService newInstance(DataServiceManager dataServiceManager, IDataService dataService,
                                                     IProtectedAccessContext protectedAccessContext) {
         return new FrontEndEntityService(dataServiceManager, dataService,
-                 protectedAccessContext);
+                protectedAccessContext);
     }
 
     private void appendAuthorizedActions(EntityRequest request, EntityResponse response, ActionsBuilder.CurrentStatus currentStatus) {
@@ -104,8 +104,8 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         for (EntityInfoType infoType : request.getEntityInfoTypes()) {
             InfoRequest infoRequest = new InfoRequest(useType);
             infoRequest.locale = locale;
-            infoRequest.withHierarchy=withHierarchy;
-            infoRequest.infoType=InfoTypeConvertor.convert(infoType);
+            infoRequest.withHierarchy = withHierarchy;
+            infoRequest.infoType = InfoTypeConvertor.convert(infoType);
             InfoResponse infoResponse = dataService.info(infoRequest);
             entityInfos.add(infoResponse.info);
         }
@@ -171,8 +171,9 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             CriteriaTransferObject cto = Request2CtoTranslator.translate(request);
             QueryRequest queryRequest = new QueryRequest(entityType);
-            queryRequest.query=cto;
-            QueryResponse queryResponse=dataService.query(accessor(), queryRequest);
+            queryRequest.query = cto;
+            QueryResponse queryResponse = dataService.query(accessor(), queryRequest);
+            result = queryResponse.result;
 
             ExternalReference externalReference = queryResponse.references;
             if (externalReference.hasReference()) {
@@ -180,6 +181,8 @@ public class FrontEndEntityService implements IFrontEndEntityService {
             }
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateQueryResponse(request, result, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseCeiling, true);
@@ -305,7 +308,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             Class<?> entityType = request.getEntryPresentationClass();
             throw new UnImplementedException();
- //           result = entityService.makeDissociatedPersistable(request.getEntryPresentationClass());
+            //           result = entityService.makeDissociatedPersistable(request.getEntryPresentationClass());
 //        } catch (ServiceException e) {
 //            se = e;
         } finally {
@@ -335,14 +338,14 @@ public class FrontEndEntityService implements IFrontEndEntityService {
                                     idStrings.add(id.toString());
                             }
                             QueryIdsRequest queryIdsRequest = new QueryIdsRequest(entityTypeName);
-                            queryIdsRequest.ids =idStrings;
+                            queryIdsRequest.ids = idStrings;
                             QueryResponse queryResponse = externalDataService.query(accessor(), queryIdsRequest);
 
                             CriteriaQueryResult cqr = queryResponse.result;
                             if (cqr.getTotalCount() > 0) {
                                 List externalEntities = cqr.getEntityCollection();
                                 for (Object extEntity : externalEntities) {
-                                    Object id = ((Persistable)extEntity).getInstanceId();
+                                    Object id = ((Persistable) extEntity).getInstanceId();
                                     result.put(id, extEntity);
                                 }
                             }

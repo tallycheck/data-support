@@ -39,10 +39,10 @@ public class AuthorityVerifierImpl implements IAuthorityVerifier {
     @Override
     public Access getAllPossibleAccess(ProtectionScope scope, String userId, String resourceTypeName, Access mask) {
         IKPermission permission = provider.getPermission(scope, resourceTypeName, userId);
-        Access access = permission.getQuickCheckAccess();
         if (permission == null) {
             return Access.None;
         }
+        Access access = permission.getQuickCheckAccess();
         if (mask == null) {
             return access;
         } else {

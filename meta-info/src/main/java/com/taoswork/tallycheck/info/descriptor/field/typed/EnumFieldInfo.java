@@ -13,13 +13,20 @@ import java.util.*;
  * Created by Gao Yuan on 2015/10/24.
  */
 public class EnumFieldInfo extends BasicFieldInfoBase {
-    private final List<String> options = new ArrayList<String>();
-    private final Map<String, String> optionsFriendly = new HashMap<String, String>();
+    private List<String> options = new ArrayList<String>();
+    private Map<String, String> optionsFriendly = new HashMap<String, String>();
     private String typeName;
     private String typeFriendlyName;
 
+    public EnumFieldInfo() {
+    }
+
     public EnumFieldInfo(String name, String friendlyName, boolean editable, Class<?> enumClz) {
         super(name, friendlyName, editable);
+        setEnumClass(enumClz);
+    }
+
+    public void setEnumClass(Class<?> enumClz){
         if (!enumClz.isEnum()) {
             throw new IllegalArgumentException();
         }

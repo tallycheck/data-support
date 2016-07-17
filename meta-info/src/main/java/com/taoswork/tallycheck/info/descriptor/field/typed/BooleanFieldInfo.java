@@ -18,6 +18,10 @@ public class BooleanFieldInfo extends BasicFieldInfoBase {
 
     private final Map<String, String> options = new HashMap<String, String>();
 
+    public BooleanFieldInfo() {
+        setAsTrueFalse();
+    }
+
     public BooleanFieldInfo(String name, String friendlyName, boolean editable, BooleanMode booleanMode) {
         super(name, friendlyName, editable);
         switch (booleanMode) {

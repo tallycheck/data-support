@@ -1,12 +1,15 @@
 package com.taoswork.tallycheck.authority.provider;
 
 import com.taoswork.tallycheck.authority.atom.Access;
+import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermission;
 import com.taoswork.tallycheck.authority.core.permission.impl.KPermissionCase;
-import com.taoswork.tallycheck.authority.domain.ProtectionSpace;
+import com.taoswork.tallycheck.authority.domain.ProtectionSpec;
 import com.taoswork.tallycheck.authority.domain.ResourceAccess;
 import com.taoswork.tallycheck.authority.domain.permission.Permission;
 import com.taoswork.tallycheck.authority.domain.permission.PermissionCase;
+import com.taoswork.tallycheck.authority.domain.resource.Protection;
+import com.taoswork.tallycheck.authority.domain.resource.ProtectionCase;
 import com.taoswork.tallycheck.authority.domain.resource.ProtectionLink;
 import com.taoswork.tallycheck.authority.domain.user.BaseAuthority;
 import com.taoswork.tallycheck.authority.provider.permission.authorities.ISimpleKAuthority;
@@ -47,9 +50,28 @@ public class PermissionObjectMaker {
 //        rpc.setFilter(filter);
 //        return rpc;
 //    }
+    public static ISimpleKAuthority makeFullAuthority(ProtectionScope scope, List<? extends Protection> protections, String userId) {
+        SKAuthority skAuthority = new SKAuthority(scope.region, userId);
+
+        for(Protection protection : protections){
+            KPermission permission = new KPermission(protection.getResource());
+            permission.setMasterAccess(Access.Full);
+            Map<String, ProtectionCase> cases = protection.getCases();
+            if(cases != null && cases.size() != 0){
+                for(Map.Entry<String, ProtectionCase> caseEntry : cases.entrySet()){
+                    String caseKey = caseEntry.getKey();
+                    ProtectionCase _case = caseEntry.getValue();
+                    KPermissionCase kcase = new KPermissionCase(_case.getUuid(), Access.Full);
+                    permission.addCase(kcase);
+                }
+            }
+            skAuthority.addPermission(permission);
+        }
+        return skAuthority;
+    }
 
     public static ISimpleKAuthority makeAuthority(BaseAuthority authority){
-        SKAuthority skAuthority = new SKAuthority(authority.getNamespace(), authority.getOwnerId());
+        SKAuthority skAuthority = new SKAuthority(authority.getProtectionRegion(), authority.getOwnerId());
         Map<String, Permission> permissions = authority.getPermissions();
         if(permissions != null){
             for (Permission permission : permissions.values()){
@@ -76,7 +98,7 @@ public class PermissionObjectMaker {
         return rcPermission;
     }
 
-    public static IKProtectionMapping convert(ProtectionSpace ps){
+    public static IKProtectionMapping convert(ProtectionSpec ps){
         final KProtectionMapping mapping = new KProtectionMapping();
         Map<String, String[]> aliases = ps.getAliases();
         if(aliases != null){

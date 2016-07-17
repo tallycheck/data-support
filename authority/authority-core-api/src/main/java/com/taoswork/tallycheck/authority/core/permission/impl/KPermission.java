@@ -30,8 +30,7 @@ public final class KPermission implements IKPermissionW {
     private final ConcurrentHashMap<String, IKPermissionCase> cases = new ConcurrentHashMap<String, IKPermissionCase>();
     private Access masterAccess = Access.None;
 
-    private Object lock = new Object();
-    private transient volatile boolean dirty = false;
+    private transient volatile boolean dirty = true;
     private transient volatile Access quickCheckAccess = Access.None;
 
     public KPermission(String resource) {
@@ -50,32 +49,26 @@ public final class KPermission implements IKPermissionW {
 
     @Override
     public Access getMasterAccess() {
-        synchronized (lock) {
-            return masterAccess;
-        }
+        return masterAccess;
     }
 
     @Override
     public void setMasterAccess(Access masterAccess) {
-        synchronized (lock) {
-            this.masterAccess = masterAccess;
-            dirty = true;
-        }
+        this.masterAccess = masterAccess;
+        dirty = true;
     }
 
     @Override
     public Access getQuickCheckAccess() {
-        synchronized (lock) {
-            if (dirty) {
-                Access a = masterAccess;
-                for (IKPermissionCase _case : cases.values()) {
-                    a = a.merge(_case.getAccess());
-                }
-                quickCheckAccess = a;
-                dirty = false;
+        if (dirty) {
+            Access a = masterAccess;
+            for (IKPermissionCase _case : cases.values()) {
+                a = a.merge(_case.getAccess());
             }
-            return quickCheckAccess;
+            quickCheckAccess = a;
+            dirty = false;
         }
+        return quickCheckAccess;
     }
 
     @Override
@@ -113,14 +106,12 @@ public final class KPermission implements IKPermissionW {
      */
     private Access fitAllAccessByCases(boolean masterControlled, Collection<String> caseCodes) {
         Map<String, IKPermissionCase> map = new HashMap<String, IKPermissionCase>();
-        synchronized (lock) {
-            for (String code : caseCodes) {
-                IKPermissionCase permCase = cases.get(code);
-                if (permCase != null) {
-                    map.put(code, permCase);
-                } else {
-                    return Access.None;
-                }
+        for (String code : caseCodes) {
+            IKPermissionCase permCase = cases.get(code);
+            if (permCase != null) {
+                map.put(code, permCase);
+            } else {
+                return Access.None;
             }
         }
 
@@ -163,12 +154,10 @@ public final class KPermission implements IKPermissionW {
      */
     private Access fitAnyAccessByCases(boolean masterControlled, Collection<String> caseCodes) {
         Map<String, IKPermissionCase> map = new HashMap<String, IKPermissionCase>();
-        synchronized (lock) {
-            for (String code : caseCodes) {
-                IKPermissionCase permSp = cases.get(code);
-                if (permSp != null) {
-                    map.put(code, permSp);
-                }
+        for (String code : caseCodes) {
+            IKPermissionCase permSp = cases.get(code);
+            if (permSp != null) {
+                map.put(code, permSp);
             }
         }
 
@@ -190,25 +179,21 @@ public final class KPermission implements IKPermissionW {
     @Override
     public IKPermission addCase(IKPermissionCase _case) {
         if (_case != null) {
-            synchronized (lock) {
-                this.cases.put(_case.getCode(), _case);
-                dirty = true;
-            }
+            this.cases.put(_case.getCode(), _case);
+            dirty = true;
         }
         return this;
     }
 
     @Override
     public IKPermission addCases(IKPermissionCase... cases) {
-        synchronized (lock) {
-            for (IKPermissionCase _case : cases) {
-                if (_case != null) {
-                    this.cases.put(_case.getCode(), _case);
-                }
+        for (IKPermissionCase _case : cases) {
+            if (_case != null) {
+                this.cases.put(_case.getCode(), _case);
             }
-            dirty = true;
-            return this;
         }
+        dirty = true;
+        return this;
     }
 
     @Override
@@ -218,57 +203,53 @@ public final class KPermission implements IKPermissionW {
         if (!resource.equals(that.getResource())) {
             throw new IllegalArgumentException();
         }
-        synchronized (lock) {
-            KPermission epthat = (KPermission) that;
-            final KPermission epthis = this;
-            if (epthat == null) {
-                throw new IllegalCodePathException("Need to implement !!");
-            }
-
-            masterAccess = masterAccess.merge(epthat.masterAccess);
-            quickCheckAccess = Access.None;
-
-            //copy that, into this
-            epthat.cases.forEach(new BiConsumer<String, IKPermissionCase>() {
-                @Override
-                public void accept(String s, final IKPermissionCase permSpInThat) {
-
-                    epthis.cases.computeIfPresent(s, new BiFunction<String, IKPermissionCase, IKPermissionCase>() {
-                        @Override
-                        public IKPermissionCase apply(String s, IKPermissionCase permSpInThis) {
-                            KPermissionCase thisEntryClone = new KPermissionCase(permSpInThis);
-                            thisEntryClone.merge(permSpInThat);
-                            return thisEntryClone;
-                        }
-                    });
-                    epthis.cases.computeIfAbsent(s, new Function<String, IKPermissionCase>() {
-                        @Override
-                        public IKPermissionCase apply(String s) {
-                            final IKPermissionCase thatEntryClone = permSpInThat.clone();
-                            return thatEntryClone;
-                        }
-                    });
-                }
-            });
-            dirty = true;
+        KPermission epthat = (KPermission) that;
+        final KPermission epthis = this;
+        if (epthat == null) {
+            throw new IllegalCodePathException("Need to implement !!");
         }
+
+        masterAccess = masterAccess.merge(epthat.masterAccess);
+        quickCheckAccess = Access.None;
+
+        //copy that, into this
+        epthat.cases.forEach(new BiConsumer<String, IKPermissionCase>() {
+            @Override
+            public void accept(String s, final IKPermissionCase permSpInThat) {
+
+                epthis.cases.computeIfPresent(s, new BiFunction<String, IKPermissionCase, IKPermissionCase>() {
+                    @Override
+                    public IKPermissionCase apply(String s, IKPermissionCase permSpInThis) {
+                        KPermissionCase thisEntryClone = new KPermissionCase(permSpInThis);
+                        thisEntryClone.merge(permSpInThat);
+                        return thisEntryClone;
+                    }
+                });
+                epthis.cases.computeIfAbsent(s, new Function<String, IKPermissionCase>() {
+                    @Override
+                    public IKPermissionCase apply(String s) {
+                        final IKPermissionCase thatEntryClone = permSpInThat.clone();
+                        return thatEntryClone;
+                    }
+                });
+            }
+        });
+        dirty = true;
         return this;
     }
 
     @Override
     public IKPermission clone() {
-        synchronized (lock) {
-            final KPermission copy = new KPermission(resource);
-            copy.masterAccess = masterAccess;
-            cases.forEach(new BiConsumer<String, IKPermissionCase>() {
-                @Override
-                public void accept(String s, IKPermissionCase permissionEntry) {
-                    copy.cases.put(s, permissionEntry.clone());
-                }
-            });
-            copy.dirty = true;
-            return copy;
-        }
+        final KPermission copy = new KPermission(resource);
+        copy.masterAccess = masterAccess;
+        cases.forEach(new BiConsumer<String, IKPermissionCase>() {
+            @Override
+            public void accept(String s, IKPermissionCase permissionEntry) {
+                copy.cases.put(s, permissionEntry.clone());
+            }
+        });
+        copy.dirty = true;
+        return copy;
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.taoswork.tallycheck.descriptor.description.builder;
 
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedOrderedImpl;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import java.util.Set;
  * Created by Gao Yuan on 2015/6/25.
  */
 final class RawGroupInfoImpl
-        extends NamedOrderedInfoImpl
+        extends NamedOrderedImpl
         implements RawGroupInfo {
 
     /**

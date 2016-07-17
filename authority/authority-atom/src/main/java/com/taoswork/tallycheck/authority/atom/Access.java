@@ -1,9 +1,11 @@
 package com.taoswork.tallycheck.authority.atom;
 
+import java.io.Serializable;
+
 /**
  * Resource access method
  */
-public final class Access {
+public final class Access implements Serializable {
     public final static int NONE = 0x00;
     public final static int CREATE = 0x01;
     public final static int READ = 0x02;
@@ -19,6 +21,7 @@ public final class Access {
     public final static Access Delete = new Access(DELETE);
     public final static Access Query = new Access(QUERY);
     public final static Access Crudq = new Access(CRUDQ_ALL);
+    public final static Access Full = new Access(0xFFFFFFFF, 0xFFFFFFFF);
 
     public final static int EXTENDED_NONE = 0x00;
 

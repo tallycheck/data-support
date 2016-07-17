@@ -3,12 +3,13 @@ package com.taoswork.tallycheck.dataservice.query;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Gao Yuan on 2015/5/22.
  */
-public class CriteriaTransferObject implements Cloneable {
+public class CriteriaTransferObject implements Cloneable, Serializable {
     public static final int SINGLE_QUERY_DEFAULT_PAGE_SIZE = 50;
     public static final int SINGLE_QUERY_MAX_PAGE_SIZE_ALLOWED = 200;
 

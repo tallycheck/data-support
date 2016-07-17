@@ -182,6 +182,7 @@ public class BasicDataService implements IDataService {
         QueryResponse response = new QueryResponse();
         CriteriaQueryResult result = entityService.query(accessor, entityCls, request.query, response.references, CopyLevel.List);
         response.result = result;
+        response.setSuccess(true);
         return response;
     }
 

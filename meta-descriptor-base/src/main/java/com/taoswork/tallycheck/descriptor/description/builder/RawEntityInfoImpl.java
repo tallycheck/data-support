@@ -2,7 +2,7 @@ package com.taoswork.tallycheck.descriptor.description.builder;
 
 import com.taoswork.tallycheck.datadomain.base.presentation.FieldType;
 import com.taoswork.tallycheck.info.descriptor.base.OrderedName;
-import com.taoswork.tallycheck.info.descriptor.base.impl.NamedInfoImpl;
+import com.taoswork.tallycheck.info.descriptor.base.impl.NamedImpl;
 import com.taoswork.tallycheck.info.descriptor.field.IBasicFieldInfo;
 import com.taoswork.tallycheck.info.descriptor.field.IFieldInfo;
 
@@ -12,7 +12,7 @@ import java.util.*;
  * Created by Gao Yuan on 2015/6/25.
  */
 class RawEntityInfoImpl
-        extends NamedInfoImpl
+        extends NamedImpl
         implements RawEntityInfo {
 
     private final Map<String, IFieldInfo> fields = new HashMap<String, IFieldInfo>();
