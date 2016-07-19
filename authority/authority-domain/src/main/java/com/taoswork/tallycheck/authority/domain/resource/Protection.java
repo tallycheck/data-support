@@ -182,7 +182,7 @@ public class Protection
     }
 
     public Long getVersion() {
-        return version;
+        return version == null ? 0 : version;
     }
 
     @Override

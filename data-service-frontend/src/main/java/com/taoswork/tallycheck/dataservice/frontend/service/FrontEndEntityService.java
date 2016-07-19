@@ -1,7 +1,6 @@
 package com.taoswork.tallycheck.dataservice.frontend.service;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.authority.client.IAuthorityVerifier;
 import com.taoswork.tallycheck.authority.core.ProtectionScope;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.datadomain.base.restful.EntityAction;
@@ -11,7 +10,6 @@ import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.frontend.IProtectedAccessContext;
-import com.taoswork.tallycheck.dataservice.frontend.dataio.FormEntity;
 import com.taoswork.tallycheck.dataservice.frontend.io.request.*;
 import com.taoswork.tallycheck.dataservice.frontend.io.response.*;
 import com.taoswork.tallycheck.dataservice.frontend.io.response.result.EntityInfoResult;
@@ -24,19 +22,15 @@ import com.taoswork.tallycheck.dataservice.frontend.io.translator.response.Resul
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
 import com.taoswork.tallycheck.dataservice.manage.DataServiceManager;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
-import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
-import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
-import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
-import com.taoswork.tallycheck.descriptor.dataio.in.translator.EntityTranslator;
 import com.taoswork.tallycheck.general.solution.exception.UnImplementedException;
 import com.taoswork.tallycheck.general.solution.reference.EntityFetchException;
 import com.taoswork.tallycheck.general.solution.reference.EntityRecords;
 import com.taoswork.tallycheck.general.solution.reference.ExternalReference;
 import com.taoswork.tallycheck.general.solution.reference.IEntityRecordsFetcher;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.general.extension.collections.MapBuilder;
 import com.taoswork.tallycheck.info.IEntityInfo;
 import org.slf4j.Logger;
@@ -46,7 +40,6 @@ import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.hateoas.UriTemplate;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -147,9 +140,23 @@ public class FrontEndEntityService implements IFrontEndEntityService {
     }
 
     private SecurityAccessor accessor() {
-        String currentUser = protectedAccessContext.getCurrentUserId();
+        String currentPersonId = protectedAccessContext.getCurrentPersonId();
         ProtectionScope currentPS = protectedAccessContext.getCurrentProtectionScope();
-        return new SecurityAccessor(currentPS, currentUser);
+        return new SecurityAccessor(currentPS, currentPersonId);
+    }
+
+    private Operator operator(){
+        return makeOperator(protectedAccessContext);
+    }
+
+
+    public static Operator makeOperator(IProtectedAccessContext accessContext){
+        Operator op = new Operator();
+        op.administrator = accessContext.isAdministrator();
+        op.buId = accessContext.getCurrentBu();
+        op.personId = accessContext.getCurrentPersonId();
+        op.employeeId = accessContext.getCurrentEmployeeId();
+        return op;
     }
 
     @Override
@@ -201,8 +208,11 @@ public class FrontEndEntityService implements IFrontEndEntityService {
             Class<? extends Persistable> entityType = request.getEntityType();
             NewInstanceRequest newInstanceRequest = new NewInstanceRequest(entityType);
             newInstanceResponse = dataService.newInstance(newInstanceRequest);
+//            response.setEntity(newInstanceResponse.getResult());
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateCreateFreshResponse(request, newInstanceResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
@@ -221,13 +231,15 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             RequestEntity requestEntity = request.getEntity().requestEntity();
             CreateRequest createRequest = new CreateRequest(requestEntity);
-            createResponse = dataService.create(accessor(), createRequest);
+            createResponse = dataService.create(operator(), accessor(), createRequest);
 
             Map<String, Object> m = new MapBuilder<String, Object>().append(EntityActionPaths.ID_KEY, createResponse.getIdValue());
             String beanUri = (new UriTemplate(beanUriTemplate)).expand(m).toString();
             response = new EntityCreateResponse(request.getUri(), beanUri);
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateCreateResponse(request, createResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
@@ -245,13 +257,15 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             ReadRequest readRequest = new ReadRequest(entityType);
             readRequest.setId(request.getId());
-            readResponse = dataService.read(accessor(), readRequest);
+            readResponse = dataService.read(operator(), accessor(), readRequest);
             ExternalReference externalReference = readResponse.references;
             if (externalReference.hasReference()) {
                 fillExternalReference(externalReference);
             }
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateReadResponse(request, readResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
@@ -270,9 +284,11 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             RequestEntity requestEntity = request.getEntity().requestEntity();
             UpdateRequest updateRequest = new UpdateRequest(requestEntity);
-            updateResponse = dataService.update(accessor(), updateRequest);
+            updateResponse = dataService.update(operator(), accessor(), updateRequest);
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateUpdateResponse(request, updateResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
@@ -290,10 +306,12 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         try {
             DeleteRequest deleteRequest = new DeleteRequest(entityType);
             deleteRequest.setId(request.getId());
-            DeleteResponse deleteResponse = dataService.delete(accessor(), deleteRequest);
+            DeleteResponse deleteResponse = dataService.delete(operator(), accessor(), deleteRequest);
             deleted = deleteResponse.isSuccess();
         } catch (ServiceException e) {
             se = e;
+        } catch (Exception e) {
+            se = new ServiceException(e);
         } finally {
             responseTranslator().translateDeleteResponse(request, deleted, se, response, locale);
         }

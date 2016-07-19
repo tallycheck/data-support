@@ -11,6 +11,7 @@ import com.taoswork.tallycheck.datasolution.config.beanlist.IGeneralBeanList;
 import com.taoswork.tallycheck.datasolution.config.helper.DataSolutionBeanCreationHelper;
 import com.taoswork.tallycheck.datasolution.core.description.FriendlyMetaInfoService;
 import com.taoswork.tallycheck.datasolution.core.description.impl.FriendlyMetaInfoServiceImpl;
+import com.taoswork.tallycheck.datasolution.security.AccessInterrupters;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
 import com.taoswork.tallycheck.datasolution.security.impl.SecurityVerifierOnAuthority;
 import com.taoswork.tallycheck.datasolution.service.EntityValidationService;
@@ -125,13 +126,19 @@ public abstract class DataSolutionBeanBaseConfiguration
     public ISecurityVerifier securityVerifier() {
         return new SecurityVerifierOnAuthority();
     }
-    /* IDataSolutionSupporterBeanList                            */
+
+    @Override
+    @Bean(name = IDataSolution.ACCESS_INTERRUPTERS)
+    public AccessInterrupters accessInterrupters() {
+        return new AccessInterrupters();
+    }
 
     @Override
     @Bean(name = BasicDataService.COMPONENT_NAME)
     public IDataService dataService() {
         return new BasicDataService();
     }
+    /* IDataSolutionSupporterBeanList                            */
 
     /************************************************************
      * IEntityProtectionBeanList                            *

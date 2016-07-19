@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
 import com.taoswork.tallycheck.datasolution.service.EntityMetaAccess;
@@ -22,6 +23,7 @@ public class EntityCreateHelper {
     public static SecurityAccessor createSecurityAccessor(){
         return new SecurityAccessor();
     }
+    private static Operator operator = new Operator();
     public static int createPeopleEntityWith(IDataSolution dataSolution,
                                              String namePrefix, int postfixStartingIndex, int createAttempt) {
         SecurityAccessor accessor = createSecurityAccessor();
@@ -40,12 +42,12 @@ public class EntityCreateHelper {
                         .setType(ZooKeeperImpl.class)
                         .setProperty("name", name);
                 ZooKeeper adminP = (ZooKeeper)translator.translate(metaAccess, adminEntity, null);
-                PersistableResult<ZooKeeper> adminRes = jpaEntityService.create(accessor, adminP);
+                PersistableResult<ZooKeeper> adminRes = jpaEntityService.create(operator, accessor, adminP);
                 ZooKeeper admin = adminRes.getValue();
 
                 ObjectId id = admin.getId();
-                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(accessor, ZooKeeper.class, id);
-                PersistableResult<ZooKeeperImpl> admin2FromDbRes = easyEntityService.read(accessor, ZooKeeperImpl.class, id);
+                PersistableResult<ZooKeeper> adminFromDbRes = easyEntityService.read(operator, accessor, ZooKeeper.class, id);
+                PersistableResult<ZooKeeperImpl> admin2FromDbRes = easyEntityService.read(operator, accessor, ZooKeeperImpl.class, id);
 
                 ZooKeeper adminFromDb = adminFromDbRes.getValue();
                 ZooKeeper admin2FromDb = admin2FromDbRes.getValue();

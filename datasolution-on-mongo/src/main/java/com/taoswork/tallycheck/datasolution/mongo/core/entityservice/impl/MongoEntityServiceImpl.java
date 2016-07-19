@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.onmongo.PersistableDocument;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.core.entityservice.BaseEntityServiceImpl;
@@ -67,12 +68,12 @@ public class MongoEntityServiceImpl
     }
 
     @Override
-    public <T extends PersistableDocument> PersistableResult<T> create(SecurityAccessor accessor, T entity) throws ServiceException {
+    public <T extends PersistableDocument> PersistableResult<T> create(Operator operator,SecurityAccessor accessor, T entity) throws ServiceException {
         try {
             Class directClz = entity.getClass();
             Class ceilingType = getProjectedEntityType(directClz);
 
-            T result = (T) securedEntityAccess.securedCreate(accessor, ceilingType, entity);
+            T result = (T) securedEntityAccess.securedCreate(operator,accessor, ceilingType, entity);
             return securedEntityAccess.makePersistableResult(result);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
@@ -81,11 +82,11 @@ public class MongoEntityServiceImpl
     }
 
     @Override
-    public <T extends PersistableDocument> PersistableResult<T> read(SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException {
+    public <T extends PersistableDocument> PersistableResult<T> read(Operator operator,SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException {
         try {
             Class projectedEntityType = getProjectedEntityType(entityClz);
             key = keyTypeAdjust(projectedEntityType, key);
-            T result = (T) securedEntityAccess.securedRead(accessor, projectedEntityType, key);
+            T result = (T) securedEntityAccess.securedRead(operator,accessor, projectedEntityType, key);
 
             CopierContext copierContext = new CopierContext(this.entityMetaAccess, externalReference);
             T safeResult = this.entityCopierService.makeSafeCopy(copierContext, result, CopyLevel.Swap);
@@ -98,11 +99,11 @@ public class MongoEntityServiceImpl
     }
 
     @Override
-    public <T extends PersistableDocument> PersistableResult<T> update(SecurityAccessor accessor, T entity) throws ServiceException {
+    public <T extends PersistableDocument> PersistableResult<T> update(Operator operator,SecurityAccessor accessor, T entity) throws ServiceException {
         try {
             Class directClz = entity.getClass();
             Class projectedEntityType = getProjectedEntityType(directClz);
-            T result = (T) securedEntityAccess.securedUpdate(accessor, projectedEntityType, entity);
+            T result = (T) securedEntityAccess.securedUpdate(operator,accessor, projectedEntityType, entity);
             return securedEntityAccess.makePersistableResult(result);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
@@ -111,11 +112,11 @@ public class MongoEntityServiceImpl
     }
 
     @Override
-    public <T extends PersistableDocument> boolean delete(SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
+    public <T extends PersistableDocument> boolean delete(Operator operator,SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
         try {
             Class projectedEntityType = getProjectedEntityType(entityClz);
             key = keyTypeAdjust(projectedEntityType, key);
-            return securedEntityAccess.securedDelete(accessor, projectedEntityType, key);
+            return securedEntityAccess.securedDelete(operator,accessor, projectedEntityType, key);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
         }

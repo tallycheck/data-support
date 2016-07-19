@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.*;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.jpa.servicemockup.TallyMockupDataSolution;
@@ -28,6 +29,7 @@ public class JpaEntityServiceTest {
 
     private IDataSolution dataSolution = null;
     private SecurityAccessor accessor = new SecurityAccessor();
+    private Operator operator = new Operator();
 
     @Before
     public void setup() {
@@ -253,7 +255,7 @@ public class JpaEntityServiceTest {
             Assert.assertTrue(returned == createAttemptB);
 
             for (ZooKeeper p : cache) {
-                easyEntityService.delete(accessor, p);
+                easyEntityService.delete(operator, accessor, p);
             }
 
             {

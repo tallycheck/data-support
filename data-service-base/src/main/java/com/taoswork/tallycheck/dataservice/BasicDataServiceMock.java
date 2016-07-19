@@ -5,6 +5,8 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -31,30 +33,30 @@ public abstract class BasicDataServiceMock implements IDataService {
     }
 
     @Override
-    public CreateResponse create(SecurityAccessor accessor, CreateRequest request) throws ServiceException {
+    public CreateResponse create(Operator operator, SecurityAccessor accessor, CreateRequest request) throws ServiceException {
         CreateResponse response = new CreateResponse();
         return response;
     }
 
     @Override
-    public ReadResponse read(SecurityAccessor accessor, ReadRequest request) throws ServiceException {
+    public ReadResponse read(Operator operator, SecurityAccessor accessor, ReadRequest request) throws ServiceException {
         ReadResponse response = new ReadResponse();
         return response;
     }
 
     @Override
-    public UpdateResponse update(SecurityAccessor accessor, UpdateRequest request) throws ServiceException {
+    public UpdateResponse update(Operator operator, SecurityAccessor accessor, UpdateRequest request) throws ServiceException {
         UpdateResponse response = new UpdateResponse();
         return response;
     }
 
     @Override
-    public UpdateFieldResponse update(SecurityAccessor accessor, UpdateFieldRequest request) {
+    public UpdateFieldResponse update(Operator operator, SecurityAccessor accessor, UpdateFieldRequest request) {
         return new UpdateFieldResponse();
     }
 
     @Override
-    public DeleteResponse delete(SecurityAccessor accessor, DeleteRequest request) throws ServiceException {
+    public DeleteResponse delete(Operator operator, SecurityAccessor accessor, DeleteRequest request) throws ServiceException {
         DeleteResponse response = new DeleteResponse();
         return response;
     }

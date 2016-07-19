@@ -21,6 +21,7 @@ import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUs
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.XFile;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
@@ -38,6 +39,7 @@ public class PermissionMockuper {
     public static final String PROTECTION_REGION = "test-region";
 
     public static final ProtectionScope PS = new ProtectionScope(PROTECTION_SPEC, PROTECTION_REGION);
+    private static final Operator operator = new Operator();
 
     public static final String CASE_A_NAME = "A";
     public static final String CASE_B_NAME = "B";
@@ -76,7 +78,7 @@ public class PermissionMockuper {
     public void makeProtectionSpec() {
         ProtectionSpec ps = new ProtectionSpec();
         ps.setSpecName(PROTECTION_SPEC);
-        easyEntityAccess.create(accessor, ps);
+        easyEntityAccess.create(operator, accessor, ps);
     }
 
     public void makeSecuredResource(String region, Class resource,
@@ -102,7 +104,7 @@ public class PermissionMockuper {
                 sr.addCase(_case);
             }
         }
-        easyEntityAccess.create(accessor, sr);
+        easyEntityAccess.create(operator, accessor, sr);
     }
 
     public Protection getResource(String tanantId, Class resource) throws ServiceException {
@@ -197,9 +199,9 @@ public class PermissionMockuper {
         }
 
         if (isNew) {
-            easyEntityAccess.create(accessor, (T) pp);
+            easyEntityAccess.create(operator, accessor, (T) pp);
         } else {
-            easyEntityAccess.update(accessor, (T) pp);
+            easyEntityAccess.update(operator, accessor, (T) pp);
         }
     }
 
@@ -218,7 +220,7 @@ public class PermissionMockuper {
         if (c) instance.addClassification(CASE_C_TAG);
         if (d) instance.addClassification(CASE_D_TAG);
         if (e) instance.addClassification(CASE_E_TAG);
-        easyEntityAccess.create(accessor, instance);
+        easyEntityAccess.create(operator, accessor, instance);
     }
 
     public <T extends XFile> T fetchInstance(Class<T> fileType, String fileTitle) throws ServiceException {

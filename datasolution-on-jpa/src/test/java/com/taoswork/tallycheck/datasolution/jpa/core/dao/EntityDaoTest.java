@@ -29,7 +29,6 @@ public class EntityDaoTest {
     public void setup() {
         dataSolution = new TallyMockupDataSolution(TestDbConfig.class);
         dataSolution.setAuthorityProvider(new AllPassAuthorityProvider());
-//        dataSolution.setAuthorityContext(new ProtectedAccessContext());
     }
 
     @After

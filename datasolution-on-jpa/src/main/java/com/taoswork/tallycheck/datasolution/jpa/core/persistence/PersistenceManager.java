@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
@@ -17,13 +18,13 @@ import java.util.Collection;
 public interface PersistenceManager {
     public static final String COMPONENT_NAME = "PersistenceManager";
 
-    <T extends Persistable> PersistableResult<T> create(SecurityAccessor accessor, Class<T> ceilingType, T entity) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> create(Operator operator,SecurityAccessor accessor, Class<T> ceilingType, T entity) throws ServiceException;
 
-    <T extends Persistable> PersistableResult<T> read(SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> read(Operator operator,SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException;
 
-    <T extends Persistable> PersistableResult<T> update(SecurityAccessor accessor, Class<T> ceilingType, T entity) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> update(Operator operator,SecurityAccessor accessor, Class<T> ceilingType, T entity) throws ServiceException;
 
-    <T extends Persistable> boolean delete(SecurityAccessor accessor, Class<T> ceilingType, Object key) throws ServiceException;
+    <T extends Persistable> boolean delete(Operator operator,SecurityAccessor accessor, Class<T> ceilingType, Object key) throws ServiceException;
 
     <T extends Persistable> CriteriaQueryResult<T> query(SecurityAccessor accessor, Class<T> entityClz, CriteriaTransferObject query, ExternalReference externalReference, CopyLevel copyLevel) throws ServiceException;
 

@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
@@ -35,9 +36,9 @@ public class EasyEntityService {
     protected final EntityMetaAccess entityMetaAccess;
     protected final IEntityService entityService;
 
-    public <T extends Persistable> boolean create(SecurityAccessor accessor, T entity){
+    public <T extends Persistable> boolean create(Operator operator, SecurityAccessor accessor, T entity){
         try {
-            PersistableResult result = entityService.create(accessor, entity);
+            PersistableResult result = entityService.create( operator, accessor, entity);
             if(result == null)
                 return false;
             return null != result.getValue();
@@ -48,19 +49,24 @@ public class EasyEntityService {
         }
     }
 
-    public PersistableResult read(SecurityAccessor accessor, Persistable entity) throws ServiceException {
+    public PersistableResult read(Operator operator, SecurityAccessor accessor, Persistable entity) throws ServiceException {
         Class directClz = entity.getClass();
         Object key = getEntityId(directClz, entity);
-        return read(accessor, directClz, key);
+        return read(operator, accessor, directClz, key);
     }
 
-    public PersistableResult read(SecurityAccessor accessor, Class<? extends Persistable> entityClz, Object key) throws ServiceException {
-        return entityService.read(accessor, entityClz, key, null);
+    public PersistableResult read(Operator operator, SecurityAccessor accessor, Class<? extends Persistable> entityClz, Object key) throws ServiceException {
+        return entityService.read(operator, accessor, entityClz, key, null);
     }
 
-    public <T extends Persistable> T read(SecurityAccessor accessor, Class<T> ceilingType, Object key, ExternalReference externalReference){
+    public <T extends Persistable> T straightRead(Operator operator, SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException{
+        PersistableResult<T> result = entityService.read(operator, accessor, entityClz, key, new ExternalReference());
+        return result.getValue();
+    }
+
+    public <T extends Persistable> T read(Operator operator, SecurityAccessor accessor, Class<T> ceilingType, Object key, ExternalReference externalReference){
         try {
-            PersistableResult<T> result = entityService.read(accessor, ceilingType, key, externalReference);
+            PersistableResult<T> result = entityService.read(operator, accessor, ceilingType, key, externalReference);
             if(result == null)
                 return null;
             return result.getValue();
@@ -71,9 +77,9 @@ public class EasyEntityService {
         }
     }
 
-    public <T extends Persistable> T update(SecurityAccessor accessor, T entity){
+    public <T extends Persistable> T update(Operator operator, SecurityAccessor accessor, T entity){
         try {
-            PersistableResult<T> result = entityService.update(accessor, entity);
+            PersistableResult<T> result = entityService.update(operator, accessor, entity);
             if(result == null)
                 return null;
             return result.getValue();
@@ -84,10 +90,10 @@ public class EasyEntityService {
         }
     }
 
-    public boolean delete(SecurityAccessor accessor, final Persistable entity) throws ServiceException {
+    public boolean delete(Operator operator, SecurityAccessor accessor, final Persistable entity) throws ServiceException {
         Class directClz = entity.getClass();
         Object key = getEntityId(directClz, entity);
-        return entityService.delete(accessor, directClz, key);
+        return entityService.delete(operator, accessor, directClz, key);
     }
 
     public CriteriaQueryResult query(SecurityAccessor accessor, Class<? extends Persistable> entityClz, CriteriaTransferObject query) throws ServiceException {

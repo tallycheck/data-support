@@ -2,6 +2,7 @@ package com.taoswork.tallycheck.datasolution;
 
 import com.taoswork.tallycheck.authority.provider.IAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.EntityType;
+import com.taoswork.tallycheck.datasolution.security.AccessInterrupters;
 import com.taoswork.tallycheck.datasolution.security.EntityFilterType;
 
 import java.util.Collection;
@@ -21,6 +22,7 @@ public interface IDataSolution {
     public static final String DATA_SOLUTION_NAME_S_BEAN_NAME = "DataSolutionBeanName";
     public static final String ERROR_MESSAGE_SOURCE_BEAN_NAME = "ErrorMessageSource";
     public static final String PROPERTY_CONFIGURER = "PROPERTY_CONFIGURER";
+    public static final String ACCESS_INTERRUPTERS = "ACCESS_INTERRUPTERS";
 
     String getName();
 

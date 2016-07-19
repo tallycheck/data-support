@@ -53,12 +53,6 @@ public abstract class BaseEntityServiceImpl<Pb extends Persistable>
     }
 
     @Override
-    public <T extends Pb> T straightRead(SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
-        PersistableResult<T> result = read(accessor, entityClz, key, new ExternalReference());
-        return result.getValue();
-    }
-
-    @Override
     public <T extends Pb> Access getAuthorizeAccess(SecurityAccessor accessor, Class<T> entityType, Access mask) {
         if (mask == null) mask = Access.Crudq;
         Access access = securityVerifier.getAllPossibleAccess(accessor, entityType.getName(), mask);

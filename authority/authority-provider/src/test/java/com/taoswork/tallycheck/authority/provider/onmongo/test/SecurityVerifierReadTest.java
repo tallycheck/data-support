@@ -8,6 +8,7 @@ import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUs
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -23,6 +24,7 @@ import java.util.List;
 public class SecurityVerifierReadTest extends VerifierTestSupport {
     private SecurityAccessor securityAccessor = VerifierTestSupport.securityAccessor;
     private ProtectionScope PS = VerifierTestSupport.securityAccessor.protectionScope;
+    private Operator operator = new Operator();
 
     @BeforeClass
     public static void beforeClass() throws ServiceException {
@@ -227,7 +229,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group_N____);
                 du.setGroups(ga);
-                entityService.update(securityAccessor, du);
+                entityService.update(operator, securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -299,7 +301,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group__AB__);
                 du.setGroups(ga);
-                entityService.update(securityAccessor, du);
+                entityService.update(operator, securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User__AB__, User__ABCD}) {
@@ -354,7 +356,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
                 List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
                 ga.add(d_group_G____);
                 du.setGroups(ga);
-                entityService.update(securityAccessor, du);
+                entityService.update(operator, securityAccessor, du);
             }
 
             for (String user : new String[]{User_N____, User_G____}) {
@@ -406,7 +408,7 @@ public class SecurityVerifierReadTest extends VerifierTestSupport {
         for (TUserAuthority du : d_users) {
             List<TGroupAuthority> ga = new ArrayList<TGroupAuthority>();
             du.setGroups(ga);
-            entityService.update(securityAccessor, du);
+            entityService.update(operator, securityAccessor, du);
         }
     }
 

@@ -11,6 +11,9 @@ public class Request implements Serializable {
      */
     protected String type;
 
+    public Request() {
+    }
+
     public Request(String type) {
         this.type = type;
     }

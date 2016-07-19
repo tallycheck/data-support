@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.descriptor.dataio.copier.fieldcopier.CopyLevel;
@@ -21,15 +22,15 @@ public interface PersistenceService {
     public static final String COMPONENT_NAME = "PersistenceService";
 
     @Transactional
-    <T extends Persistable> PersistableResult<T> create(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> create(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException;
 
-    <T extends Persistable> PersistableResult<T> read(SecurityAccessor accessor, Class<T> projectedEntityType, Object key, ExternalReference externalReference) throws ServiceException;
-
-    @Transactional
-    <T extends Persistable> PersistableResult<T> update(SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> read(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, Object key, ExternalReference externalReference) throws ServiceException;
 
     @Transactional
-    <T extends Persistable> boolean delete(SecurityAccessor accessor, Class<T> projectedEntityType, Object key) throws ServiceException;
+    <T extends Persistable> PersistableResult<T> update(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, T entity) throws ServiceException;
+
+    @Transactional
+    <T extends Persistable> boolean delete(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, Object key) throws ServiceException;
 
     /**
      * @param entity

@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.jpa.core.entityservice.PersistenceService;
@@ -35,43 +36,43 @@ public class PersistenceServiceImpl implements PersistenceService {
 
     @Override
     @Transactional
-    public <T extends Persistable> PersistableResult<T> create(final SecurityAccessor accessor, final Class<T> projectedEntityType, final T entity) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> create(final Operator operator, final SecurityAccessor accessor, final Class<T> projectedEntityType, final T entity) throws ServiceException {
         return persistenceManagerIsolatedInvoker.operation(new IPersistentMethod<PersistableResult<T>, ServiceException>() {
             @Override
             public PersistableResult<T> execute(PersistenceManager persistenceManager) throws ServiceException {
-                return persistenceManager.create(accessor, projectedEntityType, entity);
+                return persistenceManager.create(operator, accessor, projectedEntityType, entity);
             }
         });
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> read(final SecurityAccessor accessor, final Class<T> projectedEntityType, final Object key, final ExternalReference externalReference) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> read(final Operator operator, final SecurityAccessor accessor, final Class<T> projectedEntityType, final Object key, final ExternalReference externalReference) throws ServiceException {
         return persistenceManagerIsolatedInvoker.operation(new IPersistentMethod<PersistableResult<T>, ServiceException>() {
             @Override
             public PersistableResult<T> execute(PersistenceManager persistenceManager) throws ServiceException {
-                return persistenceManager.read(accessor, projectedEntityType, key, externalReference);
-            }
-        });
-    }
-
-    @Override
-    @Transactional
-    public <T extends Persistable> PersistableResult<T> update(final SecurityAccessor accessor, final Class<T> projectedEntityType, final T entity) throws ServiceException {
-        return persistenceManagerIsolatedInvoker.operation(new IPersistentMethod<PersistableResult<T>, ServiceException>() {
-            @Override
-            public PersistableResult<T> execute(PersistenceManager persistenceManager) throws ServiceException {
-                return persistenceManager.update(accessor, projectedEntityType, entity);
+                return persistenceManager.read(operator, accessor, projectedEntityType, key, externalReference);
             }
         });
     }
 
     @Override
     @Transactional
-    public <T extends Persistable> boolean delete(final SecurityAccessor accessor, final Class<T> projectedEntityType, final Object key) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> update(final Operator operator, final SecurityAccessor accessor, final Class<T> projectedEntityType, final T entity) throws ServiceException {
+        return persistenceManagerIsolatedInvoker.operation(new IPersistentMethod<PersistableResult<T>, ServiceException>() {
+            @Override
+            public PersistableResult<T> execute(PersistenceManager persistenceManager) throws ServiceException {
+                return persistenceManager.update(operator, accessor, projectedEntityType, entity);
+            }
+        });
+    }
+
+    @Override
+    @Transactional
+    public <T extends Persistable> boolean delete(final Operator operator, final SecurityAccessor accessor, final Class<T> projectedEntityType, final Object key) throws ServiceException {
         return persistenceManagerIsolatedInvoker.operation(new IPersistentMethod<Boolean, ServiceException>() {
             @Override
             public Boolean execute(PersistenceManager persistenceManager) throws ServiceException {
-                return persistenceManager.delete(accessor, projectedEntityType, key);
+                return persistenceManager.delete(operator, accessor, projectedEntityType, key);
             }
         });
     }

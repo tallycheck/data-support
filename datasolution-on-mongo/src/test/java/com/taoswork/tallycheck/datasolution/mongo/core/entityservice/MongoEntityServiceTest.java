@@ -3,6 +3,7 @@ package com.taoswork.tallycheck.datasolution.mongo.core.entityservice;
 import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.*;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
@@ -30,6 +31,7 @@ public class MongoEntityServiceTest {
 
     private IDataSolution dataSolution = null;
     private SecurityAccessor accessor = new SecurityAccessor();
+    private Operator operator = new Operator();
 
     @Before
     public void setup() {
@@ -254,7 +256,7 @@ public class MongoEntityServiceTest {
             Assert.assertTrue(returned == createAttemptB);
 
             for (ZooKeeper p : cache) {
-                entityService.delete(accessor, p);
+                entityService.delete(operator, accessor, p);
             }
 
             {

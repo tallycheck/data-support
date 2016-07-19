@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.core.entityservice.BaseEntityServiceImpl;
@@ -35,12 +36,12 @@ public final class JpaEntityServiceImpl
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> create(SecurityAccessor accessor, final T entity) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> create(Operator operator, SecurityAccessor accessor, final T entity) throws ServiceException {
         try {
             Class directClz = entity.getClass();
             Class projectedEntityType = getProjectedEntityType(directClz);
 
-            return persistenceService.create(accessor, projectedEntityType, entity);
+            return persistenceService.create(operator, accessor, projectedEntityType, entity);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
         }
@@ -48,11 +49,11 @@ public final class JpaEntityServiceImpl
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> read(SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> read(Operator operator, SecurityAccessor accessor, Class<T> entityClz, Object key, ExternalReference externalReference) throws ServiceException {
         try {
             Class projectedEntityType = getProjectedEntityType(entityClz);
             key = keyTypeAdjust(projectedEntityType, key);
-            return persistenceService.read(accessor, projectedEntityType, key, externalReference);
+            return persistenceService.read(operator, accessor, projectedEntityType, key, externalReference);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
         }
@@ -60,11 +61,11 @@ public final class JpaEntityServiceImpl
     }
 
     @Override
-    public <T extends Persistable> PersistableResult<T> update(SecurityAccessor accessor, final T entity) throws ServiceException {
+    public <T extends Persistable> PersistableResult<T> update(Operator operator, SecurityAccessor accessor, final T entity) throws ServiceException {
         try {
             Class directClz = entity.getClass();
             Class projectedEntityType = getProjectedEntityType(directClz);
-            return persistenceService.update(accessor, projectedEntityType, entity);
+            return persistenceService.update(operator, accessor, projectedEntityType, entity);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
         }
@@ -72,11 +73,11 @@ public final class JpaEntityServiceImpl
     }
 
     @Override
-    public <T extends Persistable> boolean delete(SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
+    public <T extends Persistable> boolean delete(Operator operator, SecurityAccessor accessor, Class<T> entityClz, Object key) throws ServiceException {
         try {
             Class projectedEntityType = getProjectedEntityType(entityClz);
             key = keyTypeAdjust(projectedEntityType, key);
-            return persistenceService.delete(accessor, projectedEntityType, key);
+            return persistenceService.delete(operator, accessor, projectedEntityType, key);
         } catch (Exception e) {
             entityAccessExceptionHandler(e);
         }

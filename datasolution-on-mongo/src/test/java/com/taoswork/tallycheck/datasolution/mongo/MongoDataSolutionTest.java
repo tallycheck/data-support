@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
@@ -22,6 +23,7 @@ import org.junit.Test;
 public class MongoDataSolutionTest {
     private IDataSolution dataSolution = null;
     private SecurityAccessor accessor = new SecurityAccessor();
+    private Operator operator = new Operator();
 
     @Before
     public void setup() {
@@ -61,7 +63,7 @@ public class MongoDataSolutionTest {
                 c.setFirstName("First");
                 c.setLastName("Last");
 
-                PersistableResult<Citizen> result = entityService.create(accessor, c);
+                PersistableResult<Citizen> result = entityService.create(operator, accessor, c);
 
             }
 

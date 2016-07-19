@@ -7,6 +7,7 @@ import com.taoswork.tallycheck.dataservice.*;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.security.ISecurityVerifier;
@@ -89,28 +90,36 @@ public class BasicDataService implements IDataService {
         Class entityCls = adjustEntityTypeToClass(request.getType());
         PersistableResult result = entityService.makeDissociatedPersistable(entityCls);
         NewInstanceResponse response = new NewInstanceResponse();
+        setInstanceResponseByPersistableResult(result, response);
         if (result.getValue() != null) {
             response.setSuccess(true);
-            response.result = result.getValue();
         } else {
             response.setSuccess(false);
-            response.result = null;
         }
         return response;
+    }
+
+    private void setInstanceResponseByPersistableResult(PersistableResult result, InstanceResponse response) {
+        response.result = result.getValue();
+        response.setIdKey(result.getIdKey());
+        response.setIdValue(result.getIdValue());
+        response.setName(result.getName());
     }
 
     private static Entity getEntity(InstanceRequest request){
         RequestEntity requestEntity = request.entity;
         return new Entity(requestEntity.getType(), requestEntity.getProps());
     }
+
     @Override
-    public CreateResponse create(SecurityAccessor accessor, CreateRequest request) throws ServiceException {
+    public CreateResponse create(Operator operator, SecurityAccessor accessor, CreateRequest request) throws ServiceException {
         Class entityCls = adjustEntityTypeToClass(request.getType());
         Entity entity = getEntity(request);
         try {
             Persistable persistable = entityTranslator.translate(entityMetaAccess, entity, "");
-            PersistableResult result = entityService.create(accessor, persistable);
+            PersistableResult result = entityService.create(operator, accessor, persistable);
             CreateResponse response = new CreateResponse();
+            setInstanceResponseByPersistableResult(result, response);
             if (result.getValue() != null) {
                 response.setSuccess(true);
             } else {
@@ -119,34 +128,37 @@ public class BasicDataService implements IDataService {
             return response;
         } catch (TranslateException e) {
             throw new ServiceException(e);
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceException(e);
         }
-
     }
 
     @Override
-    public ReadResponse read(SecurityAccessor accessor, ReadRequest request) throws ServiceException {
+    public ReadResponse read(Operator operator, SecurityAccessor accessor, ReadRequest request) throws ServiceException {
         Class entityCls = adjustEntityTypeToClass(request.getType());
         ReadResponse response = new ReadResponse();
-        PersistableResult result = entityService.read(accessor, entityCls, request.getId(), response.references);
+        PersistableResult result = entityService.read(operator, accessor, entityCls, request.getId(), response.references);
+        setInstanceResponseByPersistableResult(result, response);
         if (result.getValue() != null) {
             response.setSuccess(true);
-            response.result = result.getValue();
         } else {
             response.setSuccess(false);
-            response.result = null;
         }
         return response;
     }
 
     @Override
-    public UpdateResponse update(SecurityAccessor accessor, UpdateRequest request) throws ServiceException {
+    public UpdateResponse update(Operator operator, SecurityAccessor accessor, UpdateRequest request) throws ServiceException {
         Class entityCls = adjustEntityTypeToClass(request.getType());
         Entity entity = getEntity(request);
         try {
             Persistable persistable = entityTranslator.translate(entityMetaAccess, entity, "");
             LOGGER.debug("check if id is set");
-            PersistableResult result = entityService.update(accessor, persistable);
+            PersistableResult result = entityService.update(operator, accessor, persistable);
             UpdateResponse response = new UpdateResponse();
+            setInstanceResponseByPersistableResult(result, response);
             if (result.getValue() != null) {
                 response.setSuccess(true);
             } else {
@@ -155,18 +167,22 @@ public class BasicDataService implements IDataService {
             return response;
         } catch (TranslateException e) {
             throw new ServiceException(e);
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ServiceException(e);
         }
     }
 
     @Override
-    public UpdateFieldResponse update(SecurityAccessor accessor, UpdateFieldRequest request) {
+    public UpdateFieldResponse update(Operator operator, SecurityAccessor accessor, UpdateFieldRequest request) {
         return null;
     }
 
     @Override
-    public DeleteResponse delete(SecurityAccessor accessor, DeleteRequest request) throws ServiceException {
+    public DeleteResponse delete(Operator operator, SecurityAccessor accessor, DeleteRequest request) throws ServiceException {
         Class entityCls = adjustEntityTypeToClass(request.getType());
-        boolean result = entityService.delete(accessor, entityCls, request.getId());
+        boolean result = entityService.delete(operator, accessor, entityCls, request.getId());
         DeleteResponse response = new DeleteResponse();
         if (result) {
             response.setSuccess(true);

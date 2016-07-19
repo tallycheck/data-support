@@ -4,6 +4,7 @@ import com.taoswork.tallycheck.authority.provider.AllPassAuthorityProvider;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
@@ -32,6 +33,7 @@ public class JpaEntityServiceCompanyTest {
 
     private IDataSolution dataSolution = null;
     private SecurityAccessor accessor = new SecurityAccessor();
+    private Operator operator = new Operator();
 
     @Before
     public void setup() {
@@ -59,10 +61,10 @@ public class JpaEntityServiceCompanyTest {
                         privateProducts.add("private " + c);
                     }
                     company.setPrivateProducts(privateProducts);
-                    PersistableResult<ICompany> result = entityService.create(accessor, company);
+                    PersistableResult<ICompany> result = entityService.create(operator, accessor, company);
                 }
 
-                PersistableResult<ICompany> readCompanyR = easyEntityService.read(accessor, ICompany.class, company.getId());
+                PersistableResult<ICompany> readCompanyR = easyEntityService.read(operator, accessor, ICompany.class, company.getId());
                 ICompany companyByRead = readCompanyR.getValue();
                 {
                     Assert.assertEquals(company.getId(), companyByRead.getId());

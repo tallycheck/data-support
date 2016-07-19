@@ -5,6 +5,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 
 import java.util.Collection;
 
@@ -19,15 +20,15 @@ public interface IDataService {
 
     NewInstanceResponse newInstance(NewInstanceRequest request) throws ServiceException;
 
-    CreateResponse create(SecurityAccessor accessor, CreateRequest request) throws ServiceException;
+    CreateResponse create(Operator operator, SecurityAccessor accessor, CreateRequest request) throws ServiceException;
 
-    ReadResponse read(SecurityAccessor accessor, ReadRequest request) throws ServiceException;
+    ReadResponse read(Operator operator, SecurityAccessor accessor, ReadRequest request) throws ServiceException;
 
-    UpdateResponse update(SecurityAccessor accessor, UpdateRequest request) throws ServiceException;
+    UpdateResponse update(Operator operator, SecurityAccessor accessor, UpdateRequest request) throws ServiceException;
 
-    UpdateFieldResponse update(SecurityAccessor accessor, UpdateFieldRequest request);
+    UpdateFieldResponse update(Operator operator, SecurityAccessor accessor, UpdateFieldRequest request);
 
-    DeleteResponse delete(SecurityAccessor accessor, DeleteRequest request) throws ServiceException;
+    DeleteResponse delete(Operator operator, SecurityAccessor accessor, DeleteRequest request) throws ServiceException;
 
     QueryResponse query(SecurityAccessor accessor, QueryRequest request) throws ServiceException;
 

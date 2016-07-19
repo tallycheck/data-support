@@ -5,6 +5,7 @@ import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
+import com.taoswork.tallycheck.dataservice.operator.Operator;
 
 import java.util.Collection;
 
@@ -32,37 +33,37 @@ public class DataServiceDelegate implements IDataService {
     }
 
     @Override
-    public NewInstanceResponse newInstance(NewInstanceRequest request)throws ServiceException {
+    public NewInstanceResponse newInstance(NewInstanceRequest request) throws ServiceException {
         return dataService.newInstance(request);
     }
 
     @Override
-    public CreateResponse create(SecurityAccessor accessor, CreateRequest request) throws ServiceException{
-        return dataService.create(accessor, request);
+    public CreateResponse create(Operator operator, SecurityAccessor accessor, CreateRequest request) throws ServiceException {
+        return dataService.create(operator, accessor, request);
     }
 
     @Override
-    public ReadResponse read(SecurityAccessor accessor, ReadRequest request) throws ServiceException {
-        return dataService.read(accessor, request);
+    public ReadResponse read(Operator operator, SecurityAccessor accessor, ReadRequest request) throws ServiceException {
+        return dataService.read(operator, accessor, request);
     }
 
     @Override
-    public UpdateResponse update(SecurityAccessor accessor, UpdateRequest request) throws ServiceException{
-        return dataService.update(accessor, request);
+    public UpdateResponse update(Operator operator, SecurityAccessor accessor, UpdateRequest request) throws ServiceException {
+        return dataService.update(operator, accessor, request);
     }
 
     @Override
-    public UpdateFieldResponse update(SecurityAccessor accessor, UpdateFieldRequest request) {
-        return dataService.update(accessor, request);
+    public UpdateFieldResponse update(Operator operator, SecurityAccessor accessor, UpdateFieldRequest request) {
+        return dataService.update(operator, accessor, request);
     }
 
     @Override
-    public DeleteResponse delete(SecurityAccessor accessor, DeleteRequest request) throws ServiceException{
-        return dataService.delete(accessor, request);
+    public DeleteResponse delete(Operator operator, SecurityAccessor accessor, DeleteRequest request) throws ServiceException {
+        return dataService.delete(operator, accessor, request);
     }
 
     @Override
-    public QueryResponse query(SecurityAccessor accessor, QueryRequest request) throws ServiceException{
+    public QueryResponse query(SecurityAccessor accessor, QueryRequest request) throws ServiceException {
         return dataService.query(accessor, request);
     }
 
