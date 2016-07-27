@@ -14,28 +14,18 @@ public interface NamedOrdered extends Named {
 
     void setOrder(int order);
 
-    public static class InfoOrderedComparator implements Comparator<NamedOrdered>, Serializable {
-        @Override
-        public int compare(NamedOrdered o1, NamedOrdered o2) {
-            return new CompareToBuilder()
-                    .append(o1.getOrder(), o2.getOrder())
-                    .append(o1.getName(), o2.getName())
-                    .toComparison();
-        }
-    }
-
     public static class NameSorter {
 
         public static List<String> makeNamesOrdered(Collection<? extends NamedOrdered> infos) {
-            Set<OrderedName> orderedNameSet = new TreeSet<OrderedName>(new OrderedName.OrderedComparator());
+            Set<OrderedName> onSet = new TreeSet<OrderedName>(OrderedName.COMPARATOR);
             for (NamedOrdered info : infos) {
                 if (info != null) {
-                    orderedNameSet.add(new OrderedName(info.getName(), info.getOrder()));
+                    onSet.add(new OrderedName(info.getName(), info.getOrder()));
                 }
             }
 
             List<String> orderedNames = new ArrayList<String>();
-            for (OrderedName orderedName : orderedNameSet) {
+            for (OrderedName orderedName : onSet) {
                 orderedNames.add(orderedName.getName());
             }
             return orderedNames;
@@ -53,7 +43,7 @@ public interface NamedOrdered extends Named {
         }
 
         public static <T extends NamedOrdered> List<T> makeObjectOrdered(Collection<T> objects) {
-            Map<OrderedName, T> orderedNameSet = new TreeMap<OrderedName, T>(new OrderedName.OrderedComparator());
+            Map<OrderedName, T> orderedNameSet = new TreeMap<OrderedName, T>(OrderedName.COMPARATOR);
             for (T info : objects) {
                 if (info != null) {
                     orderedNameSet.put(new OrderedName(info.getName(), info.getOrder()), info);

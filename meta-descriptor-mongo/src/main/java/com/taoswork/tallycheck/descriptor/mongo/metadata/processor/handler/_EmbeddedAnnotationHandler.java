@@ -14,6 +14,9 @@ class _EmbeddedAnnotationHandler implements IFieldHandler {
     public ProcessResult process(Field field, FieldMetaMediate metaMediate) {
         BasicFieldMetaObject bfmo = metaMediate.getBasicFieldMetaObject();
         Embedded embeddedAnnotation = field.getDeclaredAnnotation(Embedded.class);
+        if(null == embeddedAnnotation){
+            embeddedAnnotation = field.getType().getAnnotation(Embedded.class);
+        }
         if (null != embeddedAnnotation) {
             EmbeddedFieldMeta.Facet facet = new EmbeddedFieldMeta.Facet(field.getDeclaringClass());
             metaMediate.pushFacet(facet);

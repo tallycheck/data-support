@@ -13,70 +13,14 @@ import java.util.Map;
  * Created by Gao Yuan on 2015/8/5.
  */
 public class EntityInfoResult {
-    private Class<?> type;
-    private Class<?> ceilingType;
-    private String idField;
-    private String nameField;
 
-    private String beanUri;
+    private final BasicInfo basic = new BasicInfo();
 
     private Map<String, IEntityInfo> details;
 
-    public Class<?> getCeilingType() {
-        return ceilingType;
-    }
-
-    public EntityInfoResult setCeilingType(Class<?> ceilingType) {
-        this.ceilingType = ceilingType;
-        return this;
-    }
-
-    public Class<?> getType() {
-        return type;
-    }
-
-    public EntityInfoResult setType(Class<?> type) {
-        this.type = type;
-        return this;
-    }
-
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String getBeanUri() {
-        return beanUri;
-    }
-
-    public void setBeanUri(String beanUri) {
-        this.beanUri = beanUri;
-    }
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String getIdField() {
-        return idField;
-    }
-
-    public void setIdFieldIfEmpty(String idField) {
-        if (StringUtils.isEmpty(this.idField)) {
-            setIdField(idField);
-        }
-    }
-
-    public void setIdField(String idField) {
-        this.idField = idField;
-    }
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public String getNameField() {
-        return nameField;
-    }
-
-    public void setNameFieldIfEmpty(String nameField) {
-        if (StringUtils.isEmpty(this.nameField)) {
-            setNameField(nameField);
-        }
-    }
-
-    public void setNameField(String nameField) {
-        this.nameField = nameField;
+    public BasicInfo getBasic() {
+        return basic;
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)

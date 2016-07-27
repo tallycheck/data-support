@@ -67,7 +67,8 @@ public final class EntityInfoBuilder {
         }
 
         {// make grid field list
-            List<String> orderedGridNameList = NamedOrdered.NameSorter.makeNamesOrdered(rawEntityInfo.getGridFields(), fields);
+            List<String> orderedGridNameList = NamedOrdered.NameSorter.makeNamesOrdered(
+                    rawEntityInfo.getGridFields(), fields);
             entityInfo.setGridFields(orderedGridNameList);
         }
 

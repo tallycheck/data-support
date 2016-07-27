@@ -79,4 +79,9 @@ abstract class FieldInfoBase
     public void setFieldType(FieldType fieldType) {
         this.fieldType = fieldType;
     }
+
+    @Override
+    public String toString() {
+        return this.name + ", " + this.fieldType;
+    }
 }

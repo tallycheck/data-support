@@ -16,7 +16,7 @@ public class ResultTranslator {
     public static EntityInfoResult convertInfoResult(EntityRequest request,
                                                      EntityResponse response) {
         EntityInfoResult result = new EntityInfoResult();
-        result.setCeilingType(request.getEntityType())
+        result.getBasic().setCeilingType(request.getEntityType())
                 .setType(response.getEntityType())
                 .setBeanUri(LinkBuilder.buildLinkForReadInstance(request.getResourceName()));
         return result;

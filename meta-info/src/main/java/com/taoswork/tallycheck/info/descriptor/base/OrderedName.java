@@ -35,7 +35,7 @@ public class OrderedName {
         return this;
     }
 
-    public static class OrderedComparator implements Comparator<OrderedName> {
+    private static class OrderedComparator implements Comparator<OrderedName> {
         @Override
         public int compare(OrderedName o1, OrderedName o2) {
             return new CompareToBuilder()
@@ -45,4 +45,5 @@ public class OrderedName {
         }
 
     }
+    public static final Comparator<OrderedName> COMPARATOR = new OrderedComparator();
 }

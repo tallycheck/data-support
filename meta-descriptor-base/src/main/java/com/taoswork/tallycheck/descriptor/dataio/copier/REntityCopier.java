@@ -117,6 +117,7 @@ public class REntityCopier {
                 ExternalForeignEntityFieldMeta efeFm = (ExternalForeignEntityFieldMeta) fieldMeta;
                 Field foreignKeyField = fieldMeta.getField();
                 Field foreignValField = efeFm.getEntityField();
+                String foreignValFieldName = efeFm.getTheDataFieldName();
                 Object keyVal = foreignKeyField.get(source);
                 foreignKeyField.set(target, keyVal);
                 if (null == keyVal) {
@@ -126,7 +127,7 @@ public class REntityCopier {
                         Class entityType = efeFm.getTargetType();
                         //backlog data: [type: entityType, key: keyVal]
                         //slot: [target: target, position: foreignValField]
-                        externalReference.publishReference(target, foreignValField, entityType, keyVal.toString());
+                        externalReference.publishReference(target, foreignValFieldName, entityType, keyVal.toString());
                     }
                     foreignValField.set(target, null);
 //                    throw new IllegalAccessException("Not Implemented");

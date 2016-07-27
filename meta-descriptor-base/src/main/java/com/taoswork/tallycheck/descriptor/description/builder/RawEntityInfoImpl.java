@@ -112,7 +112,7 @@ class RawEntityInfoImpl
     @Override
     public void finishWriting() {
         if (dirty) {
-            Map<OrderedName, IFieldInfo> fieldsOrdered = new TreeMap<OrderedName, IFieldInfo>(new OrderedName.OrderedComparator());
+            Map<OrderedName, IFieldInfo> fieldsOrdered = new TreeMap<OrderedName, IFieldInfo>(OrderedName.COMPARATOR);
             for (Map.Entry<String, IFieldInfo> entry : fields.entrySet()) {
                 IFieldInfo fieldInfo = entry.getValue();
                 fieldsOrdered.put(new OrderedName(entry.getKey(), fieldInfo.getOrder()), fieldInfo);

@@ -109,8 +109,8 @@ public class FrontEndEntityService implements IFrontEndEntityService {
                 infoResult = ResultTranslator.convertInfoResult(request, response);
             }
             if (entityInfo != null) {
-                infoResult.setIdFieldIfEmpty(entityInfo.getIdField());
-                infoResult.setNameFieldIfEmpty(entityInfo.getNameField());
+                infoResult.getBasic().setIdFieldIfEmpty(entityInfo.getIdField())
+                        .setNameFieldIfEmpty(entityInfo.getNameField());
                 infoResult.addDetail(entityInfo.getInfoType(), entityInfo);
             }
         }

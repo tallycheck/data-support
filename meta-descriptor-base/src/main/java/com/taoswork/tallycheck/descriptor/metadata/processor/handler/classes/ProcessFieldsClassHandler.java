@@ -39,7 +39,7 @@ public class ProcessFieldsClassHandler implements IClassHandler {
                 .setScanSuper(false);
         List<Field> fields = new ArrayList<Field>();
         Collection<String> pfos = mutableClassMetadata.getFieldsOverrided();
-        for(String fieldName : pfos) {
+        for (String fieldName : pfos) {
             Field f = ClassUtility.getFieldOfName(clz, fieldName, true);
             if (f == null) {
                 throw new RuntimeException("[" + ProcessFieldsClassHandler.class + "] Field " + fieldName + " in " + clz + " doesn't exist , aborting ...");
@@ -82,10 +82,10 @@ public class ProcessFieldsClassHandler implements IClassHandler {
 
     public static IFieldMeta createFieldMeta(FieldMetaMediate intermediate) {
         IFieldMetaSeed seed = intermediate.getMetaSeed();
-        if(seed == null){
+        if (seed == null) {
             LOGGER.error("Intermediate Field Metadata Seed not defined, aborting ...");
             throw new RuntimeException("Intermediate Field Metadata Seed not defined, aborting ...");
-        }else {
+        } else {
             return seed.makeFieldMeta(intermediate.getBasicFieldMetaObject());
         }
     }

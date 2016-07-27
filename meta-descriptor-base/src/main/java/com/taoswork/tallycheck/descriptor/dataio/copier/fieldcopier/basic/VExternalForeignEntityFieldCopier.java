@@ -29,6 +29,7 @@ public class VExternalForeignEntityFieldCopier extends BaseFieldCopier<ExternalF
         ExternalForeignEntityFieldMeta efeFm = fieldMeta;
         Field foreignKeyField = fieldMeta.getField();
         Field foreignValField = efeFm.getEntityField();
+        String foreignValFieldName = efeFm.getTheDataFieldName();
         Object keyVal = foreignKeyField.get(source);
         Object valVal = foreignValField.get(source);
         if (null == keyVal) {
@@ -39,7 +40,7 @@ public class VExternalForeignEntityFieldCopier extends BaseFieldCopier<ExternalF
                     Class entityType = efeFm.getTargetType();
                     //backlog data: [type: entityType, key: keyVal]
                     //slot: [target: target, position: foreignValField]
-                    externalReference.publishReference(target, foreignValField, entityType, keyVal.toString());
+                    externalReference.publishReference(target, foreignValFieldName, entityType, keyVal.toString());
                 }
             }
         }
