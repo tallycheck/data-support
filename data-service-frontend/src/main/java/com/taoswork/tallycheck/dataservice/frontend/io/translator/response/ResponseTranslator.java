@@ -72,6 +72,7 @@ public class ResponseTranslator {
             response.setEntityType(criteriaResult.getEntityType());
         }
         response.setEntities(queryResult);
+        response.setFullQuery(request.getFullUri());
 
         handleServiceException(e, response, locale);
     }
