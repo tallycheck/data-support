@@ -50,8 +50,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
         if (projectedEntityType == null) {
             projectedEntityType = (Class<T>) entity.getClass();
         }
-        Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
-        String guardianName = guardian.getName();
+        String guardianName = entityMetaAccess.getPermissionGuardian(projectedEntityType.getName());
         securityVerifier.checkAccess(accessor, guardianName, Access.Create, entity);
         PersistableResult persistableResult = makePersistableResult(entity);
 
@@ -68,8 +67,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
 
     @Override
     public <T extends Persistable> T securedRead(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, Object key) throws ServiceException {
-        Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
-        String guardianName = guardian.getName();
+        String guardianName = entityMetaAccess.getPermissionGuardian(projectedEntityType.getName());
         securityVerifier.checkAccess(accessor, guardianName, Access.Read);
         T result = doRead(projectedEntityType, key);
         if (result == null) {
@@ -88,8 +86,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
         if (projectedEntityType == null) {
             projectedEntityType = (Class<T>) entity.getClass();
         }
-        Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
-        String guardianName = guardian.getName();
+        String guardianName = entityMetaAccess.getPermissionGuardian(projectedEntityType.getName());
         PersistableResult<T> oldEntity = getManagedEntity(projectedEntityType, entity);
         securityVerifier.checkAccess(accessor, guardianName, Access.Update, oldEntity.getValue(), entity);
         PersistableResult persistableResult = makePersistableResult(entity);
@@ -107,8 +104,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
 
     @Override
     public <T extends Persistable> boolean securedDelete(Operator operator, SecurityAccessor accessor, Class<T> projectedEntityType, Object id) throws ServiceException {
-        Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
-        String guardianName = guardian.getName();
+        String guardianName = entityMetaAccess.getPermissionGuardian(projectedEntityType.getName());
         PersistableResult<T> oldEntity = getManagedEntityById(projectedEntityType, id);
         if (oldEntity == null) {
             throw new NoSuchRecordException(projectedEntityType, id);
@@ -124,8 +120,7 @@ public abstract class SecuredCrudqAccessor implements ISecuredCrudqAccessor {
 
     @Override
     public <T extends Persistable> CriteriaQueryResult<T> securedQuery(SecurityAccessor accessor, Class<T> projectedEntityType, CriteriaTransferObject query) throws ServiceException {
-        Class<?> guardian = entityMetaAccess.getPermissionGuardian(projectedEntityType);
-        String guardianName = guardian.getName();
+        String guardianName = entityMetaAccess.getPermissionGuardian(projectedEntityType.getName());
         securityVerifier.checkAccess(accessor, guardianName, Access.Query);
         CriteriaQueryResult<T> result = doQuery(projectedEntityType, query);
         for (T one : result.getEntityCollection()) {

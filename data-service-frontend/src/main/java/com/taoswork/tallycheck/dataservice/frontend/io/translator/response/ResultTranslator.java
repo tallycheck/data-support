@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.dataservice.frontend.io.translator.response;
 
+import com.taoswork.tallycheck.dataservice.PersistableResult;
 import com.taoswork.tallycheck.dataservice.frontend.io.request.EntityQueryRequest;
 import com.taoswork.tallycheck.dataservice.frontend.io.request.EntityRequest;
 import com.taoswork.tallycheck.dataservice.frontend.io.response.EntityResponse;
@@ -37,6 +38,15 @@ public class ResultTranslator {
     public static EntityInstanceResult convertInstanceResult(InstanceResponse er) {
         EntityInstanceResult result = new EntityInstanceResult();
         result.setBean(er.result)
+                .setName(er.getName())
+                .setIdKey(er.getIdKey())
+                .setIdValue(er.getIdValue());
+        return result;
+    }
+
+    public static EntityInstanceResult convertPersistableResult(PersistableResult er) {
+        EntityInstanceResult result = new EntityInstanceResult();
+        result.setBean(er.getValue())
                 .setName(er.getName())
                 .setIdKey(er.getIdKey())
                 .setIdValue(er.getIdValue());

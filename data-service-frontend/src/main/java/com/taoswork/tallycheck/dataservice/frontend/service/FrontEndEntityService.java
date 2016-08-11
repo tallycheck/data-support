@@ -70,7 +70,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
     }
 
     private void appendAuthorizedActions(EntityRequest request, EntityResponse response, ActionsBuilder.CurrentStatus currentStatus) {
-        Access access = dataService.getAuthorizeAccess(accessor(), request.getEntityType(), Access.Crudq);
+        Access access = dataService.getAuthorizeAccess(accessor(), request.getEntityType().getName(), Access.Crudq);
         Collection<EntityAction> actions = ActionsBuilder.makeActions(access, currentStatus);
         Collection<String> actionsString = EntityAction.convertToTypes(actions, new HashSet<String>());
         response.setActions(actionsString);
@@ -95,8 +95,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
 
         List<IEntityInfo> entityInfos = new ArrayList<IEntityInfo>();
         for (EntityInfoType infoType : request.getEntityInfoTypes()) {
-            InfoRequest infoRequest = new InfoRequest(useType);
-            infoRequest.locale = locale;
+            InfoRequest infoRequest = new InfoRequest(useType, locale);
             infoRequest.withHierarchy = withHierarchy;
             infoRequest.infoType = InfoTypeConvertor.convert(infoType);
             InfoResponse infoResponse = dataService.info(infoRequest);
@@ -177,14 +176,14 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         ServiceException se = null;
         try {
             CriteriaTransferObject cto = Request2CtoTranslator.translate(request);
-            QueryRequest queryRequest = new QueryRequest(entityType);
+            QueryRequest queryRequest = new QueryRequest(request.makeRequest());
             queryRequest.query = cto;
             QueryResponse queryResponse = dataService.query(accessor(), queryRequest);
             result = queryResponse.result;
 
             ExternalReference externalReference = queryResponse.references;
             if (externalReference.hasReference()) {
-                fillExternalReference(externalReference);
+                fillExternalReference(externalReference, locale);
             }
         } catch (ServiceException e) {
             se = e;
@@ -206,7 +205,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         ServiceException se = null;
         try {
             Class<? extends Persistable> entityType = request.getEntityType();
-            NewInstanceRequest newInstanceRequest = new NewInstanceRequest(entityType);
+            NewInstanceRequest newInstanceRequest = new NewInstanceRequest(request.makeRequest());
             newInstanceResponse = dataService.newInstance(newInstanceRequest);
 //            response.setEntity(newInstanceResponse.getResult());
         } catch (ServiceException e) {
@@ -230,7 +229,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         ServiceException se = null;
         try {
             RequestEntity requestEntity = request.getEntity().requestEntity();
-            CreateRequest createRequest = new CreateRequest(requestEntity);
+            CreateRequest createRequest = new CreateRequest(requestEntity, locale);
             createResponse = dataService.create(operator(), accessor(), createRequest);
 
             Map<String, Object> m = new MapBuilder<String, Object>().append(EntityActionPaths.ID_KEY, createResponse.getIdValue());
@@ -255,12 +254,12 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         ReadResponse readResponse = null;
         ServiceException se = null;
         try {
-            ReadRequest readRequest = new ReadRequest(entityType);
+            ReadRequest readRequest = new ReadRequest(request.makeRequest());
             readRequest.setId(request.getId());
             readResponse = dataService.read(operator(), accessor(), readRequest);
             ExternalReference externalReference = readResponse.references;
             if (externalReference.hasReference()) {
-                fillExternalReference(externalReference);
+                fillExternalReference(externalReference, locale);
             }
         } catch (ServiceException e) {
             se = e;
@@ -283,7 +282,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         ServiceException se = null;
         try {
             RequestEntity requestEntity = request.getEntity().requestEntity();
-            UpdateRequest updateRequest = new UpdateRequest(requestEntity);
+            UpdateRequest updateRequest = new UpdateRequest(requestEntity, locale);
             updateResponse = dataService.update(operator(), accessor(), updateRequest);
         } catch (ServiceException e) {
             se = e;
@@ -304,7 +303,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
         boolean deleted = false;
         ServiceException se = null;
         try {
-            DeleteRequest deleteRequest = new DeleteRequest(entityType);
+            DeleteRequest deleteRequest = new DeleteRequest(request.makeRequest());
             deleteRequest.setId(request.getId());
             DeleteResponse deleteResponse = dataService.delete(operator(), accessor(), deleteRequest);
             deleted = deleteResponse.isSuccess();
@@ -337,7 +336,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
 //        return response;
     }
 
-    private void fillExternalReference(ExternalReference externalReference) throws ServiceException {
+    private void fillExternalReference(ExternalReference externalReference, final Locale locale) throws ServiceException {
         if (null != externalReference) {
             try {
                 Map<String, EntityRecords> records = externalReference.calcReferenceValue(new IEntityRecordsFetcher() {
@@ -355,7 +354,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
                                 if (id != null)
                                     idStrings.add(id.toString());
                             }
-                            QueryIdsRequest queryIdsRequest = new QueryIdsRequest(entityTypeName);
+                            QueryIdsRequest queryIdsRequest = new QueryIdsRequest(entityTypeName, locale);
                             queryIdsRequest.ids = idStrings;
                             QueryResponse queryResponse = externalDataService.query(accessor(), queryIdsRequest);
 

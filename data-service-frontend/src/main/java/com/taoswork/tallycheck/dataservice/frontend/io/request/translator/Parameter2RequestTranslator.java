@@ -109,8 +109,10 @@ public class Parameter2RequestTranslator {
 
     public static EntityInfoRequest makeInfoRequest(EntityTypeParameter entityTypeParam,
                                                     URI fullUri,
-                                                    MultiValueMap<String, String> requestParams, Set<String> infoFilter) {
-        EntityInfoRequest request = new EntityInfoRequest(entityTypeParam, fullUri);
+                                                    MultiValueMap<String, String> requestParams,
+                                                    Set<String> infoFilter,
+                                                    Locale locale) {
+        EntityInfoRequest request = new EntityInfoRequest(entityTypeParam, fullUri, locale);
         _fillInfoCriterias(request, requestParams, infoFilter);
 
         return request;
@@ -118,8 +120,10 @@ public class Parameter2RequestTranslator {
 
     public static EntityQueryRequest makeQueryRequest(EntityTypeParameter entityTypeParam,
                                                       URI fullUri,
-                                                      MultiValueMap<String, String> requestParams, Set<String> infoFilter) {
-        EntityQueryRequest request = new EntityQueryRequest(entityTypeParam, fullUri);
+                                                      MultiValueMap<String, String> requestParams,
+                                                      Set<String> infoFilter,
+                                                      Locale locale) {
+        EntityQueryRequest request = new EntityQueryRequest(entityTypeParam, fullUri, locale);
         _queryRequestSetPropertyCriterias(request, requestParams);
         _fillInfoCriterias(request, requestParams, infoFilter);
 
@@ -127,23 +131,26 @@ public class Parameter2RequestTranslator {
     }
 
     public static EntityCreateFreshRequest makeCreateFreshRequest(EntityTypeParameter entityTypeParam,
-                                                                  URI fullUri) {
-        EntityCreateFreshRequest request = new EntityCreateFreshRequest(entityTypeParam, fullUri);
+                                                                  URI fullUri,
+                                                                  Locale locale) {
+        EntityCreateFreshRequest request = new EntityCreateFreshRequest(entityTypeParam, fullUri, locale);
         request.addEntityInfoType(EntityInfoType.Form);
         return request;
     }
 
     public static EntityCreateRequest makeCreateRequest(EntityTypeParameter entityTypeParam,
-                                                        URI fullUri, FormEntity entity) {
-        EntityCreateRequest request = new EntityCreateRequest(entityTypeParam, fullUri, entity);
+                                                        URI fullUri, FormEntity entity,
+                                                        Locale locale) {
+        EntityCreateRequest request = new EntityCreateRequest(entityTypeParam, fullUri, entity, locale);
         request.clearEntityInfoType();
         request.addEntityInfoType(EntityInfoType.Form);
         return request;
     }
 
     public static EntityReadRequest makeReadRequest(EntityTypeParameter entityTypeParam,
-                                                    URI fullUri, String id) {
-        EntityReadRequest request = new EntityReadRequest(entityTypeParam, fullUri);
+                                                    URI fullUri, String id,
+                                                    Locale locale) {
+        EntityReadRequest request = new EntityReadRequest(entityTypeParam, fullUri, locale);
         request.setId(id);
         request.addEntityInfoType(EntityInfoType.Form);
 
@@ -151,16 +158,18 @@ public class Parameter2RequestTranslator {
     }
 
     public static EntityUpdateRequest makeUpdateRequest(EntityTypeParameter entityTypeParam,
-                                                        URI fullUri, FormEntity entity) {
-        EntityUpdateRequest request = new EntityUpdateRequest(entityTypeParam, fullUri, entity);
+                                                        URI fullUri, FormEntity entity,
+                                                        Locale locale) {
+        EntityUpdateRequest request = new EntityUpdateRequest(entityTypeParam, fullUri, entity, locale);
         request.clearEntityInfoType();
         request.addEntityInfoType(EntityInfoType.Form);
         return request;
     }
 
     public static EntityDeleteRequest makeDeleteRequest(EntityTypeParameter entityTypeParam,
-                                                        URI fullUri, String id, FormEntity entity) {
-        EntityDeleteRequest request = new EntityDeleteRequest(entityTypeParam, fullUri, entity);
+                                                        URI fullUri, String id, FormEntity entity,
+                                                        Locale locale) {
+        EntityDeleteRequest request = new EntityDeleteRequest(entityTypeParam, fullUri, entity, locale);
         request.setId(id);
         if (entity.getType() == null) {
             entity.setType(entityTypeParam.getType());
@@ -186,8 +195,9 @@ public class Parameter2RequestTranslator {
     }
 
     public static CollectionEntryCreateFreshRequest makeCollectionCreateFreshRequest(EntityTypeParameter entityTypeParam, URI fullUri,
-                                                                                     CollectionEntryTypeParameter collectionEntryTypeParameter) {
-        CollectionEntryCreateFreshRequest request = new CollectionEntryCreateFreshRequest(entityTypeParam, fullUri, collectionEntryTypeParameter);
+                                                                                     CollectionEntryTypeParameter collectionEntryTypeParameter,
+                                                                                     Locale locale) {
+        CollectionEntryCreateFreshRequest request = new CollectionEntryCreateFreshRequest(entityTypeParam, fullUri, collectionEntryTypeParameter, locale);
         request.addEntityInfoType(EntityInfoType.Form);
         return request;
     }

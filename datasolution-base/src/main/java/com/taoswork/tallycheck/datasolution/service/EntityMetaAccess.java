@@ -47,7 +47,7 @@ public interface EntityMetaAccess extends IClassMetaAccess {
      */
     Collection<Class> getInstantiableEntityTypes(Class<?> entityCeilingType);
 
-    <T> Class<T> getPermissionGuardian(Class<T> entityType);
+    String getPermissionGuardian(String entityType);
 
     /**
      * Get a class tree with root (root's type is entityCeilingType)

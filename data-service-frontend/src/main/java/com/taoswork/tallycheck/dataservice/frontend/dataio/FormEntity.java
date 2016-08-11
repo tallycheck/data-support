@@ -13,8 +13,7 @@ import java.util.Map;
  */
 public class FormEntity implements Serializable {
     private Integer timezoneOffset;
-    private final Map<String, String> props = new HashMap<String, String>();
-    public final static String ENTITY_PROPERTY_NAME = "props";
+    private final Map<String, String> bean = new HashMap<String, String>();
     private Class<? extends Persistable> type;
     private Class<? extends Persistable> ceilingType;
 
@@ -45,20 +44,21 @@ public class FormEntity implements Serializable {
         return this;
     }
 
-    public Map<String, String> getProps() {
-        return props;
+    public Map<String, String> getBean() {
+        return bean;
     }
 
-    public FormEntity setProperty(String key, String value){
-        this.props.put(key, value);
+    public FormEntity setBean(Map<String, String> bean){
+        this.bean.clear();
+        this.bean.putAll(bean);
         return this;
     }
 
     public Entity entity(){
-        return new Entity(type, props);
+        return new Entity(type, bean);
     }
 
     public RequestEntity requestEntity(){
-        return new RequestEntity(type, props);
+        return new RequestEntity(type, bean);
     }
 }

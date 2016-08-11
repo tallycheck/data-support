@@ -80,7 +80,7 @@ public abstract class BasicDataServiceMock implements IDataService {
     }
 
     @Override
-    public Access getAuthorizeAccess(SecurityAccessor accessor, Class<? extends Persistable> entityType, Access mask) {
+    public Access getAuthorizeAccess(SecurityAccessor accessor, String entityType, Access mask) {
         return Access.None;
     }
 

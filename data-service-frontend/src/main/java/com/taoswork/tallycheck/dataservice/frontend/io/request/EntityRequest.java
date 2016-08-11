@@ -2,14 +2,12 @@ package com.taoswork.tallycheck.dataservice.frontend.io.request;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.frontend.io.request.parameter.EntityTypeParameter;
+import com.taoswork.tallycheck.dataservice.io.request.Request;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
 import org.springframework.util.StringUtils;
 
 import java.net.URI;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Gao Yuan on 2015/8/4.
@@ -17,26 +15,30 @@ import java.util.Set;
 public abstract class EntityRequest {
     private final String resourceName;
     private Class<? extends Persistable> entityType;
+    private final String entityUri;
+    private final Locale locale;
+
     //The uri of this request
     private final String uri;
     //The uri of this request, with parameter
     private final URI fullUri;
-    private final String entityUri;
 
     private final Set<EntityInfoType> entityInfoTypes = new HashSet<EntityInfoType>();
 
     public EntityRequest(EntityTypeParameter entityTypeParam,
-                         URI fullUri) {
+                         URI fullUri, Locale locale) {
         this.resourceName = entityTypeParam.getTypeName();
         this.setEntityType(entityTypeParam.getType());
         // this.entityType = entityTypeParam.getType();
-        this.fullUri = fullUri;
-        this.uri = fullUri.getPath();
         this.entityUri = entityTypeParam.getEntityUri();
+        this.locale = locale;
+
+        this.uri = fullUri.getPath();
+        this.fullUri = fullUri;
     }
 
-    public String getFullUri() {
-        return fullUri.toString();
+    public String getResourceName() {
+        return resourceName;
     }
 
     public Class<? extends Persistable> getEntityType() {
@@ -66,16 +68,20 @@ public abstract class EntityRequest {
         return this;
     }
 
-    public String getResourceName() {
-        return resourceName;
+    public String getEntityUri() {
+        return entityUri;
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 
     public String getUri() {
         return uri;
     }
 
-    public String getEntityUri() {
-        return entityUri;
+    public String getFullUri() {
+        return fullUri.toString();
     }
 
     ////////////////////////////////////////
@@ -100,6 +106,10 @@ public abstract class EntityRequest {
     public EntityRequest clearEntityInfoType() {
         entityInfoTypes.clear();
         return this;
+    }
+
+    public Request makeRequest(){
+        return new Request(entityType, locale);
     }
 
     public boolean hasEntityInfoType(EntityInfoType entityInfoType) {

@@ -28,6 +28,10 @@ public final class Access implements Serializable {
     private final int general;
     private final int extended;
 
+    public Access() {
+        this(NONE);
+    }
+
     public Access(int general) {
         this(general, EXTENDED_NONE);
     }

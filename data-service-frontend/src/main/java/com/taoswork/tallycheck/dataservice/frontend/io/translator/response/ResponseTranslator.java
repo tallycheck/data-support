@@ -141,14 +141,14 @@ public class ResponseTranslator {
                                            InstanceResponse result,
                                            ServiceException e,
                                            EntityInstanceResponse response) {
-        PersistableResult persistableResult=null;
-        if(result != null){
+        PersistableResult persistableResult = null;
+        if (result != null) {
             persistableResult = new PersistableResult();
             persistableResult.setIdKey(result.getIdKey());
             persistableResult.setIdValue(result.getIdValue());
             persistableResult.setName(result.getName());
             persistableResult.setValue(result.getResult());
-        }else if (result == null && e instanceof EntityValueValidationException) {
+        } else if (result == null && e instanceof EntityValueValidationException) {
             persistableResult = ((EntityValueValidationException) e).getEntity();
         }
         if (persistableResult == null) {
@@ -157,7 +157,7 @@ public class ResponseTranslator {
         } else {
             Persistable resultEntity = persistableResult.getValue();
             response.setEntityType(resultEntity.getClass());
-            EntityInstanceResult instanceResult = ResultTranslator.convertInstanceResult(result);
+            EntityInstanceResult instanceResult = ResultTranslator.convertPersistableResult(persistableResult);
             response.setEntity(instanceResult);
         }
     }

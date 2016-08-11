@@ -1,15 +1,24 @@
 package com.taoswork.tallycheck.dataservice.io.request;
 
+import java.util.Locale;
+
 /**
  * Created by gaoyuan on 7/1/16.
  */
 public class DeleteRequest extends Request {
-    public DeleteRequest(String type) {
-        super(type);
+    public DeleteRequest() {
     }
 
-    public DeleteRequest(Class type) {
-        super(type);
+    public DeleteRequest(String type, Locale locale) {
+        super(type, locale);
+    }
+
+    public DeleteRequest(Class type, Locale locale) {
+        super(type, locale);
+    }
+
+    public DeleteRequest(Request req) {
+        super(req);
     }
 
     protected String id;

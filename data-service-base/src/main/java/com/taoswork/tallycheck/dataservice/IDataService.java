@@ -36,5 +36,5 @@ public interface IDataService {
 
     InfoResponse info(InfoRequest request);
 
-    Access getAuthorizeAccess(SecurityAccessor accessor, Class< ? extends Persistable> entityType, Access mask);
+    Access getAuthorizeAccess(SecurityAccessor accessor, String entityType, Access mask);
 }

@@ -1,9 +1,11 @@
 package com.taoswork.tallycheck.datadomain.base.entity.validation.error;
 
+import java.io.Serializable;
+
 /**
  * Created by Gao Yuan on 2015/10/4.
  */
-public class ValidationError {
+public class ValidationError implements Serializable {
     private String code;
     private Object[] args;
 

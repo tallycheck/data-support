@@ -4,12 +4,16 @@ import com.taoswork.tallycheck.dataservice.frontend.io.request.parameter.Collect
 import com.taoswork.tallycheck.dataservice.frontend.io.request.parameter.EntityTypeParameter;
 
 import java.net.URI;
+import java.util.Locale;
 
 public class CollectionEntryCreateFreshRequest extends EntityRequest {
     public final CollectionEntryTypeParameter collectionEntryTypeParameter;
 
-    public CollectionEntryCreateFreshRequest(EntityTypeParameter entityTypeParam, URI fullUri, CollectionEntryTypeParameter collectionEntryTypeParameter) {
-        super(entityTypeParam, fullUri);
+    public CollectionEntryCreateFreshRequest(EntityTypeParameter entityTypeParam,
+                                             URI fullUri,
+                                             CollectionEntryTypeParameter collectionEntryTypeParameter,
+                                             Locale locale) {
+        super(entityTypeParam, fullUri, locale);
         this.collectionEntryTypeParameter = collectionEntryTypeParameter;
     }
 

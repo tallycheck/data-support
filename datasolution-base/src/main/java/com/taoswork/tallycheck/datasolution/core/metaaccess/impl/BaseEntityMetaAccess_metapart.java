@@ -60,7 +60,7 @@ abstract class BaseEntityMetaAccess_metapart implements EntityMetaAccess {
     @GuardedBy(value = "self", lockOrder = 4)
     private Map<ClassScope, IClassMeta> classMetaMap = null;
 
-    private Map<Class, Class> entityType2GuardianType;
+    private Map<String, String> entityType2GuardianType;
 
     protected abstract Class<?> superPersistable();
 
@@ -154,7 +154,7 @@ abstract class BaseEntityMetaAccess_metapart implements EntityMetaAccess {
     }
 
     @Override
-    public <T> Class<T> getPermissionGuardian(Class<T> entityType) {
+    public String getPermissionGuardian(String entityType) {
         calcEntityTypeGuardians();
         return entityType2GuardianType.get(entityType);
     }
@@ -332,7 +332,11 @@ abstract class BaseEntityMetaAccess_metapart implements EntityMetaAccess {
                 }
                 temp.put(entityType, guardian);
             }
-            entityType2GuardianType = temp;
+            Map<String, String> guardianMap = new HashMap<String, String>();
+            for(Map.Entry<Class, Class> entry : temp.entrySet()){
+                guardianMap.put(entry.getKey().getName(), entry.getValue().getName());
+            }
+            entityType2GuardianType = guardianMap;
         }
     }
 }

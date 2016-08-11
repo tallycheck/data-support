@@ -214,7 +214,7 @@ public class BasicDataService implements IDataService {
     @Override
     public InfoResponse info(InfoRequest request) {
         Class entityCls = adjustEntityTypeToClass(request.getType());
-        IEntityInfo entityInfo = entityService.describe(entityCls, request.withHierarchy, convertInfoType(request.infoType), request.locale);
+        IEntityInfo entityInfo = entityService.describe(entityCls, request.withHierarchy, convertInfoType(request.infoType), request.getLocale());
         InfoResponse response = new InfoResponse();
         if (entityInfo != null) {
             response.setSuccess(true);
@@ -227,9 +227,8 @@ public class BasicDataService implements IDataService {
     }
 
     @Override
-    public Access getAuthorizeAccess(SecurityAccessor accessor, Class<? extends Persistable> entityType, Access mask) {
-        Class guardian = entityMetaAccess.getPermissionGuardian(entityType);
-        String guardianName = guardian.getName();
+    public Access getAuthorizeAccess(SecurityAccessor accessor, String entityType, Access mask) {
+        String guardianName = entityMetaAccess.getPermissionGuardian(entityType);
         return securityVerifier.getAllPossibleAccess(accessor, guardianName,mask);
     }
 

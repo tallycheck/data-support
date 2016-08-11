@@ -78,7 +78,7 @@ public class DataServiceDelegate implements IDataService {
     }
 
     @Override
-    public Access getAuthorizeAccess(SecurityAccessor accessor, Class<? extends Persistable> entityType, Access mask) {
+    public Access getAuthorizeAccess(SecurityAccessor accessor, String entityType, Access mask) {
         return dataService.getAuthorizeAccess(accessor, entityType, mask);
     }
 }

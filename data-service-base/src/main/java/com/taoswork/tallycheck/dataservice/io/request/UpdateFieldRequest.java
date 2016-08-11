@@ -1,5 +1,7 @@
 package com.taoswork.tallycheck.dataservice.io.request;
 
+import java.util.Locale;
+
 /**
  * Created by gaoyuan on 7/1/16.
  */
@@ -9,11 +11,18 @@ public class UpdateFieldRequest extends Request {
      */
     protected String field;
 
-    public UpdateFieldRequest(String type) {
-        super(type);
+    public UpdateFieldRequest() {
     }
 
-    public UpdateFieldRequest(Class type) {
-        super(type);
+    public UpdateFieldRequest(String type, Locale locale) {
+        super(type, locale);
+    }
+
+    public UpdateFieldRequest(Class type, Locale locale) {
+        super(type, locale);
+    }
+
+    public UpdateFieldRequest(Request req) {
+        super(req);
     }
 }

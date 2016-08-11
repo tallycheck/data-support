@@ -28,6 +28,11 @@
             <groupId>com.taoswork.tallycheck</groupId>
             <artifactId>meta-info</artifactId>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

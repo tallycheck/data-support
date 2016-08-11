@@ -2,10 +2,12 @@ package com.taoswork.tallycheck.dataservice;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 
+import java.io.Serializable;
+
 /**
  * Created by Gao Yuan on 2015/9/24.
  */
-public class PersistableResult<T extends Persistable> {
+public class PersistableResult<T extends Persistable> implements Serializable {
     String idKey;
     String idValue;
     String name;

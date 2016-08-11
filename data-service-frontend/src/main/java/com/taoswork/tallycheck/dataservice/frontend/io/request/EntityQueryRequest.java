@@ -8,6 +8,7 @@ import com.taoswork.tallycheck.dataservice.query.PropertySortCriteria;
 
 import java.net.URI;
 import java.util.Collection;
+import java.util.Locale;
 
 /**
  * Created by Gao Yuan on 2015/6/1.
@@ -18,8 +19,9 @@ public class EntityQueryRequest extends EntityRequest implements Pageable {
 
     private CriteriaTransferObject criteriaTransferObject = new CriteriaTransferObject();
 
-    public EntityQueryRequest(EntityTypeParameter entityTypeParam, URI fullUri) {
-        super(entityTypeParam, fullUri);
+    public EntityQueryRequest(EntityTypeParameter entityTypeParam,
+                              URI fullUri, Locale locale) {
+        super(entityTypeParam, fullUri, locale);
     }
 
     @Override

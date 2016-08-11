@@ -74,11 +74,11 @@ public class EntityMetaAccessTest {
         EntityMetaAccess entityMetaAccess = dataService.getService(EntityMetaAccess.COMPONENT_NAME);
         Assert.assertNotNull(entityMetaAccess);
 
-        Class guardian1 = entityMetaAccess.getPermissionGuardian(ZooKeeper.class);
-        Class guardian2 = entityMetaAccess.getPermissionGuardian(ZooKeeperImpl.class);
+        String guardian1 = entityMetaAccess.getPermissionGuardian(ZooKeeper.class.getName());
+        String guardian2 = entityMetaAccess.getPermissionGuardian(ZooKeeperImpl.class.getName());
 
-        Assert.assertEquals(guardian1, ZooKeeper.class);
-        Assert.assertEquals(guardian2, ZooKeeper.class);
+        Assert.assertEquals(guardian1, ZooKeeper.class.getName());
+        Assert.assertEquals(guardian2, ZooKeeper.class.getName());
 
     }
 }

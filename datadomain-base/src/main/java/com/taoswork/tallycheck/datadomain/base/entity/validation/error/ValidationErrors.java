@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.datadomain.base.entity.validation.error;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -7,7 +8,7 @@ import java.util.Collections;
 /**
  * Created by Gao Yuan on 2015/10/4.
  */
-public class ValidationErrors {
+public class ValidationErrors implements Serializable{
     private Collection<ValidationError> errors;
 
     public ValidationErrors() {
