@@ -24,7 +24,7 @@ public class FieldLengthValidator extends BaseTypedFieldValidator<String> {
     public ValidationError doValidate(IFieldMeta fieldMeta, String fieldValue) {
         if (fieldMeta instanceof StringFieldMeta) {
             int maxLength = ((StringFieldMeta) fieldMeta).getLength();
-            int length = fieldValue.length();
+            int length = (fieldValue == null) ? 0 : fieldValue.length();
             if (length > maxLength) {
                 return new ValidationError("validation.error.field.length",
                         new Object[]{maxLength, length});

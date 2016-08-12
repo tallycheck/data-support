@@ -1,11 +1,8 @@
 package com.taoswork.tallycheck.dataservice.frontend.io.translator.response;
 
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
-import com.taoswork.tallycheck.datadomain.base.entity.validation.error.EntityValidationErrors;
-import com.taoswork.tallycheck.datadomain.base.entity.validation.error.FieldValidationErrors;
-import com.taoswork.tallycheck.datadomain.base.entity.validation.error.ValidationError;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.dataservice.exception.EntityValueValidationException;
+import com.taoswork.tallycheck.dataservice.exception.EntityValidationException;
 import com.taoswork.tallycheck.dataservice.exception.NoPermissionException;
 import com.taoswork.tallycheck.dataservice.exception.NoSuchRecordException;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
@@ -17,12 +14,15 @@ import com.taoswork.tallycheck.dataservice.frontend.io.response.result.EntityIns
 import com.taoswork.tallycheck.dataservice.frontend.io.response.result.EntityQueryResult;
 import com.taoswork.tallycheck.dataservice.io.response.InstanceResponse;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
+import org.apache.commons.collections4.MultiMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Created by Gao Yuan on 2015/6/19.
@@ -148,8 +148,8 @@ public class ResponseTranslator {
             persistableResult.setIdValue(result.getIdValue());
             persistableResult.setName(result.getName());
             persistableResult.setValue(result.getResult());
-        } else if (result == null && e instanceof EntityValueValidationException) {
-            persistableResult = ((EntityValueValidationException) e).getEntity();
+        } else if (result == null && e instanceof EntityValidationException) {
+            persistableResult = ((EntityValidationException) e).getEntity();
         }
         if (persistableResult == null) {
             response.setEntityType(null);
@@ -165,14 +165,9 @@ public class ResponseTranslator {
     private void handleServiceException(ServiceException e, EntityResponse response, Locale locale) {
         if (e != null) {
             EntityErrors errors = response.getErrors();
-            if (e instanceof EntityValueValidationException) {
-                EntityValueValidationException ve = (EntityValueValidationException) e;
-                EntityValidationErrors validationError = ve.getEntityValidationError();
-                if (!validationError.isValid()) {
-                    this.translateValidationError(validationError, errors, locale);
-                } else {
-                    this.translateUnhandledServiceError(e, errors, locale);
-                }
+            if (e instanceof EntityValidationException) {
+                EntityValidationException ve = (EntityValidationException) e;
+                this.translateValidationError(ve, errors, locale);
             } else if (e instanceof NoSuchRecordException) {
                 this.translateNoSuchRecordError((NoSuchRecordException) e, errors, locale);
             } else if (e instanceof NoPermissionException) {
@@ -204,23 +199,20 @@ public class ResponseTranslator {
         errors.addGlobalErrorMessage(msg);
     }
 
-    private void translateValidationError(EntityValidationErrors validationErrors,
+    private void translateValidationError(EntityValidationException validationErrors,
                                           EntityErrors errors, Locale locale) {
-        if (!validationErrors.isValid()) {
-            Collection<FieldValidationErrors> fieldErrorsCollection = validationErrors.getFieldErrors();
-            for (FieldValidationErrors fieldErrors : fieldErrorsCollection) {
-                String fieldName = fieldErrors.getFieldName();
-                Collection<ValidationError> errorMsgs = fieldErrors.getErrors();
-                for (ValidationError emsg : errorMsgs) {
-                    String msg = this.getMessage(emsg.getCode(), emsg.getArgs(), locale);
-                    errors.addFieldErrorMessage(fieldName, msg);
-                }
-            }
-            for (ValidationError emsg : validationErrors.getErrors()) {
-                String msg = this.getMessage(emsg.getCode(), emsg.getArgs(), locale);
-                errors.addGlobalErrorMessage(msg);
+        List<String> verrors = validationErrors.getErrors();
+        for(String error : verrors){
+            errors.addGlobalErrorMessage(error);
+        }
+
+        for(String field : validationErrors.getErrorFields()){
+            Collection<String> fieldMsgs = validationErrors.getFieldErrors(field);
+            for(String msg : fieldMsgs){
+                errors.addFieldErrorMessage(field, msg);
             }
         }
+
     }
 
     private void translateUnhandledServiceError(ServiceException serviceException, EntityErrors errors, Locale locale) {

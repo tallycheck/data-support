@@ -33,7 +33,9 @@ public class ValidationErrors implements Serializable{
 
     public void appendError(ValidationError error) {
         if (error != null) {
-            this.errors.add(error);
+            if(!this.errors.contains(error)){
+                this.errors.add(error);
+            }
         }
     }
 

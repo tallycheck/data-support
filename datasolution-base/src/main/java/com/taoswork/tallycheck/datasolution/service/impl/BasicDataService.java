@@ -3,7 +3,12 @@ package com.taoswork.tallycheck.datasolution.service.impl;
 import com.taoswork.tallycheck.authority.atom.Access;
 import com.taoswork.tallycheck.authority.core.UnexpectedException;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
+import com.taoswork.tallycheck.datadomain.base.entity.validation.error.EntityValidationErrors;
+import com.taoswork.tallycheck.datadomain.base.entity.validation.error.FieldValidationErrors;
+import com.taoswork.tallycheck.datadomain.base.entity.validation.error.ValidationError;
 import com.taoswork.tallycheck.dataservice.*;
+import com.taoswork.tallycheck.dataservice.exception.EntityValidationErrorCodeException;
+import com.taoswork.tallycheck.dataservice.exception.EntityValidationException;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
@@ -22,11 +27,13 @@ import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.info.IEntityInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 
 import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -50,6 +57,9 @@ public class BasicDataService implements IDataService {
 
     @Resource(name = ISecurityVerifier.COMPONENT_NAME)
     protected ISecurityVerifier securityVerifier;
+
+    @Resource(name = IDataSolution.ERROR_MESSAGE_SOURCE_BEAN_NAME)
+    protected MessageSource errorMessageSource;
 
     private IDataSolution dataSolution;
 
@@ -106,7 +116,7 @@ public class BasicDataService implements IDataService {
         response.setName(result.getName());
     }
 
-    private static Entity getEntity(InstanceRequest request){
+    private static Entity getEntity(InstanceRequest request) {
         RequestEntity requestEntity = request.entity;
         return new Entity(requestEntity.getType(), requestEntity.getProps());
     }
@@ -129,7 +139,7 @@ public class BasicDataService implements IDataService {
         } catch (TranslateException e) {
             throw new ServiceException(e);
         } catch (ServiceException e) {
-            throw e;
+            throw makeLocalizedServiceException(e, request);
         } catch (Exception e) {
             throw new ServiceException(e);
         }
@@ -168,7 +178,7 @@ public class BasicDataService implements IDataService {
         } catch (TranslateException e) {
             throw new ServiceException(e);
         } catch (ServiceException e) {
-            throw e;
+            throw makeLocalizedServiceException(e, request);
         } catch (Exception e) {
             throw new ServiceException(e);
         }
@@ -229,7 +239,7 @@ public class BasicDataService implements IDataService {
     @Override
     public Access getAuthorizeAccess(SecurityAccessor accessor, String entityType, Access mask) {
         String guardianName = entityMetaAccess.getPermissionGuardian(entityType);
-        return securityVerifier.getAllPossibleAccess(accessor, guardianName,mask);
+        return securityVerifier.getAllPossibleAccess(accessor, guardianName, mask);
     }
 
     private static EntityInfoType convertInfoType(InfoType infoType) {
@@ -245,5 +255,50 @@ public class BasicDataService implements IDataService {
             default:
                 throw new UnexpectedException();
         }
+    }
+
+    private ServiceException makeLocalizedServiceException(ServiceException e, Request req) {
+        if (e instanceof EntityValidationErrorCodeException) {
+            EntityValidationErrorCodeException vece = (EntityValidationErrorCodeException) e;
+            Locale locale = req.getLocale();
+            PersistableResult entity = vece.getEntity();
+            EntityValidationErrors validationError = vece.getEntityValidationError();
+
+            EntityValidationException eve = new EntityValidationException(entity);
+            if (!validationError.isValid()) {
+                this.translateValidationError(validationError, eve, locale);
+            } else {
+                this.translateUnhandledServiceError(e, eve, locale);
+            }
+
+            return eve;
+        } else {
+            return e;
+        }
+    }
+
+    private void translateUnhandledServiceError(ServiceException e, EntityValidationException eve, Locale locale) {
+        eve.addError(e.getMessage());
+    }
+
+    private void translateValidationError(EntityValidationErrors validationErrors,
+                                          EntityValidationException eve, Locale locale) {
+        MessageSource ms = errorMessageSource;
+        if (!validationErrors.isValid()) {
+            Collection<FieldValidationErrors> fieldErrorsCollection = validationErrors.getFieldErrors();
+            for (FieldValidationErrors fieldErrors : fieldErrorsCollection) {
+                String fieldName = fieldErrors.getFieldName();
+                Collection<ValidationError> errorMsgs = fieldErrors.getErrors();
+                for (ValidationError emsg : errorMsgs) {
+                    String msg = ms.getMessage(emsg.getCode(), emsg.getArgs(), locale);
+                    eve.addFieldError(fieldName, msg);
+                }
+            }
+            for (ValidationError emsg : validationErrors.getErrors()) {
+                String msg = ms.getMessage(emsg.getCode(), emsg.getArgs(), locale);
+                eve.addError(msg);
+            }
+        }
+
     }
 }

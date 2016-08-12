@@ -1,5 +1,7 @@
 package com.taoswork.tallycheck.datasolution;
 
+import com.taoswork.tallycheck.general.extension.collections.StringChain;
+
 /**
  * Created by Gao Yuan on 2016/2/13.
  */
@@ -20,5 +22,18 @@ public interface IDataSolutionDefinition {
     String getPropertiesResourceDirectory();
 
     Class[] getExtraConfig();
+
+    public static class Utils {
+        public static String FileChain (String prefix, String delimter, String ... nodes){
+            StringChain sb = new StringChain();
+            sb.setFixes("",delimter,"");
+            for (String node : nodes){
+                sb.add(prefix + node);
+            }
+
+            return sb.toString();
+        }
+
+    }
 
 }

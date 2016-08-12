@@ -24,14 +24,17 @@ public abstract class BaseTypedFieldValidator<T>
     @Override
     public final ValidationError validate(IFieldMeta fieldMeta, Object fieldValue) {
         if (canHandle(fieldMeta)) {
+            ValidationError requiredError = null;
             if (null == fieldValue) {
                 if (nullValueAsValid(fieldMeta)) {
                     return null;
                 } else {
-                    return new ValidationError("validation.error.field.required");
+                    requiredError = new ValidationError("validation.error.field.required");
                 }
             }
             ValidationError result = this.doValidate(fieldMeta, (T) fieldValue);
+            if(result == null)
+                result = requiredError;
             return result;
         }
         return null;

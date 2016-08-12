@@ -3,7 +3,7 @@ package com.taoswork.tallycheck.datasolution.service.impl;
 import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.datadomain.base.entity.validation.error.EntityValidationErrors;
 import com.taoswork.tallycheck.dataservice.PersistableResult;
-import com.taoswork.tallycheck.dataservice.exception.EntityValueValidationException;
+import com.taoswork.tallycheck.dataservice.exception.EntityValidationErrorCodeException;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.field.validate.validator.*;
 import com.taoswork.tallycheck.datasolution.core.entityprotect.validate.EntityValueValidator;
@@ -51,7 +51,7 @@ public class EntityValidationServiceImpl implements EntityValidationService {
             entityValidatorManager.validate(entity, classMeta, entityErrors);
 
             if (!entityErrors.isValid()) {
-                throw new EntityValueValidationException(persistableResult, entityErrors);
+                throw new EntityValidationErrorCodeException(persistableResult, entityErrors);
             }
         } catch (IllegalAccessException e) {
             throw new ServiceException(e);
