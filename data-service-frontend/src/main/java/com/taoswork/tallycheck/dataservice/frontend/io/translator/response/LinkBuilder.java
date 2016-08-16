@@ -3,10 +3,7 @@ package com.taoswork.tallycheck.dataservice.frontend.io.translator.response;
 import com.taoswork.tallycheck.datadomain.base.restful.EntityAction;
 import com.taoswork.tallycheck.datadomain.base.restful.EntityActionPaths;
 import com.taoswork.tallycheck.dataservice.frontend.io.request.*;
-import com.taoswork.tallycheck.dataservice.frontend.io.response.EntityCreateFreshResponse;
-import com.taoswork.tallycheck.dataservice.frontend.io.response.EntityQueryResponse;
-import com.taoswork.tallycheck.dataservice.frontend.io.response.EntityReadResponse;
-import com.taoswork.tallycheck.dataservice.frontend.io.response.EntityResponse;
+import com.taoswork.tallycheck.dataservice.frontend.io.response.*;
 import com.taoswork.tallycheck.dataservice.frontend.io.response.range.QueryResultRange;
 import io.mikael.urlbuilder.UrlBuilder;
 import org.springframework.hateoas.Link;
@@ -49,17 +46,32 @@ public class LinkBuilder {
         }
     }
 
+    public static void buildLinkForCreateFreshResults(EntityCreateFreshRequest request, EntityCreateFreshResponse response) {
+        response.add(new Link(request.getFullUri()));
+        appendEntityUriByAction(request, EntityAction.CREATE, response);
+    }
+
+    public static void buildLinkForCreateResults(EntityCreateRequest request, EntityCreateResponse response) {
+        response.add(new Link(request.getFullUri()));
+        appendEntityUriByAction(request, EntityAction.CREATE, response);
+    }
+
     public static void buildLinkForReadResults(EntityReadRequest request, EntityReadResponse response) {
         response.add(new Link(request.getFullUri()));
         appendEntityActionUris(request.getResourceName(), response);
     }
 
-    public static void buildLinkForNewInstanceResults(EntityCreateFreshRequest request, EntityCreateFreshResponse response) {
-        response.add(new Link(request.getFullUri()));
-    }
-
     public static String buildLinkForReadInstance(String entityName) {
         return EntityActionPaths.EntityUris.uriTemplateForAction(entityName, EntityAction.READ);
+    }
+
+    private static void appendEntityUriByAction(EntityRequest request, EntityAction action, EntityResponse response) {
+        appendEntityUriByAction(request.getResourceName(), action, response);
+    }
+
+    private static void appendEntityUriByAction(String entityName, EntityAction action, EntityResponse response) {
+        String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
+        response.add(new Link(uri).withRel(action.getType()));
     }
 
     /**
@@ -67,35 +79,11 @@ public class LinkBuilder {
      * @param response
      */
     private static void appendEntityActionUris(String entityName, EntityResponse response) {
-        {   //inspect
-            EntityAction action = EntityAction.INFO;
-            String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
-            response.add(new Link(uri).withRel(action.getType()));
-        }
-        {   //search
-            EntityAction action = EntityAction.QUERY;
-            response.add(new Link(EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action))
-                    .withRel(action.getType()));
-        }
-        {   //create
-            EntityAction action = EntityAction.CREATE;
-            String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
-            response.add(new Link(uri).withRel(action.getType()));
-        }
-        {   //read
-            EntityAction action = EntityAction.READ;
-            String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
-            response.add(new Link(uri).withRel(action.getType()));
-        }
-        {   //update
-            EntityAction action = EntityAction.UPDATE;
-            String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
-            response.add(new Link(uri).withRel(action.getType()));
-        }
-        {   //delete
-            EntityAction action = EntityAction.DELETE;
-            String uri = EntityActionPaths.EntityUris.uriTemplateForAction(entityName, action);
-            response.add(new Link(uri).withRel(action.getType()));
+        EntityAction [] actions = new EntityAction[]{
+                EntityAction.INFO, EntityAction.QUERY, EntityAction.CREATE,
+                EntityAction.READ, EntityAction.UPDATE, EntityAction.DELETE};
+        for(EntityAction action : actions){
+            appendEntityUriByAction(entityName, action, response);
         }
     }
 

@@ -1,7 +1,12 @@
 package com.taoswork.tallycheck.dataservice.frontend.io.response.result;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.taoswork.tallycheck.authority.core.UnexpectedException;
+import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
+import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityFormInfo;
+import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityFullInfo;
+import com.taoswork.tallycheck.descriptor.description.infos.handy.EntityGridInfo;
 import com.taoswork.tallycheck.info.IEntityInfo;
 import org.apache.commons.lang3.StringUtils;
 
@@ -15,8 +20,9 @@ import java.util.Map;
 public class EntityInfoResult {
 
     private final BasicInfo basic = new BasicInfo();
-
-    private Map<String, IEntityInfo> details;
+    private IEntityInfo full = null;
+    private IEntityInfo form = null;
+    private IEntityInfo grid = null;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public BasicInfo getBasic() {
@@ -24,41 +30,39 @@ public class EntityInfoResult {
     }
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public Map<String, IEntityInfo> getDetails() {
-        if (null == details) {
-            return null;
+    public IEntityInfo getFull() {
+        return full;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public IEntityInfo getForm() {
+        return form;
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public IEntityInfo getGrid() {
+        return grid;
+    }
+//
+//    public EntityInfoResult setDetails(Map<String, IEntityInfo> details) {
+//        this.details = details;
+//        return this;
+//    }
+
+
+    public EntityInfoResult addDetail(IEntityInfo info) {
+        if (info == null)
+            return this;
+        if (info instanceof EntityFullInfo) {
+            this.full = info;
+        } else if (info instanceof EntityFormInfo) {
+            this.form = info;
+        } else if (info instanceof EntityGridInfo) {
+            this.grid = info;
+        } else {
+            throw new UnexpectedException();
         }
-        return Collections.unmodifiableMap(details);
-    }
-
-    public EntityInfoResult setDetails(Map<String, IEntityInfo> details) {
-        this.details = details;
         return this;
-    }
-
-
-    public EntityInfoResult addDetail(String typeName, IEntityInfo entityDetail) {
-        if (this.details == null) {
-            this.details = new HashMap<String, IEntityInfo>();
-        }
-        this.details.put(typeName, entityDetail);
-        return this;
-    }
-
-    public EntityInfoResult addDetails(Map<String, IEntityInfo> entityDetailMap) {
-        if (this.details == null) {
-            this.details = new HashMap<String, IEntityInfo>();
-        }
-        this.details.putAll(entityDetailMap);
-        return this;
-    }
-
-    public <T extends IEntityInfo> T getDetail(String infoType) {
-        return (T) details.get(infoType);
-    }
-
-    public <T extends IEntityInfo> T getDetail(EntityInfoType infoType) {
-        return (T) details.get(infoType.getType());
     }
 
 }

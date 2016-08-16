@@ -51,22 +51,27 @@ public class FrontEndEntityService implements IFrontEndEntityService {
     private final IDataService dataService;
     private final DataServiceManager dataServiceManager;
     private final IProtectedAccessContext protectedAccessContext;
+    private final MessageSource entityAccessMessageSource;
 
     public FrontEndEntityService(
             DataServiceManager dataServiceManager,
             IDataService dataService,
-            IProtectedAccessContext protectedAccessContext) {
+            IProtectedAccessContext protectedAccessContext,
+            MessageSource entityAccessMessageSource) {
         this.dataServiceManager = dataServiceManager;
         this.dataService = dataService;
         this.protectedAccessContext = protectedAccessContext;
+        this.entityAccessMessageSource =entityAccessMessageSource;
 //        this.errorMessageSource = dataService.getService(IDataService.ERROR_MESSAGE_SOURCE_BEAN_NAME);
 //        this.translator = dataServiceManagezxdfgtrr.getEntityTranslator();
     }
 
     public static FrontEndEntityService newInstance(DataServiceManager dataServiceManager, IDataService dataService,
-                                                    IProtectedAccessContext protectedAccessContext) {
+                                                    IProtectedAccessContext protectedAccessContext,
+                                                    MessageSource entityAccessMessageSource) {
         return new FrontEndEntityService(dataServiceManager, dataService,
-                protectedAccessContext);
+                protectedAccessContext,
+                entityAccessMessageSource);
     }
 
     private void appendAuthorizedActions(EntityRequest request, EntityResponse response, ActionsBuilder.CurrentStatus currentStatus) {
@@ -110,7 +115,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
             if (entityInfo != null) {
                 infoResult.getBasic().setIdFieldIfEmpty(entityInfo.getIdField())
                         .setNameFieldIfEmpty(entityInfo.getNameField());
-                infoResult.addDetail(entityInfo.getInfoType(), entityInfo);
+                infoResult.addDetail(entityInfo);
             }
         }
 
@@ -118,24 +123,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
     }
 
     private ResponseTranslator responseTranslator() {
-        MessageSource mm = new MessageSource() {
-            @Override
-            public String getMessage(String s, Object[] objects, String s1, Locale locale) {
-                return "mm";
-            }
-
-            @Override
-            public String getMessage(String s, Object[] objects, Locale locale) throws NoSuchMessageException {
-                return "mm";
-            }
-
-            @Override
-            public String getMessage(MessageSourceResolvable messageSourceResolvable, Locale locale) throws NoSuchMessageException {
-                return "mm";
-            }
-        };
-        //errorMessageSource
-        return new ResponseTranslator(mm);
+        return new ResponseTranslator(entityAccessMessageSource);
     }
 
     private SecurityAccessor accessor() {
@@ -216,7 +204,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
             responseTranslator().translateCreateFreshResponse(request, newInstanceResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
             this.appendAuthorizedActions(request, response, ActionsBuilder.CurrentStatus.Adding);
-            LinkBuilder.buildLinkForNewInstanceResults(request, response);
+            LinkBuilder.buildLinkForCreateFreshResults(request, response);
         }
         return response;
     }
@@ -243,6 +231,7 @@ public class FrontEndEntityService implements IFrontEndEntityService {
             responseTranslator().translateCreateResponse(request, createResponse, se, response, locale);
             this.appendInfoFields(request, response, locale, InfoTypeOption.UseFactual, false);
             this.appendAuthorizedActions(request, response, ActionsBuilder.CurrentStatus.Adding);
+            LinkBuilder.buildLinkForCreateResults(request, response);
         }
         return response;
     }
