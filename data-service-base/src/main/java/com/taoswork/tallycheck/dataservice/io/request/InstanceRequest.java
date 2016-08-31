@@ -6,7 +6,7 @@ import java.util.Locale;
  * Created by gaoyuan on 7/1/16.
  */
 public abstract class InstanceRequest extends Request {
-    public InstanceRequest(){
+    public InstanceRequest() {
         super();
     }
 

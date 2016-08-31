@@ -465,7 +465,6 @@
         <module>test-material-for-jpa</module>
         <module>test-material-for-mongo</module>
         <module>data-service-base</module>
-        <module>data-service-frontend</module>
         <module>meta-info</module>
     </modules>
 

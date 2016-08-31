@@ -79,7 +79,6 @@ public class DataSolutionBeanCreationHelper {
 
         List<String> basenameList = MessageUtility.getMessageBasenames(resolver, messageDirs, null);
         basenameList.add("classpath:/error-messages/ValidationMessages");
-        basenameList.add("classpath:/error-messages/ServiceExceptionMessages");
         ms.setBasenames(basenameList.toArray(new String[basenameList.size()]));
 
         return ms;
