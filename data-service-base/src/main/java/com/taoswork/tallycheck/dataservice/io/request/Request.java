@@ -51,4 +51,9 @@ public class Request implements Serializable {
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
+
+    public void setParameter(String type, Locale locale) {
+        this.type = type;
+        this.locale = locale;
+    }
 }

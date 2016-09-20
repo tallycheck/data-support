@@ -10,27 +10,27 @@ import java.io.Serializable;
 public class EntityType implements Serializable{
     private String dataServiceName;
     private String resourceName;
-    private String entityInterfaceName;
+    private String interfaceName;
 
     public EntityType() {
     }
 
     public EntityType(String dataServiceName, Class<?> entityInterface) {
         this.dataServiceName = dataServiceName;
-        this.entityInterfaceName = entityInterface.getName();
+        this.interfaceName = entityInterface.getName();
         this.resourceName = PersistEntityHelper.getEntityName(entityInterface);
     }
 
-    protected EntityType(String dataServiceName, String resource, String entityInterfaceName) {
+    protected EntityType(String dataServiceName, String resource, String interfaceName) {
         this.dataServiceName = dataServiceName;
         this.resourceName = resource;
-        this.entityInterfaceName = entityInterfaceName;
+        this.interfaceName = interfaceName;
     }
 
     public EntityType(EntityType other) {
         this.dataServiceName = other.dataServiceName;
         this.resourceName = other.resourceName;
-        this.entityInterfaceName = other.entityInterfaceName;
+        this.interfaceName = other.interfaceName;
     }
 
     public String getDataServiceName() {
@@ -41,8 +41,8 @@ public class EntityType implements Serializable{
         return resourceName;
     }
 
-    public String getEntityInterfaceName() {
-        return entityInterfaceName;
+    public String getInterfaceName() {
+        return interfaceName;
     }
 
 

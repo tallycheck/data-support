@@ -23,12 +23,10 @@ import com.taoswork.tallycheck.descriptor.dataio.in.Entity;
 import com.taoswork.tallycheck.descriptor.dataio.in.translator.IEntityTranslator;
 import com.taoswork.tallycheck.descriptor.dataio.in.translator.TranslateException;
 import com.taoswork.tallycheck.descriptor.description.infos.EntityInfoType;
-import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
 import com.taoswork.tallycheck.info.IEntityInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -71,7 +69,7 @@ public class BasicDataService implements IDataService {
         try {
             for (EntityType entityType : getEntityTypes()) {
                 String resourceTypeName = entityType.getResourceName();
-                String resourceInterfaceName = entityType.getEntityInterfaceName();
+                String resourceInterfaceName = entityType.getInterfaceName();
                 Class<? extends Persistable> resourceInterface = (Class<? extends Persistable>) Class.forName(resourceInterfaceName);
                 entityResourceNameToClz.put(resourceInterfaceName, resourceInterface);
                 entityResourceNameToClz.put(resourceTypeName, resourceInterface);
@@ -96,7 +94,7 @@ public class BasicDataService implements IDataService {
     }
 
     @Override
-    public NewInstanceResponse newInstance(NewInstanceRequest request) throws ServiceException {
+    public NewInstanceResponse newInstance(CreateGetRequest request) throws ServiceException {
         Class entityCls = adjustEntityTypeToClass(request.getType());
         PersistableResult result = entityService.makeDissociatedPersistable(entityCls);
         NewInstanceResponse response = new NewInstanceResponse();

@@ -98,7 +98,7 @@ public abstract class EntityDaoImplBase implements EntityDao {
         List<T> resultList = listQuery.getResultList();
         long count = countQuery.getSingleResult().longValue();
 
-        CriteriaQueryResult<T> queryResult = new CriteriaQueryResult<T>(entityType);
+        CriteriaQueryResult<T> queryResult = new CriteriaQueryResult<T>(entityType.getName());
         queryResult.setEntityCollection(resultList).setTotalCount(count).setStartIndex(query.getFirstResult());
 
         return queryResult;

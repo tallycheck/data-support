@@ -87,7 +87,7 @@ public class SecuredEntityAccess extends SecuredCrudqAccessor {
         List<T> resultList = q.asList();
         long count = qc.countAll();
 
-        CriteriaQueryResult<T> queryResult = new CriteriaQueryResult<T>(projectedEntityType);
+        CriteriaQueryResult<T> queryResult = new CriteriaQueryResult<T>(projectedEntityType.getName());
         queryResult.setEntityCollection(resultList).setTotalCount(count).setStartIndex(cto.getFirstResult());
 
         return queryResult;

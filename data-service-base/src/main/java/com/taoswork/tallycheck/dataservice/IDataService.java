@@ -1,7 +1,6 @@
 package com.taoswork.tallycheck.dataservice;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
@@ -18,7 +17,7 @@ public interface IDataService {
 
     Collection<EntityType> getEntityTypes();
 
-    NewInstanceResponse newInstance(NewInstanceRequest request) throws ServiceException;
+    NewInstanceResponse newInstance(CreateGetRequest request) throws ServiceException;
 
     CreateResponse create(Operator operator, SecurityAccessor accessor, CreateRequest request) throws ServiceException;
 

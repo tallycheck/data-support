@@ -26,7 +26,7 @@ public class DataServiceManagerImpl implements DataServiceManager {
         String dataServiceBeanName = dataService.getName();
         dataServiceMap.put(dataServiceBeanName, dataService);
         for (final EntityType entityType : dataService.getEntityTypes()) {
-            String typeName = entityType.getEntityInterfaceName();
+            String typeName = entityType.getInterfaceName();
             if (entityTypeNameToCatalogMap.containsKey(typeName)) {
                 LOGGER.error("ManagedEntityCatalog with name '{}' already exist, over-writing", typeName);
             }

@@ -10,16 +10,18 @@ import java.util.List;
  * Created by Gao Yuan on 2015/6/17.
  */
 public class CriteriaQueryResult<T extends Persistable> implements Serializable {
-    private final Class<T> entityType;
+    //the entity type, in interface / class
+    private final String entityType;
+    //
     private List<T> entityCollection;
     private Long totalCount;
     private long startIndex;
 
-    public CriteriaQueryResult(Class<T> entityType) {
+    public CriteriaQueryResult(String entityType) {
         this.entityType = entityType;
     }
 
-    public Class<T> getEntityType() {
+    public String getEntityType() {
         return entityType;
     }
 

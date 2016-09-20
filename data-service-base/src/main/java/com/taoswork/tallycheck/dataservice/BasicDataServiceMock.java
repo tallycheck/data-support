@@ -1,7 +1,6 @@
 package com.taoswork.tallycheck.dataservice;
 
 import com.taoswork.tallycheck.authority.atom.Access;
-import com.taoswork.tallycheck.datadomain.base.entity.Persistable;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.io.request.*;
 import com.taoswork.tallycheck.dataservice.io.response.*;
@@ -27,7 +26,7 @@ public abstract class BasicDataServiceMock implements IDataService {
     }
 
     @Override
-    public NewInstanceResponse newInstance(NewInstanceRequest request) throws ServiceException {
+    public NewInstanceResponse newInstance(CreateGetRequest request) throws ServiceException {
         NewInstanceResponse response = new NewInstanceResponse();
         return response;
     }
