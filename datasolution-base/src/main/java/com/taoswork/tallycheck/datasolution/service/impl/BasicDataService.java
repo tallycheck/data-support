@@ -68,7 +68,7 @@ public class BasicDataService implements IDataService {
 
         try {
             for (EntityType entityType : getEntityTypes()) {
-                String resourceTypeName = entityType.getResourceName();
+                String resourceTypeName = entityType.getResource();
                 String resourceInterfaceName = entityType.getInterfaceName();
                 Class<? extends Persistable> resourceInterface = (Class<? extends Persistable>) Class.forName(resourceInterfaceName);
                 entityResourceNameToClz.put(resourceInterfaceName, resourceInterface);

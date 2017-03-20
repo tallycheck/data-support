@@ -1,6 +1,8 @@
 package com.taoswork.tallycheck.datasolution.jpa.config;
 
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.IDatasourceBeanConfiguration;
+import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.jpa.JpaDatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.jpa.config.beanlist.IEntityBeanList;
 import com.taoswork.tallycheck.datasolution.jpa.config.beanlist.IPersistenceBeanList;
@@ -120,7 +122,7 @@ public abstract class JpaDatasourceBeanConfiguration
      */
 
     @Override
-    @Bean(name = JpaDatasourceDefinition.DATA_SERVICE_DEFINITION_BEAN_NAME)
+    @Bean(name = DatasourceDefinition.DATA_SOURCE_DEFINITION)
     public JpaDatasourceDefinition dataServiceDefinitionBean() {
         return this.jpaDatasourceDefinition;
     }

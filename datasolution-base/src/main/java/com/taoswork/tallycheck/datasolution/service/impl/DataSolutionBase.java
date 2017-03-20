@@ -18,6 +18,7 @@ import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -30,12 +31,45 @@ import java.util.*;
  * Created by Gao Yuan on 2015/5/11.
  */
 public abstract class DataSolutionBase implements IDataSolution {
+    class DataSolutionInsideAnnotationConfigApplicationContext
+            extends AnnotationConfigApplicationContext
+            implements IDataSolutionDelegate {
+        private IDataSolution dataSolution = null;
+
+        @Override
+        protected void onRefresh() throws BeansException {
+            onServiceStart();
+            super.onRefresh();
+        }
+
+        @Override
+        protected void onClose() {
+            super.onClose();
+            onServiceStop();
+        }
+
+        @Override
+        public IDataSolutionDefinition getDataSolutionDefinition() {
+            return dsDef;
+        }
+
+        @Override
+        public IDataSolution theDataSolution() {
+            return dataSolution;
+        }
+
+        public void setDataSolution(IDataSolution dataSolution) {
+            this.dataSolution = dataSolution;
+        }
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DataSolutionBase.class);
     private static final Map<String, Integer> loadCounter = new HashMap<String, Integer>();
 
-    private ApplicationContext applicationContext;
     private final IDataSolutionDefinition dsDef;
+    private final ApplicationContext applicationContext;
 
+    //resource -> interface
     private final Map<String, String> entityResNameToTypeName = new HashMap<String, String>();
     //key is type name
     private final Map<String, EntityType> entityTypeNameToTypes = new HashMap<String, EntityType>();
@@ -49,8 +83,8 @@ public abstract class DataSolutionBase implements IDataSolution {
             List<Class> annotatedClasses) {
         TimeCounter counter = new TimeCounter();
         this.dsDef = dsDef;
-        List<Class> annotatedClassesList = new ArrayList<Class>();
 
+        List<Class> annotatedClassesList = new ArrayList<Class>();
         annotatedClassesList.add(solutionConfig);
 
         if (annotatedClasses != null) {
@@ -66,74 +100,43 @@ public abstract class DataSolutionBase implements IDataSolution {
             }
         }
 
-        load(annotatedClassesList);
+        applicationContext = loadAnnotatedClasses(annotatedClassesList);
+        if(applicationContext != null) {
+            BasicDataService basicDataService = (BasicDataService) applicationContext.getBean(BasicDataService.COMPONENT_NAME);
+            basicDataService.setDataSolution(this);
+        }
+        postConstruct();
+        postLoadCheck();
+        this.setAuthorityProvider(new AllBlockAuthorityProvider());
         double passedSeconds = counter.getPassedInSeconds();
         LOGGER.info("Load DataSolution {} cost {} seconds.", dsDef.getDataSolutionName(), passedSeconds);
     }
 
-
-    private void load(
-            List<Class> annotatedClasses) {
+    private ApplicationContext loadAnnotatedClasses(List<Class> annotatedClasses) {
         String clzName = this.getClass().getName();
         int oldCount = MapUtils.getIntValue(loadCounter, clzName, 0);
         loadCounter.put(clzName, oldCount + 1);
 
-        loadAnnotatedClasses(annotatedClasses.toArray(new Class[annotatedClasses.size()]));
-    }
-
-    private void loadAnnotatedClasses(Class<?>... annotatedClasses) {
+        ApplicationContext localAppCtx = null;
         try {
-            onServiceStart();
-
-            class DataSolutionInsideAnnotationConfigApplicationContext
-                    extends AnnotationConfigApplicationContext
-                    implements IDataSolutionDelegate {
-                private IDataSolution dataSolution = null;
-
-                @Override
-                protected void onClose() {
-                    super.onClose();
-                    onServiceStop();
-                }
-
-                @Override
-                public IDataSolutionDefinition getDataSolutionDefinition() {
-                    return dsDef;
-                }
-
-                @Override
-                public IDataSolution theDataSolution() {
-                    return dataSolution;
-                }
-
-                public void setDataSolution(IDataSolution dataSolution) {
-                    this.dataSolution = dataSolution;
-                }
-            }
+            final Class[] annotatedClassArray = annotatedClasses.toArray(new Class[annotatedClasses.size()]);
 
             DataSolutionInsideAnnotationConfigApplicationContext annotationConfigApplicationContext = new DataSolutionInsideAnnotationConfigApplicationContext();
             annotationConfigApplicationContext.setDataSolution(this);
-
             annotationConfigApplicationContext.setDisplayName(this.getClass().getSimpleName());
-            annotationConfigApplicationContext.register(annotatedClasses);
+            annotationConfigApplicationContext.register(annotatedClassArray);
             annotationConfigApplicationContext.refresh();
-
 
 //        AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext(annotatedClasses);
 //        annotationConfigApplicationContext.setDisplayName(this.getClass().getSimpleName());
-            applicationContext = annotationConfigApplicationContext;
+            localAppCtx = annotationConfigApplicationContext;
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            postConstruct();
-            postLoadCheck();
-
-            BasicDataService basicDataService = (BasicDataService)applicationContext.getBean(BasicDataService.COMPONENT_NAME);
-            basicDataService.setDataSolution(this);
-            this.setAuthorityProvider(new AllBlockAuthorityProvider());
         }
+        return localAppCtx;
     }
 
     protected void postConstruct() {
@@ -254,7 +257,7 @@ public abstract class DataSolutionBase implements IDataSolution {
                     LOGGER.error("EntityType with name '{}' already exist, over-writing", typeName);
                 }
                 EntityType entityType = new EntityType(dsName, entityCls);
-                String newResourceName = entityType.getResourceName();
+                String newResourceName = entityType.getResource();
 
                 entityTypeNameToTypes.put(typeName, entityType);
                 entityResNameToTypeName.put(newResourceName, typeName);
@@ -290,7 +293,7 @@ public abstract class DataSolutionBase implements IDataSolution {
         if (entityCatalog == null) {
             return null;
         }
-        return entityCatalog.getResourceName();
+        return entityCatalog.getResource();
     }
 
     @Override

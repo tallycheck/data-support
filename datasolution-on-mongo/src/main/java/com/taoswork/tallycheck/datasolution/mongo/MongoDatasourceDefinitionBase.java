@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.datasolution.mongo;
 
+import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.taoswork.tallycheck.general.solution.conf.TallycheckConfiguration;
 

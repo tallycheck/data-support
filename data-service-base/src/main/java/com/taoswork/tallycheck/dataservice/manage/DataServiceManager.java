@@ -18,5 +18,4 @@ public interface DataServiceManager {
 
     IDataService getDataService(String entityClz);
 
-
 }

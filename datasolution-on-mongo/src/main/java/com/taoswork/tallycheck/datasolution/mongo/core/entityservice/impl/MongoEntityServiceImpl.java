@@ -9,6 +9,7 @@ import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.core.entityservice.BaseEntityServiceImpl;
 import com.taoswork.tallycheck.datasolution.mongo.MongoDatasourceDefinition;
+import com.taoswork.tallycheck.datasolution.mongo.config.beanlist.IMongoBeanList;
 import com.taoswork.tallycheck.datasolution.mongo.core.convertors.ObjectIdConverter;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.SecuredEntityAccess;
@@ -38,7 +39,7 @@ public class MongoEntityServiceImpl
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoEntityServiceImpl.class);
 
-    @Resource(name = MongoDatasourceDefinition.DATASTORE_BEAN_NAME)
+    @Resource(name = IMongoBeanList.DATASTORE_BEAN_NAME)
     private AdvancedDatastore datastore;
 
     @Resource(name = EntityValidationService.COMPONENT_NAME)

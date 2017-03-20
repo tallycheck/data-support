@@ -14,6 +14,7 @@ import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.auth.TUs
 import com.taoswork.tallycheck.authority.provider.onmongo.common.domain.resource.*;
 import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityservice.MongoEntityService;
 import com.taoswork.tallycheck.datasolution.service.IEntityService;
@@ -90,7 +91,7 @@ public class VerifierTestSupport {
 
     protected static void teardownDatabaseData() {
         authorityProvider = null;
-        AuthSolutionDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        AuthSolutionDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(DatasourceDefinition.DATA_SOURCE_DEFINITION);
         mdbDef.dropDatabase();
         dataSolution = null;
     }

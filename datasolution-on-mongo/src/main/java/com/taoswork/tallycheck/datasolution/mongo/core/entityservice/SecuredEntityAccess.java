@@ -7,6 +7,7 @@ import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.datasolution.core.SecuredCrudqAccessor;
 import com.taoswork.tallycheck.datasolution.mongo.MongoDatasourceDefinition;
+import com.taoswork.tallycheck.datasolution.mongo.config.beanlist.IMongoBeanList;
 import com.taoswork.tallycheck.datasolution.mongo.core.query.MongoQueryTranslator;
 import com.taoswork.tallycheck.datasolution.mongo.core.query.impl.MongoQueryTranslatorImpl;
 import com.taoswork.tallycheck.descriptor.metadata.IClassMeta;
@@ -25,7 +26,7 @@ import java.util.List;
 public class SecuredEntityAccess extends SecuredCrudqAccessor {
     public static final String COMPONENT_NAME = "SecuredEntityAccess";
 
-    @Resource(name = MongoDatasourceDefinition.DATASTORE_BEAN_NAME)
+    @Resource(name = IMongoBeanList.DATASTORE_BEAN_NAME)
     private AdvancedDatastore datastore;
 
     private MongoQueryTranslator queryTranslator = new MongoQueryTranslatorImpl();

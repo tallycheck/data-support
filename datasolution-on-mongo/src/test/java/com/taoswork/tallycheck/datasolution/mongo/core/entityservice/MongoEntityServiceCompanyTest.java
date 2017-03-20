@@ -8,6 +8,7 @@ import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.CriteriaQueryResult;
 import com.taoswork.tallycheck.dataservice.query.CriteriaTransferObject;
 import com.taoswork.tallycheck.dataservice.query.PropertyFilterCriteria;
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
@@ -45,7 +46,7 @@ public class MongoEntityServiceCompanyTest {
 
     @After
     public void teardown() {
-        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(DatasourceDefinition.DATA_SOURCE_DEFINITION);
         mdbDef.dropDatabase();
         dataSolution = null;
     }

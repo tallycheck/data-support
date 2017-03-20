@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.datasolution.jpa.config;
 
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.jpa.JpaDatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.jpa.core.entityprotect.valuecoper.JpaEntityCopierServiceImpl;
@@ -17,8 +18,9 @@ public abstract class JpaDatasourceConfiguration implements IDatasourceConfigura
 
     protected abstract JpaDatasourceDefinition createDatasourceDefinition();
 
-    @Bean(name = DATA_SOURCE_PATH_DEFINITION)
-    public JpaDatasourceDefinition mongoDatasourceDefinition() {
+    @Override
+    @Bean(name = DatasourceDefinition.DATA_SOURCE_DEFINITION)
+    public JpaDatasourceDefinition datasourceDefinition() {
         return createDatasourceDefinition();
     }
 

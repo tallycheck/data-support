@@ -40,7 +40,7 @@ public class DataServiceManagerImpl implements DataServiceManager {
             String interfaceName = entryEntry.getKey();
             EntityType managedEntityCatalog = entryEntry.getValue();
 
-            String resourceName = managedEntityCatalog.getResourceName();
+            String resourceName = managedEntityCatalog.getResource();
             if (entityResNameToTypeName.containsKey(resourceName)) {
                 LOGGER.error("ResourceName '{}' for interface '{}' already used.", resourceName, interfaceName);
             }
@@ -64,7 +64,7 @@ public class DataServiceManagerImpl implements DataServiceManager {
     public String getEntityResourceName(String entityType) {
         EntityType managedEntityCatalog = getInterfaceEntityEntry(entityType);
         if (null != managedEntityCatalog) {
-            return managedEntityCatalog.getResourceName();
+            return managedEntityCatalog.getResource();
         } else {
             return "";
         }

@@ -1,8 +1,10 @@
 package com.taoswork.tallycheck.datasolution.jpa.core.entityservice;
 
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.IDataSolutionDelegate;
+import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.jpa.JpaDatasourceDefinition;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -46,7 +48,7 @@ public class OpenEntityManagerAop implements ApplicationContextAware {
     }
 
     protected EntityManagerFactory lookupEntityManagerFactory() {
-        JpaDatasourceDefinition dataServiceDefinition = dataSolution.getService(JpaDatasourceDefinition.DATA_SERVICE_DEFINITION_BEAN_NAME);
+        JpaDatasourceDefinition dataServiceDefinition = dataSolution.getService(DatasourceDefinition.DATA_SOURCE_DEFINITION);
         String emfBeanName = dataServiceDefinition.getEntityManagerName();
         String puName = dataServiceDefinition.getPersistenceUnit();
         return dataSolution.getService(EntityManagerFactory.class, emfBeanName);

@@ -7,12 +7,15 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class PersistEntityHelper {
     public static final String getEntityName(Class<?> entityInterface) {
-        String typeName = entityInterface.getSimpleName().toLowerCase();
+        String typeName = null;
         PersistEntity persistEntity = entityInterface.getDeclaredAnnotation(PersistEntity.class);
         if (persistEntity != null) {
             String nameOverride = persistEntity.value();
             if (StringUtils.isNotEmpty(nameOverride))
                 typeName = nameOverride;
+        }
+        if(typeName == null){
+            typeName = entityInterface.getSimpleName().toLowerCase();
         }
         return typeName;
     }

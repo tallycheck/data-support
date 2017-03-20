@@ -5,12 +5,12 @@ import com.taoswork.tallycheck.dataservice.SecurityAccessor;
 import com.taoswork.tallycheck.dataservice.exception.ServiceException;
 import com.taoswork.tallycheck.dataservice.operator.Operator;
 import com.taoswork.tallycheck.dataservice.query.*;
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.IDataSolution;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.TallyMockupMongoDataSolution;
 import com.taoswork.tallycheck.datasolution.mongo.servicemockup.datasource.TallyMockupMongoDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.service.EasyEntityService;
-import com.taoswork.tallycheck.datasolution.service.IEntityService;
 import com.taoswork.tallycheck.general.solution.time.MethodTimeCounter;
 import com.taoswork.tallycheck.testmaterial.mongo.domain.zoo.ZooKeeper;
 import org.junit.After;
@@ -41,7 +41,7 @@ public class MongoEntityServiceTest {
 
     @After
     public void teardown() {
-        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(IDatasourceConfiguration.DATA_SOURCE_PATH_DEFINITION);
+        TallyMockupMongoDatasourceConfiguration.DatasourceDefinition mdbDef = dataSolution.getService(DatasourceDefinition.DATA_SOURCE_DEFINITION);
         mdbDef.dropDatabase();
         dataSolution = null;
     }

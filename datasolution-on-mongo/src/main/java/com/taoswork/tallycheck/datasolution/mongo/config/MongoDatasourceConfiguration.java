@@ -1,5 +1,6 @@
 package com.taoswork.tallycheck.datasolution.mongo.config;
 
+import com.taoswork.tallycheck.datasolution.DatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.config.IDatasourceConfiguration;
 import com.taoswork.tallycheck.datasolution.mongo.MongoDatasourceDefinition;
 import com.taoswork.tallycheck.datasolution.mongo.core.entityprotect.valuecoper.MongoEntityCopierServiceImpl;
@@ -19,8 +20,9 @@ public abstract class MongoDatasourceConfiguration implements IDatasourceConfigu
 
     protected abstract MongoDatasourceDefinition createDatasourceDefinition();
 
-    @Bean(name = DATA_SOURCE_PATH_DEFINITION)
-    public MongoDatasourceDefinition mongoDatasourceDefinition() {
+    @Override
+    @Bean(name = DatasourceDefinition.DATA_SOURCE_DEFINITION)
+    public MongoDatasourceDefinition datasourceDefinition() {
         return createDatasourceDefinition();
     }
 

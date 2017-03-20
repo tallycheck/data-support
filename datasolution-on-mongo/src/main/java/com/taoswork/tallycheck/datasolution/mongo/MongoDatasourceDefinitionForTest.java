@@ -9,6 +9,7 @@ import com.taoswork.tallycheck.general.solution.conf.TallycheckConfiguration;
  * Created by Gao Yuan on 2016/6/26.
  */
 public abstract class MongoDatasourceDefinitionForTest extends MongoDatasourceDefinitionBase {
+
     @Override
     protected ServerAddress determineServerAddress() {
         org.apache.commons.configuration2.Configuration conf = TallycheckConfiguration.instance();
